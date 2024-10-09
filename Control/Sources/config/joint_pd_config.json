@@ -1,0 +1,320 @@
+{
+    "hipPitch_Left": {
+        "control_config": {
+            "Kp": 450.0,
+            "Kd": 10.0
+        }
+    },
+    "hipRoll_Left": {
+        "control_config": {
+            "Kp": 120.0,
+            "Kd": 6.0
+        }
+    },
+    "hipYaw_Left": {
+        "control_config": {
+            "Kp": 60.0,
+            "Kd": 1.0
+        }
+    },
+    "kneePitch_Left": {
+        "control_config": {
+            "Kp": 400.0,
+            "Kd": 10.0
+        }
+    },
+    "anklePitch_Left": {
+        "control_config": {
+            "Kp": 50.0,
+            "Kd": 2.0
+        }
+    },
+    "ankleRoll_Left": {
+        "control_config": {
+            "Kp": 0.0,
+            "Kd": 0.25
+        }
+    },
+    "hipPitch_Right": {
+        "control_config": {
+            "Kp": 450.0,
+            "Kd": 10.0
+        }
+    },
+    "hipRoll_Right": {
+        "control_config": {
+            "Kp": 120.0,
+            "Kd": 6.0
+        }
+    },
+    "hipYaw_Right": {
+        "control_config": {
+            "Kp": 60.0,
+            "Kd": 1.0
+        }
+    },
+    "kneePitch_Right": {
+        "control_config": {
+            "Kp": 400.0,
+            "Kd": 10.0
+        }
+    },
+    "anklePitch_Right": {
+        "control_config": {
+            "Kp": 50.0,
+            "Kd": 2.0
+        }
+    },
+    "ankleRoll_Right": {
+        "control_config": {
+            "Kp": 0.0,
+            "Kd": 0.25
+        }
+    },
+    "waistRoll": {
+        "control_config": {
+            "Kp": 60.0,
+            "Kd": 1.0
+        }
+    },
+    "waistPitch": {
+        "control_config": {
+            "Kp": 60.0,
+            "Kd": 1.0
+        }
+    },
+    "waistYaw": {
+        "control_config": {
+            "Kp": 60.0,
+            "Kd": 1.0
+        }
+    },
+    "shoulderPitch_Left": {
+        "control_config": {
+            "Kp": 12.0,
+            "Kd": 0.4
+        }
+    },
+    "shoulderRoll_Left": {
+        "control_config": {
+            "Kp": 12.0,
+            "Kd": 0.4
+        }
+    },
+    "shoulderYaw_Left": {
+        "control_config": {
+            "Kp": 12.0,
+            "Kd": 0.4
+        }
+    },
+    "elbow_Left": {
+        "control_config": {
+            "Kp": 12.0,
+            "Kd": 0.4
+        }
+    },
+    "wristYaw_Left": {
+        "control_config": {
+            "Kp": 12.0,
+            "Kd": 0.4
+        }
+    },
+    "wristPitch_Left": {
+        "control_config": {
+            "Kp": 12.0,
+            "Kd": 0.4
+        }
+    },
+    "wristRoll_Left": {
+        "control_config": {
+            "Kp": 12.0,
+            "Kd": 0.4
+        }
+    },
+    "L_thumb_MCP_joint1": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "L_thumb_MCP_joint2": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "L_thumb_PIP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "L_thumb_DIP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "L_index_MCP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "L_index_DIP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "L_middle_MCP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "L_middle_DIP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "L_ring_MCP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "L_ring_DIP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "L_pinky_MCP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "L_pinky_DIP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "shoulderPitch_Right": {
+        "control_config": {
+            "Kp": 12.0,
+            "Kd": 0.4
+        }
+    },
+    "shoulderRoll_Right": {
+        "control_config": {
+            "Kp": 12.0,
+            "Kd": 0.4
+        }
+    },
+    "shoulderYaw_Right": {
+        "control_config": {
+            "Kp": 12.0,
+            "Kd": 0.4
+        }
+    },
+    "elbow_Right": {
+        "control_config": {
+            "Kp": 12.0,
+            "Kd": 0.4
+        }
+    },
+    "wristYaw_Right": {
+        "control_config": {
+            "Kp": 12.0,
+            "Kd": 0.4
+        }
+    },
+    "wristPitch_Right": {
+        "control_config": {
+            "Kp": 12.0,
+            "Kd": 0.4
+        }
+    },
+    "wristRoll_Right": {
+        "control_config": {
+            "Kp": 12.0,
+            "Kd": 0.4
+        }
+    },
+    "R_thumb_MCP_joint1": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "R_thumb_MCP_joint2": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "R_thumb_PIP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "R_thumb_DIP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "R_index_MCP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "R_index_DIP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "R_middle_MCP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "R_middle_DIP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "R_ring_MCP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "R_ring_DIP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "R_pinky_MCP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    },
+    "R_pinky_DIP_joint": {
+        "control_config": {
+            "Kp": 10.0,
+            "Kd": 0.2
+        }
+    }
+}

@@ -1,0 +1,127 @@
+{
+    "hipPitch_Left": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": -1,
+        "absolute_pos_gear_ratio": 3.0
+    },
+    "hipRoll_Left": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 3.3846
+    },
+    "hipYaw_Left": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": -1,
+        "absolute_pos_gear_ratio": 2.7143
+    },
+    "kneePitch_Left": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": -1,
+        "absolute_pos_gear_ratio": 1.0
+    },
+    "anklePitch_Left": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0
+    },
+    "ankleRoll_Left": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0
+    },
+    "hipPitch_Right": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 3.0
+    },
+    "hipRoll_Right": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 3.3846
+    },
+    "hipYaw_Right": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": -1,
+        "absolute_pos_gear_ratio": 2.7143
+    },
+    "kneePitch_Right": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0
+    },
+    "anklePitch_Right": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": -1,
+        "absolute_pos_gear_ratio": 1.0
+    },
+    "ankleRoll_Right": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0
+    },
+    "waistRoll": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": -1,
+        "absolute_pos_gear_ratio": 1.0
+    },
+    "waistPitch": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0
+    },
+    "waistYaw": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 2.7143
+    },
+    "shoulderPitch_Left": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0
+    },
+    "shoulderRoll_Left": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0
+    },
+    "shoulderYaw_Left": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0
+    },
+    "elbow_Left": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0
+    },
+    "wristYaw_Left": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0
+    },
+    "shoulderPitch_Right": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0
+    },
+    "shoulderRoll_Right": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0
+    },
+    "shoulderYaw_Right": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0
+    },
+    "elbow_Right": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0
+    },
+    "wristYaw_Right": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0
+    }
+}

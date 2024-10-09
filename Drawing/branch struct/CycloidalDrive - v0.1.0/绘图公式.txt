@@ -1,0 +1,14 @@
+Equations by mar Younis
+
+N 	- 	Number of rollers
+Rr 	- 	Radius of the roller
+R 	- 	Radius of the rollers PcD(Pitch Circle Diamater)
+E	-	Eccentricity - offset from input shaft to a cycloidal disk
+==============================================================================
+N   -   滚轮数量
+Rr  -   滚轮半径
+R   -   滚轮的节圆直径（PcD）
+E   -   偏心距 - 从输入轴到摆线盘的偏移量
+
+x=( R*cos(t))-(Rr*cos(t+arctan(sin((1-N)*t)/((R/(E*N))-cos((1-N)*t)))))-(E*cos(N*t))
+y=(-R*sin(t))+(Rr*sin(t+arctan(sin((1-N)*t)/((R/(E*N))-cos((1-1)*t)))))+(E*sin(N*t))

@@ -1,0 +1,2181 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/Floor.proto"
+
+WorldInfo {
+  basicTimeStep 1.25
+}
+Viewpoint {
+  orientation -0.03459387997591821 -0.10100206101709208 0.9942845906170484 5.619777541907322
+  position -1.9918768618695573 1.3999466245766023 1.0745906115806252
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+Floor {
+}
+DEF Adam Robot {
+  translation 0 0 0.98
+  children [
+    Pose {
+      children [
+        InertialUnit {
+        }
+        Gyro {
+        }
+        Accelerometer {
+        }
+      ]
+    }
+    Shape {
+      appearance DEF pelvis_material PBRAppearance {
+        roughness 1
+        metalness 0
+      }
+      geometry DEF pelvis Mesh {
+        url [
+          "../meshes_standard_plus/pelvis.STL"
+        ]
+      }
+    }
+    Solid {
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.5 0.5 0.5
+            roughness 1
+            metalness 0
+          }
+          geometry DEF vn100-0001 Mesh {
+            url [
+              "../meshes_standard_plus/vn100-0001.stl"
+            ]
+          }
+        }
+      ]
+      name "imu_link"
+      physics Physics {
+        density -1
+        mass 0.001
+        centerOfMass [
+          0 0 0
+        ]
+        inertiaMatrix [
+          0.0001 0.0001 0.0001
+          0 0 0
+        ]
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 0.819149 -0.57358
+        anchor 0 0.096192 -0.033241
+      }
+      device [
+        RotationalMotor {
+          name "hipPitch_Left"
+          maxVelocity 15
+          minPosition -2.09
+          maxPosition 2.09
+          maxTorque 230
+        }
+        PositionSensor {
+          name "hipPitch_Left_sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 0.096192 -0.033241
+        rotation -1 0 0 0.61087
+        children [
+          Shape {
+            appearance DEF hipPitchLeft_material PBRAppearance {
+              roughness 1
+              metalness 0
+            }
+            geometry DEF hipPitchLeft Mesh {
+              url [
+                "../meshes_standard_plus/hipPitchLeft.STL"
+              ]
+            }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              anchor -0.0255 0.069 0
+            }
+            device [
+              RotationalMotor {
+                name "hipRoll_Left"
+                maxVelocity 8
+                minPosition -0.78
+                maxPosition 1.57
+                maxTorque 160
+              }
+              PositionSensor {
+                name "hipRoll_Left_sensor"
+              }
+            ]
+            endPoint Solid {
+              translation -0.0255 0.069 0
+              rotation 1 0 0 0.61087
+              children [
+                Shape {
+                  appearance DEF hipRollLeft_material PBRAppearance {
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry DEF hipRollLeft Mesh {
+                    url [
+                      "../meshes_standard_plus/hipRollLeft.STL"
+                    ]
+                  }
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    axis 0 0 1
+                    anchor 0.044 0 -0.0525
+                  }
+                  device [
+                    RotationalMotor {
+                      name "hipYaw_Left"
+                      maxVelocity 8
+                      minPosition -0.78
+                      maxPosition 0.78
+                      maxTorque 105
+                    }
+                    PositionSensor {
+                      name "hipYaw_Left_sensor"
+                    }
+                  ]
+                  endPoint Solid {
+                    translation 0.044 0 -0.0525
+                    children [
+                      Shape {
+                        appearance DEF thighLeft_material PBRAppearance {
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry DEF thighLeft Mesh {
+                          url [
+                            "../meshes_standard_plus/thighLeft.STL"
+                          ]
+                        }
+                      }
+                      HingeJoint {
+                        jointParameters HingeJointParameters {
+                          axis 0 1 0
+                          anchor 0 -0.0355 -0.369
+                        }
+                        device [
+                          RotationalMotor {
+                            name "kneePitch_Left"
+                            maxVelocity 15
+                            minPosition -0.09
+                            maxPosition 2.4
+                            maxTorque 230
+                          }
+                          PositionSensor {
+                            name "kneePitch_Left_sensor"
+                          }
+                        ]
+                        endPoint Solid {
+                          translation 0 -0.0355 -0.369
+                          children [
+                            Shape {
+                              appearance DEF shinLeft_material PBRAppearance {
+                                roughness 1
+                                metalness 0
+                              }
+                              geometry DEF shinLeft Mesh {
+                                url [
+                                  "../meshes_standard_plus/shinLeft.STL"
+                                ]
+                              }
+                            }
+                            HingeJoint {
+                              jointParameters HingeJointParameters {
+                                axis 0 1 0
+                                anchor 0 0 -0.37
+                              }
+                              device [
+                                RotationalMotor {
+                                  name "anklePitch_Left"
+                                  maxVelocity 20
+                                  minPosition -1
+                                  maxPosition 0.35
+                                  maxTorque 40
+                                }
+                                PositionSensor {
+                                  name "anklePitch_Left_sensor"
+                                }
+                              ]
+                              endPoint Solid {
+                                translation 0 0 -0.37
+                                children [
+                                  Shape {
+                                    appearance DEF anklePitchLeft_material PBRAppearance {
+                                      roughness 1
+                                      metalness 0
+                                    }
+                                    geometry DEF anklePitchLeft Mesh {
+                                      url [
+                                        "../meshes_standard_plus/anklePitchLeft.STL"
+                                      ]
+                                    }
+                                  }
+                                  HingeJoint {
+                                    jointParameters HingeJointParameters {
+                                    }
+                                    device [
+                                      RotationalMotor {
+                                        name "ankleRoll_Left"
+                                        maxVelocity 20
+                                        minPosition -0.3491
+                                        maxPosition 0.3491
+                                        maxTorque 12
+                                      }
+                                      PositionSensor {
+                                        name "ankleRoll_Left_sensor"
+                                      }
+                                    ]
+                                    endPoint Solid {
+                                      children [
+                                        Shape {
+                                          appearance DEF toeLeft_material PBRAppearance {
+                                            baseColor 0.752941 0.752941 0.752941
+                                            roughness 1
+                                            metalness 0
+                                          }
+                                          geometry DEF toeLeft Mesh {
+                                            url [
+                                              "../meshes_standard_plus/toeLeft.STL"
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                      name "toeLeft"
+                                      boundingObject Group {
+                                        children [
+                                          Pose {
+                                            translation 0.045 0.025 -0.049
+                                            rotation 0 1 0 1.58
+                                            children [
+                                              Cylinder {
+                                                height 0.22
+                                                radius 0.015
+                                              }
+                                            ]
+                                          }
+                                          Pose {
+                                            translation 0.045 -0.025 -0.049
+                                            rotation 0 1 0 1.58
+                                            children [
+                                              Cylinder {
+                                                height 0.22
+                                                radius 0.015
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                      physics Physics {
+                                        density -1
+                                        mass 0.4758
+                                        centerOfMass [
+                                          0.037007 -2.1e-05 -0.041987
+                                        ]
+                                        inertiaMatrix [
+                                          0.00028492 0.00152181 0.00158187
+                                          1.326e-05 -0.00012023 1.43e-06
+                                        ]
+                                      }
+                                    }
+                                  }
+                                ]
+                                name "anklePitchLeft"
+                                physics Physics {
+                                  density -1
+                                  mass 0.031
+                                  centerOfMass [
+                                    0 0 0
+                                  ]
+                                  inertiaMatrix [
+                                    3.23e-06 3.23e-06 2.1e-06
+                                    0 0 0
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                          name "shinLeft"
+                          boundingObject Pose {
+                            translation 0 0 -0.2
+                            children [
+                              Box {
+                                size 0.08 0.06 0.3
+                              }
+                            ]
+                          }
+                          physics Physics {
+                            density -1
+                            mass 2.198665
+                            centerOfMass [
+                              -0.000809 0.000973 -0.145408
+                            ]
+                            inertiaMatrix [
+                              0.01932815 0.01940985 0.00136828
+                              -1.127e-05 0.00022012 8.606e-05
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                    name "thighLeft"
+                    physics Physics {
+                      density -1
+                      mass 6.647497
+                      centerOfMass [
+                        0.003312 -0.011125 -0.135198
+                      ]
+                      inertiaMatrix [
+                        0.05688222 0.06217155 0.01520394
+                        -0.00031813 -0.00156531 0.00531838
+                      ]
+                    }
+                  }
+                }
+              ]
+              name "hipRollLeft"
+              physics Physics {
+                density -1
+                mass 1.294219
+                centerOfMass [
+                  0.039954 -0.000116 -0.011021
+                ]
+                inertiaMatrix [
+                  0.00134168 0.0013707 0.00144577
+                  -4.31e-06 -6.007e-05 -1.695e-05
+                ]
+              }
+            }
+          }
+        ]
+        name "hipPitchLeft"
+        physics Physics {
+          density -1
+          mass 2.151248
+          centerOfMass [
+            -0.058182 0.058895 -0.000312
+          ]
+          inertiaMatrix [
+            0.00385847 0.00440973 0.00508085
+            -0.00094455 2.598e-05 2.828e-05
+          ]
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 0.819149 0.57358
+        anchor 0 -0.096192 -0.033241
+      }
+      device [
+        RotationalMotor {
+          name "hipPitch_Right"
+          maxVelocity 15
+          minPosition -2.09
+          maxPosition 2.09
+          maxTorque 230
+        }
+        PositionSensor {
+          name "hipPitch_Right_sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 -0.096192 -0.033241
+        rotation 1 0 0 0.61087
+        children [
+          Shape {
+            appearance DEF hipPitchRight_material PBRAppearance {
+              roughness 1
+              metalness 0
+            }
+            geometry DEF hipPitchRight Mesh {
+              url [
+                "../meshes_standard_plus/hipPitchRight.STL"
+              ]
+            }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              anchor -0.0255 -0.069 0
+            }
+            device [
+              RotationalMotor {
+                name "hipRoll_Right"
+                maxVelocity 8
+                minPosition -1.57
+                maxPosition 0.78
+                maxTorque 160
+              }
+              PositionSensor {
+                name "hipRoll_Right_sensor"
+              }
+            ]
+            endPoint Solid {
+              translation -0.0255 -0.069 0
+              rotation -1 0 0 0.61087
+              children [
+                Shape {
+                  appearance DEF hipRollRight_material PBRAppearance {
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry DEF hipRollRight Mesh {
+                    url [
+                      "../meshes_standard_plus/hipRollRight.STL"
+                    ]
+                  }
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    axis 0 0 1
+                    anchor 0.044 0 -0.0525
+                  }
+                  device [
+                    RotationalMotor {
+                      name "hipYaw_Right"
+                      maxVelocity 8
+                      minPosition -0.78
+                      maxPosition 0.78
+                      maxTorque 105
+                    }
+                    PositionSensor {
+                      name "hipYaw_Right_sensor"
+                    }
+                  ]
+                  endPoint Solid {
+                    translation 0.044 0 -0.0525
+                    children [
+                      Shape {
+                        appearance DEF thighRight_material PBRAppearance {
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry DEF thighRight Mesh {
+                          url [
+                            "../meshes_standard_plus/thighRight.STL"
+                          ]
+                        }
+                      }
+                      HingeJoint {
+                        jointParameters HingeJointParameters {
+                          axis 0 1 0
+                          anchor 0 0.0355 -0.369
+                        }
+                        device [
+                          RotationalMotor {
+                            name "kneePitch_Right"
+                            maxVelocity 15
+                            minPosition -0.09
+                            maxPosition 2.4
+                            maxTorque 230
+                          }
+                          PositionSensor {
+                            name "kneePitch_Right_sensor"
+                          }
+                        ]
+                        endPoint Solid {
+                          translation 0 0.0355 -0.369
+                          children [
+                            Shape {
+                              appearance DEF shinRight_material PBRAppearance {
+                                roughness 1
+                                metalness 0
+                              }
+                              geometry DEF shinRight Mesh {
+                                url [
+                                  "../meshes_standard_plus/shinRight.STL"
+                                ]
+                              }
+                            }
+                            HingeJoint {
+                              jointParameters HingeJointParameters {
+                                axis 0 1 0
+                                anchor 0 0 -0.37
+                              }
+                              device [
+                                RotationalMotor {
+                                  name "anklePitch_Right"
+                                  maxVelocity 20
+                                  minPosition -1
+                                  maxPosition 0.35
+                                  maxTorque 40
+                                }
+                                PositionSensor {
+                                  name "anklePitch_Right_sensor"
+                                }
+                              ]
+                              endPoint Solid {
+                                translation 0 0 -0.37
+                                children [
+                                  Shape {
+                                    appearance DEF anklePitchRight_material PBRAppearance {
+                                      baseColor 0.752941 0.752941 0.752941
+                                      roughness 1
+                                      metalness 0
+                                    }
+                                    geometry DEF anklePitchRight Mesh {
+                                      url [
+                                        "../meshes_standard_plus/anklePitchRight.STL"
+                                      ]
+                                    }
+                                  }
+                                  HingeJoint {
+                                    jointParameters HingeJointParameters {
+                                    }
+                                    device [
+                                      RotationalMotor {
+                                        name "ankleRoll_Right"
+                                        maxVelocity 20
+                                        minPosition -0.3491
+                                        maxPosition 0.3491
+                                        maxTorque 12
+                                      }
+                                      PositionSensor {
+                                        name "ankleRoll_Right_sensor"
+                                      }
+                                    ]
+                                    endPoint Solid {
+                                      children [
+                                        Shape {
+                                          appearance DEF toeRight_material PBRAppearance {
+                                            baseColor 0.752941 0.752941 0.752941
+                                            roughness 1
+                                            metalness 0
+                                          }
+                                          geometry DEF toeRight Mesh {
+                                            url [
+                                              "../meshes_standard_plus/toeRight.STL"
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                      name "toeRight"
+                                      boundingObject Group {
+                                        children [
+                                          Pose {
+                                            translation 0.045 0.025 -0.049
+                                            rotation 0 1 0 1.58
+                                            children [
+                                              Cylinder {
+                                                height 0.22
+                                                radius 0.015
+                                              }
+                                            ]
+                                          }
+                                          Pose {
+                                            translation 0.045 -0.025 -0.049
+                                            rotation 0 1 0 1.58
+                                            children [
+                                              Cylinder {
+                                                height 0.22
+                                                radius 0.015
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                      physics Physics {
+                                        density -1
+                                        mass 0.4758
+                                        centerOfMass [
+                                          0.037003 2.2e-05 -0.041976
+                                        ]
+                                        inertiaMatrix [
+                                          0.00028522 0.00152191 0.00158164
+                                          -1.32e-05 -0.00012034 -1.43e-06
+                                        ]
+                                      }
+                                    }
+                                  }
+                                ]
+                                name "anklePitchRight"
+                                physics Physics {
+                                  density -1
+                                  mass 0.031
+                                  centerOfMass [
+                                    0 0 0
+                                  ]
+                                  inertiaMatrix [
+                                    3.23e-06 3.23e-06 2.1e-06
+                                    0 0 0
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                          name "shinRight"
+                          boundingObject Pose {
+                            translation 0 0 -0.2
+                            children [
+                              Box {
+                                size 0.08 0.06 0.3
+                              }
+                            ]
+                          }
+                          physics Physics {
+                            density -1
+                            mass 2.208092
+                            centerOfMass [
+                              -0.0008 -0.000973 -0.146351
+                            ]
+                            inertiaMatrix [
+                              0.0197983 0.0198766 0.00137192
+                              1.096e-05 0.00021758 -9.064e-05
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                    name "thighRight"
+                    physics Physics {
+                      density -1
+                      mass 6.647545
+                      centerOfMass [
+                        0.003327 0.011103 -0.13529
+                      ]
+                      inertiaMatrix [
+                        0.05714386 0.06243248 0.01517531
+                        0.00030277 -0.00153883 -0.00531134
+                      ]
+                    }
+                  }
+                }
+              ]
+              name "hipRollRight"
+              physics Physics {
+                density -1
+                mass 1.294228
+                centerOfMass [
+                  0.039882 0.000116 -0.011021
+                ]
+                inertiaMatrix [
+                  0.0013417 0.00136997 0.00144502
+                  3.79e-06 -6.269e-05 1.693e-05
+                ]
+              }
+            }
+          }
+        ]
+        name "hipPitchRight"
+        physics Physics {
+          density -1
+          mass 2.151243
+          centerOfMass [
+            -0.058182 -0.05887 -0.00033
+          ]
+          inertiaMatrix [
+            0.00385735 0.0044067 0.0050828
+            0.0009421 2.77e-05 -2.677e-05
+          ]
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        anchor 0 0 0.044
+      }
+      device [
+        RotationalMotor {
+          name "waistRoll"
+          maxVelocity 8
+          minPosition -0.52
+          maxPosition 0.52
+          maxTorque 110
+        }
+        PositionSensor {
+          name "waistRoll_sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 0 0.044
+        children [
+          Shape {
+            appearance DEF waistRoll_material PBRAppearance {
+              roughness 1
+              metalness 0
+            }
+            geometry DEF waistRoll Mesh {
+              url [
+                "../meshes_standard_plus/waistRoll.STL"
+              ]
+            }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              axis 0 1 0
+              anchor 0 0 0.08
+            }
+            device [
+              RotationalMotor {
+                name "waistPitch"
+                maxVelocity 8
+                minPosition -0.78
+                maxPosition 0.78
+                maxTorque 110
+              }
+              PositionSensor {
+                name "waistPitch_sensor"
+              }
+            ]
+            endPoint Solid {
+              translation 0 0 0.08
+              children [
+                Shape {
+                  appearance DEF waistPitch_material PBRAppearance {
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry DEF waistPitch Mesh {
+                    url [
+                      "../meshes_standard_plus/waistPitch.STL"
+                    ]
+                  }
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    axis 0 0 1
+                    anchor 0 0.0005 0.053
+                  }
+                  device [
+                    RotationalMotor {
+                      name "waistYaw"
+                      maxVelocity 8
+                      minPosition -0.78
+                      maxPosition 0.78
+                      maxTorque 110
+                    }
+                    PositionSensor {
+                      name "waistYaw_sensor"
+                    }
+                  ]
+                  endPoint Solid {
+                    translation 0 0.0005 0.053
+                    children [
+                      Shape {
+                        appearance DEF torso_material PBRAppearance {
+                          baseColor 0.752941 0.752941 0.752941
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry DEF torso Mesh {
+                          url [
+                            "../meshes_standard_plus/torso.STL"
+                          ]
+                        }
+                      }
+                      HingeJoint {
+                        jointParameters HingeJointParameters {
+                          axis 0 0.939691 0.342024
+                          anchor 0 0.16011 0.25742
+                        }
+                        device [
+                          RotationalMotor {
+                            name "shoulderPitch_Left"
+                            maxVelocity 8
+                            minPosition -2.7
+                            maxPosition 1
+                            maxTorque 65
+                          }
+                          PositionSensor {
+                            name "shoulderPitch_Left_sensor"
+                          }
+                        ]
+                        endPoint Solid {
+                          translation 0 0.16011 0.25742
+                          rotation 1 0 0 0.34907
+                          children [
+                            Shape {
+                              appearance DEF shoulderPitchLeft_material PBRAppearance {
+                                roughness 1
+                                metalness 0
+                              }
+                              geometry DEF shoulderPitchLeft Mesh {
+                                url [
+                                  "../meshes_standard_plus/shoulderPitchLeft.STL"
+                                ]
+                              }
+                            }
+                            HingeJoint {
+                              jointParameters HingeJointParameters {
+                                anchor 0.0335 0.0435 0
+                              }
+                              device [
+                                RotationalMotor {
+                                  name "shoulderRoll_Left"
+                                  maxVelocity 8
+                                  minPosition -0.3
+                                  maxPosition 3.14
+                                  maxTorque 65
+                                }
+                                PositionSensor {
+                                  name "shoulderRoll_Left_sensor"
+                                }
+                              ]
+                              endPoint Solid {
+                                translation 0.0335 0.0435 0
+                                rotation -1 0 0 0.34907
+                                children [
+                                  Shape {
+                                    appearance DEF shoulderRollLeft_material PBRAppearance {
+                                      roughness 1
+                                      metalness 0
+                                    }
+                                    geometry DEF shoulderRollLeft Mesh {
+                                      url [
+                                        "../meshes_standard_plus/shoulderRollLeft.STL"
+                                      ]
+                                    }
+                                  }
+                                  HingeJoint {
+                                    jointParameters HingeJointParameters {
+                                      axis 0 0 1
+                                      anchor -0.0335 0.034 -0.0585
+                                    }
+                                    device [
+                                      RotationalMotor {
+                                        name "shoulderYaw_Left"
+                                        maxVelocity 8
+                                        minPosition -1.6
+                                        maxPosition 1.6
+                                        maxTorque 65
+                                      }
+                                      PositionSensor {
+                                        name "shoulderYaw_Left_sensor"
+                                      }
+                                    ]
+                                    endPoint Solid {
+                                      translation -0.0335 0.034 -0.0585
+                                      children [
+                                        Shape {
+                                          appearance DEF shoulderYawLeft_material PBRAppearance {
+                                            roughness 1
+                                            metalness 0
+                                          }
+                                          geometry DEF shoulderYawLeft Mesh {
+                                            url [
+                                              "../meshes_standard_plus/shoulderYawLeft.STL"
+                                            ]
+                                          }
+                                        }
+                                        HingeJoint {
+                                          jointParameters HingeJointParameters {
+                                            axis 0 1 0
+                                            anchor 0 -0.0285 -0.20415
+                                          }
+                                          device [
+                                            RotationalMotor {
+                                              name "elbow_Left"
+                                              maxVelocity 8
+                                              minPosition -2
+                                              maxTorque 30
+                                            }
+                                            PositionSensor {
+                                              name "elbow_Left_sensor"
+                                            }
+                                          ]
+                                          endPoint Solid {
+                                            translation 0 -0.0285 -0.20415
+                                            children [
+                                              Shape {
+                                                appearance DEF elbowLeft_material PBRAppearance {
+                                                  roughness 1
+                                                  metalness 0
+                                                }
+                                                geometry DEF elbowLeft Mesh {
+                                                  url [
+                                                    "../meshes_standard_plus/elbowLeft.STL"
+                                                  ]
+                                                }
+                                              }
+                                              Solid {
+                                                translation -0.025 0.0285 -0.0729
+                                                children [
+                                                  Shape {
+                                                    appearance DEF wristYawLeft_material PBRAppearance {
+                                                      roughness 1
+                                                      metalness 0
+                                                    }
+                                                    geometry DEF wristYawLeft Mesh {
+                                                      url [
+                                                        "../meshes_standard_plus/wristYawLeft.STL"
+                                                      ]
+                                                    }
+                                                  }
+                                                  Solid {
+                                                    translation 0 0 -0.2017
+                                                    children [
+                                                      Shape {
+                                                        appearance DEF wristPitchLeft_material PBRAppearance {
+                                                          roughness 1
+                                                          metalness 0
+                                                        }
+                                                        geometry DEF wristPitchLeft Mesh {
+                                                          url [
+                                                            "../meshes_standard_plus/wristPitchLeft.STL"
+                                                          ]
+                                                        }
+                                                      }
+                                                      Solid {
+                                                        children [
+                                                          Shape {
+                                                            appearance DEF wristRollLeft_material PBRAppearance {
+                                                              baseColor 0.752941 0.752941 0.752941
+                                                              roughness 1
+                                                              metalness 0
+                                                            }
+                                                            geometry DEF L_hand_base_link Mesh {
+                                                              url [
+                                                                "../meshes_standard_plus/L_hand_base_link.STL"
+                                                              ]
+                                                            }
+                                                          }
+                                                          Solid {
+                                                            translation 0.02045 -0.016956 -0.091202
+                                                            rotation -0.05992400588543652 -0.7058370693237911 0.7058350693235946 3.021888
+                                                            children [
+                                                              Shape {
+                                                                appearance DEF L_thumb_proximal_base_material PBRAppearance {
+                                                                  baseColor 0.752941 0.752941 0.752941
+                                                                  roughness 1
+                                                                  metalness 0
+                                                                }
+                                                                geometry DEF L_thumb_proximal_base Mesh {
+                                                                  url [
+                                                                    "../meshes_standard_plus/L_thumb_proximal_base.STL"
+                                                                  ]
+                                                                }
+                                                              }
+                                                              Solid {
+                                                                translation -0.0115 0.005 0.0034
+                                                                rotation 0.3692930746956252 -0.8885171797172783 0.27232305508183674 1.385468
+                                                                children [
+                                                                  Shape {
+                                                                    appearance DEF L_thumb_proximal_material PBRAppearance {
+                                                                      baseColor 0.752941 0.752941 0.752941
+                                                                      roughness 1
+                                                                      metalness 0
+                                                                    }
+                                                                    geometry DEF L_thumb_proximal Mesh {
+                                                                      url [
+                                                                        "../meshes_standard_plus/L_thumb_proximal.STL"
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                  Solid {
+                                                                    translation 0 0.055863 -0.003924
+                                                                    rotation 1 0 0 0.038299
+                                                                    children [
+                                                                      Shape {
+                                                                        appearance DEF L_thumb_intermediate_material PBRAppearance {
+                                                                          baseColor 0.752941 0.752941 0.752941
+                                                                          roughness 1
+                                                                          metalness 0
+                                                                        }
+                                                                        geometry DEF L_thumb_intermediate Mesh {
+                                                                          url [
+                                                                            "../meshes_standard_plus/L_thumb_intermediate.STL"
+                                                                          ]
+                                                                        }
+                                                                      }
+                                                                      Solid {
+                                                                        translation 0 0.022558 0.002072
+                                                                        rotation 1 0 0 0.011642
+                                                                        children [
+                                                                          Shape {
+                                                                            appearance DEF L_thumb_distal_material PBRAppearance {
+                                                                              baseColor 0.752941 0.752941 0.752941
+                                                                              roughness 1
+                                                                              metalness 0
+                                                                            }
+                                                                            geometry DEF L_thumb_distal Mesh {
+                                                                              url [
+                                                                                "../meshes_standard_plus/L_thumb_distal.STL"
+                                                                              ]
+                                                                            }
+                                                                          }
+                                                                        ]
+                                                                        name "L_thumb_distal"
+                                                                        boundingObject USE L_thumb_distal
+                                                                        physics Physics {
+                                                                          density -1
+                                                                          mass 0.003202
+                                                                          centerOfMass [
+                                                                            -0.000633 0.010704 1.1e-05
+                                                                          ]
+                                                                          inertiaMatrix [
+                                                                            1.865004e-07 8.357309e-08 1.729268e-07
+                                                                            5.243575e-10 -5.528565e-11 2.596807e-08
+                                                                          ]
+                                                                        }
+                                                                      }
+                                                                    ]
+                                                                    name "L_thumb_intermediate"
+                                                                    boundingObject USE L_thumb_intermediate
+                                                                    physics Physics {
+                                                                      density -1
+                                                                      mass 0.007624
+                                                                      centerOfMass [
+                                                                        -0.000491 0.009509 0.005852
+                                                                      ]
+                                                                      inertiaMatrix [
+                                                                        8.631958e-07 3.744893e-07 7.8759e-07
+                                                                        2.64909e-09 1.296167e-11 1.017001e-07
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                                name "L_thumb_proximal"
+                                                                boundingObject USE L_thumb_proximal
+                                                                physics Physics {
+                                                                  density -1
+                                                                  mass 0.026112
+                                                                  centerOfMass [
+                                                                    -0.000193 0.0253 0.001172
+                                                                  ]
+                                                                  inertiaMatrix [
+                                                                    7.939163e-06 2.410701e-06 6.725507e-06
+                                                                    3.887269e-08 1.236064e-08 7.334674e-08
+                                                                  ]
+                                                                }
+                                                              }
+                                                            ]
+                                                            name "L_thumb_proximal_base"
+                                                            boundingObject USE L_thumb_proximal_base
+                                                            physics Physics {
+                                                              density -1
+                                                              mass 0.001518
+                                                              centerOfMass [
+                                                                -0.003827 0.005773 0.000563
+                                                              ]
+                                                              inertiaMatrix [
+                                                                4.117253e-08 5.616117e-08 5.562434e-08
+                                                                -1.821166e-09 1.155125e-08 7.541923e-10
+                                                              ]
+                                                            }
+                                                          }
+                                                          Solid {
+                                                            translation 0.018231 0.000284 -0.173012
+                                                            rotation -0.9995954082858274 -0.022463009175040433 -0.017448007126657415 1.321192
+                                                            children [
+                                                              Shape {
+                                                                appearance DEF L_index_proximal_material PBRAppearance {
+                                                                  baseColor 0.752941 0.752941 0.752941
+                                                                  roughness 1
+                                                                  metalness 0
+                                                                }
+                                                                geometry DEF L_index_proximal Mesh {
+                                                                  url [
+                                                                    "../meshes_standard_plus/L_index_proximal.STL"
+                                                                  ]
+                                                                }
+                                                              }
+                                                              Solid {
+                                                                translation 0.001654 0.030445 -0.010275
+                                                                rotation -1 0 0 0.039748
+                                                                children [
+                                                                  Shape {
+                                                                    appearance DEF L_index_distal_material PBRAppearance {
+                                                                      baseColor 0.752941 0.752941 0.752941
+                                                                      roughness 1
+                                                                      metalness 0
+                                                                    }
+                                                                    geometry DEF L_index_distal Mesh {
+                                                                      url [
+                                                                        "../meshes_standard_plus/L_index_distal.STL"
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                                name "L_index_distal"
+                                                                boundingObject USE L_index_distal
+                                                                physics Physics {
+                                                                  density -1
+                                                                  mass 0.004447
+                                                                  centerOfMass [
+                                                                    0.006391 0.019571 0.002984
+                                                                  ]
+                                                                  inertiaMatrix [
+                                                                    7.46184e-07 1.082654e-07 7.067935e-07
+                                                                    -1.003155e-11 3.908054e-12 1.368732e-07
+                                                                  ]
+                                                                }
+                                                              }
+                                                            ]
+                                                            name "L_index_proximal"
+                                                            boundingObject USE L_index_proximal
+                                                            physics Physics {
+                                                              density -1
+                                                              mass 0.007019
+                                                              centerOfMass [
+                                                                0.008045 0.013328 -0.001261
+                                                              ]
+                                                              inertiaMatrix [
+                                                                8.957244e-07 2.838335e-07 8.248376e-07
+                                                                -7.031166e-12 4.666297e-13 7.448077e-08
+                                                              ]
+                                                            }
+                                                          }
+                                                          Solid {
+                                                            translation -0.001115 0.000284 -0.173012
+                                                            rotation -1 0 0 1.3208
+                                                            children [
+                                                              Shape {
+                                                                appearance DEF L_middle_proximal_material PBRAppearance {
+                                                                  baseColor 0.752941 0.752941 0.752941
+                                                                  roughness 1
+                                                                  metalness 0
+                                                                }
+                                                                geometry DEF L_middle_proximal Mesh {
+                                                                  url [
+                                                                    "../meshes_standard_plus/L_middle_proximal.STL"
+                                                                  ]
+                                                                }
+                                                              }
+                                                              Solid {
+                                                                translation 0.00167 0.030445 -0.010275
+                                                                rotation -1 0 0 0.071413
+                                                                children [
+                                                                  Shape {
+                                                                    appearance DEF L_middle_distal_material PBRAppearance {
+                                                                      baseColor 0.752941 0.752941 0.752941
+                                                                      roughness 1
+                                                                      metalness 0
+                                                                    }
+                                                                    geometry DEF L_middle_distal Mesh {
+                                                                      url [
+                                                                        "../meshes_standard_plus/L_middle_distal.STL"
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                                name "L_middle_distal"
+                                                                boundingObject USE L_middle_distal
+                                                                physics Physics {
+                                                                  density -1
+                                                                  mass 0.004891
+                                                                  centerOfMass [
+                                                                    0.006395 0.020843 0.003429
+                                                                  ]
+                                                                  inertiaMatrix [
+                                                                    9.686208e-07 1.128524e-07 9.315717e-07
+                                                                    -1.096943e-11 3.120437e-12 1.470389e-07
+                                                                  ]
+                                                                }
+                                                              }
+                                                            ]
+                                                            name "L_middle_proximal"
+                                                            boundingObject USE L_middle_proximal
+                                                            physics Physics {
+                                                              density -1
+                                                              mass 0.007019
+                                                              centerOfMass [
+                                                                0.008065 0.013408 -0.001281
+                                                              ]
+                                                              inertiaMatrix [
+                                                                8.957233e-07 2.838336e-07 8.248362e-07
+                                                                -7.163843e-12 4.630059e-13 7.448118e-08
+                                                              ]
+                                                            }
+                                                          }
+                                                          Solid {
+                                                            translation -0.023085 0.000284 -0.172032
+                                                            rotation -0.9990901221547603 0.03368200411816416 0.02616200319872368 1.321682
+                                                            children [
+                                                              Shape {
+                                                                appearance DEF L_ring_proximal_material PBRAppearance {
+                                                                  baseColor 0.752941 0.752941 0.752941
+                                                                  roughness 1
+                                                                  metalness 0
+                                                                }
+                                                                geometry DEF L_ring_proximal Mesh {
+                                                                  url [
+                                                                    "../meshes_standard_plus/L_ring_proximal.STL"
+                                                                  ]
+                                                                }
+                                                              }
+                                                              Solid {
+                                                                translation 0.001536 0.030445 -0.010275
+                                                                rotation -1 0 0 0.039748
+                                                                children [
+                                                                  Shape {
+                                                                    appearance DEF L_ring_distal_material PBRAppearance {
+                                                                      baseColor 0.752941 0.752941 0.752941
+                                                                      roughness 1
+                                                                      metalness 0
+                                                                    }
+                                                                    geometry DEF L_ring_distal Mesh {
+                                                                      url [
+                                                                        "../meshes_standard_plus/L_ring_distal.STL"
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                                name "L_ring_distal"
+                                                                boundingObject USE L_ring_distal
+                                                                physics Physics {
+                                                                  density -1
+                                                                  mass 0.004447
+                                                                  centerOfMass [
+                                                                    0.009285 0.019563 0.002986
+                                                                  ]
+                                                                  inertiaMatrix [
+                                                                    7.461961e-07 1.082671e-07 7.068065e-07
+                                                                    -4.731746e-12 3.120434e-12 1.36873e-07
+                                                                  ]
+                                                                }
+                                                              }
+                                                            ]
+                                                            name "L_ring_proximal"
+                                                            boundingObject USE L_ring_proximal
+                                                            physics Physics {
+                                                              density -1
+                                                              mass 0.006581
+                                                              centerOfMass [
+                                                                0.010821 0.013232 -0.001566
+                                                              ]
+                                                              inertiaMatrix [
+                                                                8.776962e-07 2.709221e-07 8.156353e-07
+                                                                3.86103e-12 -2.837402e-12 7.67896e-08
+                                                              ]
+                                                            }
+                                                          }
+                                                          Solid {
+                                                            translation -0.044927 0.000284 -0.169672
+                                                            rotation -0.9963703828553931 0.06722602583160538 0.05221802006477806 1.324325
+                                                            children [
+                                                              Shape {
+                                                                appearance DEF L_pinky_proximal_material PBRAppearance {
+                                                                  baseColor 0.752941 0.752941 0.752941
+                                                                  roughness 1
+                                                                  metalness 0
+                                                                }
+                                                                geometry DEF L_pinky_proximal Mesh {
+                                                                  url [
+                                                                    "../meshes_standard_plus/L_pinky_proximal.STL"
+                                                                  ]
+                                                                }
+                                                              }
+                                                              Solid {
+                                                                translation 0 0.030445 -0.010275
+                                                                rotation 1 0 0 0.037691
+                                                                children [
+                                                                  Shape {
+                                                                    appearance DEF L_pinky_distal_material PBRAppearance {
+                                                                      baseColor 0.752941 0.752941 0.752941
+                                                                      roughness 1
+                                                                      metalness 0
+                                                                    }
+                                                                    geometry DEF L_pinky_distal Mesh {
+                                                                      url [
+                                                                        "../meshes_standard_plus/L_pinky_distal.STL"
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                                name "L_pinky_distal"
+                                                                boundingObject USE L_pinky_distal
+                                                                physics Physics {
+                                                                  density -1
+                                                                  mass 0.00358
+                                                                  centerOfMass [
+                                                                    0.013576 0.016563 0.002546
+                                                                  ]
+                                                                  inertiaMatrix [
+                                                                    4.282912e-07 8.816155e-08 3.956969e-07
+                                                                    -6.237676e-10 3.031436e-10 9.442717e-08
+                                                                  ]
+                                                                }
+                                                              }
+                                                            ]
+                                                            name "L_pinky_proximal"
+                                                            boundingObject USE L_pinky_proximal
+                                                            physics Physics {
+                                                              density -1
+                                                              mass 0.007019
+                                                              centerOfMass [
+                                                                0.013546 0.013323 -0.001259
+                                                              ]
+                                                              inertiaMatrix [
+                                                                8.957223e-07 2.838333e-07 8.248355e-07
+                                                                -7.240024e-12 4.664312e-13 7.448125e-08
+                                                              ]
+                                                            }
+                                                          }
+                                                        ]
+                                                        name "wristRollLeft"
+                                                        boundingObject USE L_hand_base_link
+                                                        physics Physics {
+                                                          density -1
+                                                          mass 0.613179
+                                                          centerOfMass [
+                                                            -0.001914 -0.000617 -0.09727
+                                                          ]
+                                                          inertiaMatrix [
+                                                            0.00114766 0.00132437 0.00033406
+                                                            8.72e-06 1.254e-05 -7.12e-06
+                                                          ]
+                                                        }
+                                                      }
+                                                    ]
+                                                    name "wristPitchLeft"
+                                                    boundingObject USE wristPitchLeft
+                                                    physics Physics {
+                                                      density -1
+                                                      mass 0.119635
+                                                      centerOfMass [
+                                                        -0.000176 0.001661 -2.8e-05
+                                                      ]
+                                                      inertiaMatrix [
+                                                        3.359e-05 2.69e-05 3.977e-05
+                                                        2e-08 0 -5e-08
+                                                      ]
+                                                    }
+                                                  }
+                                                ]
+                                                name "wristYawLeft"
+                                                boundingObject USE wristYawLeft
+                                                physics Physics {
+                                                  density -1
+                                                  mass 0.955879
+                                                  centerOfMass [
+                                                    -0.000619 1.8e-05 -0.110099
+                                                  ]
+                                                  inertiaMatrix [
+                                                    0.00256138 0.00250125 0.00055105
+                                                    -2.68e-06 3.06e-05 -2.66e-05
+                                                  ]
+                                                }
+                                              }
+                                            ]
+                                            name "elbowLeft"
+                                            physics Physics {
+                                              density -1
+                                              mass 0.854
+                                              centerOfMass [
+                                                -0.021644 0.027762 -0.044696
+                                              ]
+                                              inertiaMatrix [
+                                                0.00072987 0.0008041 0.00047565
+                                                -1.38e-05 0.00015644 -2.763e-05
+                                              ]
+                                            }
+                                          }
+                                        }
+                                      ]
+                                      name "shoulderYawLeft"
+                                      boundingObject Pose {
+                                        translation 0 0 -0.08
+                                        children [
+                                          Cylinder {
+                                            height 0.15
+                                            radius 0.038
+                                          }
+                                        ]
+                                      }
+                                      physics Physics {
+                                        density -1
+                                        mass 0.6963
+                                        centerOfMass [
+                                          -0.000698 0.00102 -0.068423
+                                        ]
+                                        inertiaMatrix [
+                                          0.00317887 0.00310433 0.00039452
+                                          5.9e-07 5.528e-05 -9.472e-05
+                                        ]
+                                      }
+                                    }
+                                  }
+                                ]
+                                name "shoulderRollLeft"
+                                boundingObject Pose {
+                                  translation -0.03 0 0
+                                  rotation 0 1 0 1.5708
+                                  children [
+                                    Cylinder {
+                                      height 0.1
+                                      radius 0.035
+                                    }
+                                  ]
+                                }
+                                physics Physics {
+                                  density -1
+                                  mass 0.7248
+                                  centerOfMass [
+                                    -0.028604 0.011042 -0.014053
+                                  ]
+                                  inertiaMatrix [
+                                    0.00090812 0.00071197 0.00060954
+                                    -2.621e-05 3.997e-05 -0.00025129
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                          name "shoulderPitchLeft"
+                          physics Physics {
+                            density -1
+                            mass 0.2031
+                            centerOfMass [
+                              -0.001504 0.026888 0.000108
+                            ]
+                            inertiaMatrix [
+                              0.0001702 0.00028895 0.00034385
+                              -4.61e-06 -6.4e-07 4.2e-07
+                            ]
+                          }
+                        }
+                      }
+                      HingeJoint {
+                        jointParameters HingeJointParameters {
+                          axis 0 0.939691 -0.342024
+                          anchor 0 -0.16011 0.25742
+                        }
+                        device [
+                          RotationalMotor {
+                            name "shoulderPitch_Right"
+                            maxVelocity 8
+                            minPosition -2.7
+                            maxPosition 1.1
+                            maxTorque 65
+                          }
+                          PositionSensor {
+                            name "shoulderPitch_Right_sensor"
+                          }
+                        ]
+                        endPoint Solid {
+                          translation 0 -0.16011 0.25742
+                          rotation -1 0 0 0.34907
+                          children [
+                            Shape {
+                              appearance DEF shoulderPitchRight_material PBRAppearance {
+                                roughness 1
+                                metalness 0
+                              }
+                              geometry DEF shoulderPitchRight Mesh {
+                                url [
+                                  "../meshes_standard_plus/shoulderPitchRight.STL"
+                                ]
+                              }
+                            }
+                            HingeJoint {
+                              jointParameters HingeJointParameters {
+                                anchor 0.0335 -0.0435 0
+                              }
+                              device [
+                                RotationalMotor {
+                                  name "shoulderRoll_Right"
+                                  maxVelocity 8
+                                  minPosition -3.14
+                                  maxPosition 0.3
+                                  maxTorque 65
+                                }
+                                PositionSensor {
+                                  name "shoulderRoll_Right_sensor"
+                                }
+                              ]
+                              endPoint Solid {
+                                translation 0.0335 -0.0435 0
+                                rotation 1 0 0 0.34907
+                                children [
+                                  Shape {
+                                    appearance DEF shoulderRollRight_material PBRAppearance {
+                                      roughness 1
+                                      metalness 0
+                                    }
+                                    geometry DEF shoulderRollRight Mesh {
+                                      url [
+                                        "../meshes_standard_plus/shoulderRollRight.STL"
+                                      ]
+                                    }
+                                  }
+                                  HingeJoint {
+                                    jointParameters HingeJointParameters {
+                                      axis 0 0 1
+                                      anchor -0.0335 -0.034 -0.0585
+                                    }
+                                    device [
+                                      RotationalMotor {
+                                        name "shoulderYaw_Right"
+                                        maxVelocity 8
+                                        minPosition -1.6
+                                        maxPosition 1.6
+                                        maxTorque 65
+                                      }
+                                      PositionSensor {
+                                        name "shoulderYaw_Right_sensor"
+                                      }
+                                    ]
+                                    endPoint Solid {
+                                      translation -0.0335 -0.034 -0.0585
+                                      children [
+                                        Shape {
+                                          appearance DEF shoulderYawRight_material PBRAppearance {
+                                            roughness 1
+                                            metalness 0
+                                          }
+                                          geometry DEF shoulderYawRight Mesh {
+                                            url [
+                                              "../meshes_standard_plus/shoulderYawRight.STL"
+                                            ]
+                                          }
+                                        }
+                                        HingeJoint {
+                                          jointParameters HingeJointParameters {
+                                            axis 0 1 0
+                                            anchor 0 0.0285 -0.20415
+                                          }
+                                          device [
+                                            RotationalMotor {
+                                              name "elbow_Right"
+                                              maxVelocity 8
+                                              minPosition -2
+                                              maxTorque 30
+                                            }
+                                            PositionSensor {
+                                              name "elbow_Right_sensor"
+                                            }
+                                          ]
+                                          endPoint Solid {
+                                            translation 0 0.0285 -0.20415
+                                            children [
+                                              Shape {
+                                                appearance DEF elbowRight_material PBRAppearance {
+                                                  roughness 1
+                                                  metalness 0
+                                                }
+                                                geometry DEF elbowRight Mesh {
+                                                  url [
+                                                    "../meshes_standard_plus/elbowRight.STL"
+                                                  ]
+                                                }
+                                              }
+                                              Solid {
+                                                translation -0.025 -0.0285 -0.0729
+                                                children [
+                                                  Shape {
+                                                    appearance DEF wristYawRight_material PBRAppearance {
+                                                      roughness 1
+                                                      metalness 0
+                                                    }
+                                                    geometry DEF wristYawRight Mesh {
+                                                      url [
+                                                        "../meshes_standard_plus/wristYawRight.STL"
+                                                      ]
+                                                    }
+                                                  }
+                                                  Solid {
+                                                    translation 0 0 -0.2017
+                                                    children [
+                                                      Shape {
+                                                        appearance DEF wristPitchRight_material PBRAppearance {
+                                                          roughness 1
+                                                          metalness 0
+                                                        }
+                                                        geometry DEF wristPitchRight Mesh {
+                                                          url [
+                                                            "../meshes_standard_plus/wristPitchRight.STL"
+                                                          ]
+                                                        }
+                                                      }
+                                                      Solid {
+                                                        children [
+                                                          Shape {
+                                                            appearance DEF wristRollRight_material PBRAppearance {
+                                                              baseColor 0.752941 0.752941 0.752941
+                                                              roughness 1
+                                                              metalness 0
+                                                            }
+                                                            geometry DEF R_hand_base_link Mesh {
+                                                              url [
+                                                                "../meshes_standard_plus/R_hand_base_link.STL"
+                                                              ]
+                                                            }
+                                                          }
+                                                          Solid {
+                                                            translation 0.02045 0.016956 -0.107694
+                                                            rotation -0.16488499270598272 0.6974249691480122 -0.6974319691477027 2.814759
+                                                            children [
+                                                              Shape {
+                                                                appearance DEF R_thumb_proximal_base_material PBRAppearance {
+                                                                  baseColor 0.752941 0.752941 0.752941
+                                                                  roughness 1
+                                                                  metalness 0
+                                                                }
+                                                                geometry DEF R_thumb_proximal_base Mesh {
+                                                                  url [
+                                                                    "../meshes_standard_plus/R_thumb_proximal_base.STL"
+                                                                  ]
+                                                                }
+                                                              }
+                                                              Solid {
+                                                                translation -0.0115 -0.011843 0
+                                                                rotation -0.33625294673030803 0.8796968606371147 0.3362549467299912 1.698628
+                                                                children [
+                                                                  Shape {
+                                                                    appearance DEF R_thumb_proximal_material PBRAppearance {
+                                                                      baseColor 0.752941 0.752941 0.752941
+                                                                      roughness 1
+                                                                      metalness 0
+                                                                    }
+                                                                    geometry DEF R_thumb_proximal Mesh {
+                                                                      url [
+                                                                        "../meshes_standard_plus/R_thumb_proximal.STL"
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                  Solid {
+                                                                    translation 0 0.055863 0.003924
+                                                                    rotation -1 0 0 0.038299
+                                                                    children [
+                                                                      Shape {
+                                                                        appearance DEF R_thumb_intermediate_material PBRAppearance {
+                                                                          baseColor 0.752941 0.752941 0.752941
+                                                                          roughness 1
+                                                                          metalness 0
+                                                                        }
+                                                                        geometry DEF R_thumb_intermediate Mesh {
+                                                                          url [
+                                                                            "../meshes_standard_plus/R_thumb_intermediate.STL"
+                                                                          ]
+                                                                        }
+                                                                      }
+                                                                      Solid {
+                                                                        translation 0 0.022558 -0.002072
+                                                                        rotation -1 0 0 0.011642
+                                                                        children [
+                                                                          Shape {
+                                                                            appearance DEF R_thumb_distal_material PBRAppearance {
+                                                                              baseColor 0.752941 0.752941 0.752941
+                                                                              roughness 1
+                                                                              metalness 0
+                                                                            }
+                                                                            geometry DEF R_thumb_distal Mesh {
+                                                                              url [
+                                                                                "../meshes_standard_plus/R_thumb_distal.STL"
+                                                                              ]
+                                                                            }
+                                                                          }
+                                                                        ]
+                                                                        name "R_thumb_distal"
+                                                                        boundingObject USE R_thumb_distal
+                                                                        physics Physics {
+                                                                          density -1
+                                                                          mass 0.003202
+                                                                          centerOfMass [
+                                                                            -0.000296 0.010767 -0.003012
+                                                                          ]
+                                                                          inertiaMatrix [
+                                                                            1.864993e-07 7.662996e-08 1.798628e-07
+                                                                            3.079367e-10 -1.459703e-11 -2.446386e-09
+                                                                          ]
+                                                                        }
+                                                                      }
+                                                                    ]
+                                                                    name "R_thumb_intermediate"
+                                                                    boundingObject USE R_thumb_intermediate
+                                                                    physics Physics {
+                                                                      density -1
+                                                                      mass 0.007624
+                                                                      centerOfMass [
+                                                                        -0.00023 0.009726 -0.005697
+                                                                      ]
+                                                                      inertiaMatrix [
+                                                                        8.632173e-07 3.662521e-07 7.958162e-07
+                                                                        1.182387e-09 4.341801e-11 -8.293345e-08
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                                name "R_thumb_proximal"
+                                                                boundingObject USE R_thumb_proximal
+                                                                physics Physics {
+                                                                  density -1
+                                                                  mass 0.026112
+                                                                  centerOfMass [
+                                                                    -0.000118 0.025857 -0.001008
+                                                                  ]
+                                                                  inertiaMatrix [
+                                                                    7.939316e-06 2.413126e-06 6.722507e-06
+                                                                    1.480097e-08 -3.38204e-09 -1.301004e-07
+                                                                  ]
+                                                                }
+                                                              }
+                                                            ]
+                                                            name "R_thumb_proximal_base"
+                                                            boundingObject USE R_thumb_proximal_base
+                                                            physics Physics {
+                                                              density -1
+                                                              mass 0.001518
+                                                              centerOfMass [
+                                                                -0.003828 -0.010718 0.00056
+                                                              ]
+                                                              inertiaMatrix [
+                                                                3.600871e-08 5.61611e-08 6.078782e-08
+                                                                -1.960955e-09 -5.669557e-09 -1.993744e-10
+                                                              ]
+                                                            }
+                                                          }
+                                                          Solid {
+                                                            translation 0.016376 -0.000284 -0.173083
+                                                            rotation -0.9997546902025631 -0.013638995773637301 -0.01745099459240007 1.815023
+                                                            children [
+                                                              Shape {
+                                                                appearance DEF R_index_proximal_material PBRAppearance {
+                                                                  baseColor 0.752941 0.752941 0.752941
+                                                                  roughness 1
+                                                                  metalness 0
+                                                                }
+                                                                geometry DEF R_index_proximal Mesh {
+                                                                  url [
+                                                                    "../meshes_standard_plus/R_index_proximal.STL"
+                                                                  ]
+                                                                }
+                                                              }
+                                                              Solid {
+                                                                translation 0.001575 0.030445 0.010275
+                                                                rotation 1 0 0 0.044288
+                                                                children [
+                                                                  Shape {
+                                                                    appearance DEF R_index_distal_material PBRAppearance {
+                                                                      baseColor 0.752941 0.752941 0.752941
+                                                                      roughness 1
+                                                                      metalness 0
+                                                                    }
+                                                                    geometry DEF R_index_distal Mesh {
+                                                                      url [
+                                                                        "../meshes_standard_plus/R_index_distal.STL"
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                                name "R_index_distal"
+                                                                boundingObject USE R_index_distal
+                                                                physics Physics {
+                                                                  density -1
+                                                                  mass 0.004447
+                                                                  centerOfMass [
+                                                                    0.008326 0.019585 -0.003377
+                                                                  ]
+                                                                  inertiaMatrix [
+                                                                    7.462107e-07 1.05451e-07 7.096385e-07
+                                                                    2.736122e-12 2.557205e-12 -1.305349e-07
+                                                                  ]
+                                                                }
+                                                              }
+                                                            ]
+                                                            name "R_index_proximal"
+                                                            boundingObject USE R_index_proximal
+                                                            physics Physics {
+                                                              density -1
+                                                              mass 0.007019
+                                                              centerOfMass [
+                                                                0.009901 0.01333 0.001179
+                                                              ]
+                                                              inertiaMatrix [
+                                                                8.957266e-07 2.829537e-07 8.257207e-07
+                                                                -1.14892e-11 -3.180202e-12 -7.121942e-08
+                                                              ]
+                                                            }
+                                                          }
+                                                          Solid {
+                                                            translation -0.001115 -0.000284 -0.1731
+                                                            rotation -1 0 0 1.820785
+                                                            children [
+                                                              Shape {
+                                                                appearance DEF R_index_distalR_middle_proximal_material PBRAppearance {
+                                                                  baseColor 0.752941 0.752941 0.752941
+                                                                  roughness 1
+                                                                  metalness 0
+                                                                }
+                                                                geometry DEF R_index_distalR_middle_proximal Mesh {
+                                                                  url [
+                                                                    "../meshes_standard_plus/R_index_distalR_middle_proximal.STL"
+                                                                  ]
+                                                                }
+                                                              }
+                                                              Solid {
+                                                                translation 0.001667 0.030445 0.010275
+                                                                rotation 1 0 0 0.071413
+                                                                children [
+                                                                  Shape {
+                                                                    appearance DEF R_middle_distal_material PBRAppearance {
+                                                                      baseColor 0.752941 0.752941 0.752941
+                                                                      roughness 1
+                                                                      metalness 0
+                                                                    }
+                                                                    geometry DEF R_middle_distal Mesh {
+                                                                      url [
+                                                                        "../meshes_standard_plus/R_middle_distal.STL"
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                                name "R_middle_distal"
+                                                                boundingObject USE R_middle_distal
+                                                                physics Physics {
+                                                                  density -1
+                                                                  mass 0.004892
+                                                                  centerOfMass [
+                                                                    0.006398 0.020758 -0.003445
+                                                                  ]
+                                                                  inertiaMatrix [
+                                                                    9.687797e-07 1.128602e-07 9.31723e-07
+                                                                    1.001033e-11 2.135401e-12 -1.470662e-07
+                                                                  ]
+                                                                }
+                                                              }
+                                                            ]
+                                                            name "R_index_distalR_middle_proximal"
+                                                            boundingObject USE R_index_distalR_middle_proximal
+                                                            physics Physics {
+                                                              density -1
+                                                              mass 0.007019
+                                                              centerOfMass [
+                                                                0.008065 0.013324 0.00126
+                                                              ]
+                                                              inertiaMatrix [
+                                                                8.957286e-07 2.838289e-07 8.248474e-07
+                                                                -1.159406e-11 -3.421289e-12 -7.447238e-08
+                                                              ]
+                                                            }
+                                                          }
+                                                          Solid {
+                                                            translation -0.020289 -0.000284 -0.172177
+                                                            rotation -0.9994507285362262 0.020328994478381573 0.026171992891347463 1.821318
+                                                            children [
+                                                              Shape {
+                                                                appearance DEF R_ring_proximal_material PBRAppearance {
+                                                                  baseColor 0.752941 0.752941 0.752941
+                                                                  roughness 1
+                                                                  metalness 0
+                                                                }
+                                                                geometry DEF R_ring_proximal Mesh {
+                                                                  url [
+                                                                    "../meshes_standard_plus/R_ring_proximal.STL"
+                                                                  ]
+                                                                }
+                                                              }
+                                                              Solid {
+                                                                translation 0 0.030445 0.010275
+                                                                rotation 1 0 0 0.039748
+                                                                children [
+                                                                  Shape {
+                                                                    appearance DEF R_ring_distal_material PBRAppearance {
+                                                                      baseColor 0.752941 0.752941 0.752941
+                                                                      roughness 1
+                                                                      metalness 0
+                                                                    }
+                                                                    geometry DEF R_ring_distal Mesh {
+                                                                      url [
+                                                                        "../meshes_standard_plus/R_ring_distal.STL"
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                                name "R_ring_distal"
+                                                                boundingObject USE R_ring_distal
+                                                                physics Physics {
+                                                                  density -1
+                                                                  mass 0.004447
+                                                                  centerOfMass [
+                                                                    0.008021 0.019566 -0.002985
+                                                                  ]
+                                                                  inertiaMatrix [
+                                                                    7.461881e-07 1.082638e-07 7.068006e-07
+                                                                    9.865672e-12 3.653024e-12 -1.368704e-07
+                                                                  ]
+                                                                }
+                                                              }
+                                                            ]
+                                                            name "R_ring_proximal"
+                                                            boundingObject USE R_ring_proximal
+                                                            physics Physics {
+                                                              density -1
+                                                              mass 0.006581
+                                                              centerOfMass [
+                                                                0.008021 0.013234 0.001566
+                                                              ]
+                                                              inertiaMatrix [
+                                                                8.776994e-07 2.709224e-07 8.156402e-07
+                                                                -7.272434e-12 -3.163505e-12 -7.678181e-08
+                                                              ]
+                                                            }
+                                                          }
+                                                          Solid {
+                                                            translation -0.039301 -2.8e-05 -0.170263
+                                                            rotation -0.9978053596914354 0.040619014642446584 0.05229301885072156 1.822913
+                                                            children [
+                                                              Shape {
+                                                                appearance DEF R_pinky_proximal_material PBRAppearance {
+                                                                  baseColor 0.752941 0.752941 0.752941
+                                                                  roughness 1
+                                                                  metalness 0
+                                                                }
+                                                                geometry DEF R_pinky_proximal Mesh {
+                                                                  url [
+                                                                    "../meshes_standard_plus/R_pinky_proximal.STL"
+                                                                  ]
+                                                                }
+                                                              }
+                                                              Solid {
+                                                                translation 0 0.030445 0.010275
+                                                                rotation -1 0 0 0.037691
+                                                                children [
+                                                                  Shape {
+                                                                    appearance DEF R_pinky_distal_material PBRAppearance {
+                                                                      baseColor 0.752941 0.752941 0.752941
+                                                                      roughness 1
+                                                                      metalness 0
+                                                                    }
+                                                                    geometry DEF R_pinky_distal Mesh {
+                                                                      url [
+                                                                        "../meshes_standard_plus/R_pinky_distal.STL"
+                                                                      ]
+                                                                    }
+                                                                  }
+                                                                ]
+                                                                name "R_pinky_distal"
+                                                                boundingObject USE R_pinky_distal
+                                                                physics Physics {
+                                                                  density -1
+                                                                  mass 0.00358
+                                                                  centerOfMass [
+                                                                    0.007919 0.016637 -0.002791
+                                                                  ]
+                                                                  inertiaMatrix [
+                                                                    4.282969e-07 8.816455e-08 3.957e-07
+                                                                    -6.199115e-10 -3.027725e-10 -9.442888e-08
+                                                                  ]
+                                                                }
+                                                              }
+                                                            ]
+                                                            name "R_pinky_proximal"
+                                                            boundingObject USE R_pinky_proximal
+                                                            physics Physics {
+                                                              density -1
+                                                              mass 0.007019
+                                                              centerOfMass [
+                                                                0.007889 0.013387 0.001011
+                                                              ]
+                                                              inertiaMatrix [
+                                                                8.957294e-07 2.838292e-07 8.248481e-07
+                                                                -1.18147e-11 -3.549158e-12 -7.447308e-08
+                                                              ]
+                                                            }
+                                                          }
+                                                        ]
+                                                        name "wristRollRight"
+                                                        boundingObject USE R_hand_base_link
+                                                        physics Physics {
+                                                          density -1
+                                                          mass 0.613179
+                                                          centerOfMass [
+                                                            -0.001914 0.000646 -0.09727
+                                                          ]
+                                                          inertiaMatrix [
+                                                            0.00114745 0.00132436 0.00033387
+                                                            -9.15e-06 1.254e-05 6.71e-06
+                                                          ]
+                                                        }
+                                                      }
+                                                    ]
+                                                    name "wristPitchRight"
+                                                    boundingObject USE wristPitchRight
+                                                    physics Physics {
+                                                      density -1
+                                                      mass 0.119635
+                                                      centerOfMass [
+                                                        -0.000176 0.001661 -2.8e-05
+                                                      ]
+                                                      inertiaMatrix [
+                                                        3.359e-05 2.69e-05 3.977e-05
+                                                        2e-08 0 -5e-08
+                                                      ]
+                                                    }
+                                                  }
+                                                ]
+                                                name "wristYawRight"
+                                                boundingObject USE wristYawRight
+                                                physics Physics {
+                                                  density -1
+                                                  mass 0.955878
+                                                  centerOfMass [
+                                                    -0.00203 -0.000131 -0.092169
+                                                  ]
+                                                  inertiaMatrix [
+                                                    0.00256092 0.00250028 0.00055059
+                                                    2.73e-06 3.067e-05 2.722e-05
+                                                  ]
+                                                }
+                                              }
+                                            ]
+                                            name "elbowRight"
+                                            physics Physics {
+                                              density -1
+                                              mass 0.854
+                                              centerOfMass [
+                                                -0.012123 -0.026296 -0.026584
+                                              ]
+                                              inertiaMatrix [
+                                                0.00099546 0.00111379 0.00053993
+                                                2.241e-05 0.00027937 4.82e-05
+                                              ]
+                                            }
+                                          }
+                                        }
+                                      ]
+                                      name "shoulderYawRight"
+                                      boundingObject Pose {
+                                        translation 0 0 -0.08
+                                        children [
+                                          Cylinder {
+                                            height 0.15
+                                            radius 0.038
+                                          }
+                                        ]
+                                      }
+                                      physics Physics {
+                                        density -1
+                                        mass 0.6963
+                                        centerOfMass [
+                                          -0.000893 -0.000966 -0.069805
+                                        ]
+                                        inertiaMatrix [
+                                          0.00304636 0.00297764 0.00041751
+                                          -7e-07 5.211e-05 8.904e-05
+                                        ]
+                                      }
+                                    }
+                                  }
+                                ]
+                                name "shoulderRollRight"
+                                boundingObject Pose {
+                                  translation -0.03 0 0
+                                  rotation 0 1 0 1.5708
+                                  children [
+                                    Cylinder {
+                                      height 0.1
+                                      radius 0.035
+                                    }
+                                  ]
+                                }
+                                physics Physics {
+                                  density -1
+                                  mass 0.7248
+                                  centerOfMass [
+                                    -0.028605 -0.011046 -0.01405
+                                  ]
+                                  inertiaMatrix [
+                                    0.00090814 0.00071184 0.00060969
+                                    2.628e-05 3.99e-05 0.00025129
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                          name "shoulderPitchRight"
+                          physics Physics {
+                            density -1
+                            mass 0.2031
+                            centerOfMass [
+                              -0.001504 -0.026872 0.000108
+                            ]
+                            inertiaMatrix [
+                              0.00017009 0.00028895 0.00034374
+                              4.47e-06 -6.4e-07 -4.3e-07
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                    name "torso"
+                    boundingObject Pose {
+                      translation 0 0 0.15
+                      children [
+                        Sphere {
+                          radius 0.13
+                        }
+                      ]
+                    }
+                    physics Physics {
+                      density -1
+                      mass 13.28596
+                      centerOfMass [
+                        0.0008 -3.1e-05 0.183003
+                      ]
+                      inertiaMatrix [
+                        0.1989286 0.1611538 0.07256954
+                        2.898e-05 0.0037221 -0.00010404
+                      ]
+                    }
+                  }
+                }
+              ]
+              name "waistPitch"
+              physics Physics {
+                density -1
+                mass 0.4987
+                centerOfMass [
+                  -0.000666 0.000705 0.025066
+                ]
+                inertiaMatrix [
+                  0.0013606 0.00061064 0.00144067
+                  1.9e-07 -6.1e-07 -2.57e-05
+                ]
+              }
+            }
+          }
+        ]
+        name "waistRoll"
+        physics Physics {
+          density -1
+          mass 2.184307
+          centerOfMass [
+            0.00212 0.002121 0.04
+          ]
+          inertiaMatrix [
+            0.00490282 0.0049029 0.00201818
+            -8.39e-06 -0.0001494 0.00014939
+          ]
+        }
+      }
+    }
+  ]
+  name "Adam"
+  boundingObject Pose {
+    rotation 1 0 0 1.57
+    children [
+      Cylinder {
+        height 0.2
+        radius 0.1
+      }
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 10.1873
+    centerOfMass [
+      -0.001203 -1e-06 -0.008022
+    ]
+    inertiaMatrix [
+      0.06839529 0.0375323 0.07519708
+      -9.95e-06 -4.308e-05 -1.05e-06
+    ]
+  }
+  controller "mpc_controller"
+  supervisor TRUE
+}

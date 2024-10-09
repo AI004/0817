@@ -1,0 +1,163 @@
+{
+    "hipRoll_Left": {
+        "absolute_pos_zero": 0.246971,
+        "control_config": {
+            "Kp": 3837.0,
+            "Kd": 63.96
+        }
+    },
+    "hipYaw_Left": {
+        "absolute_pos_zero": 1.15164,
+        "control_config": {
+            "Kp": 1314.6,
+            "Kd": 26.29
+        }
+    },
+    "hipPitch_Left": {
+        "absolute_pos_zero": 4.43052,
+        "control_config": {
+            "Kp": 477.9,
+            "Kd": 15.93
+        }
+    },
+    "kneePitch_Left": {
+        "absolute_pos_zero": 0.942248,
+        "control_config": {
+            "Kp": 296.0,
+            "Kd": 14.8
+        }
+    },
+    "anklePitch_Left": {
+        "absolute_pos_zero": 4.84853,
+        "control_config": {
+            "Kp": 178.0,
+            "Kd": 3.56
+        }
+    },
+    "ankleRoll_Left": {
+        "absolute_pos_zero": 4.83472,
+        "control_config": {
+            "Kp": 0.0,
+            "Kd": 0.497
+        }
+    },
+    "hipRoll_Right": {
+        "absolute_pos_zero": 0.074781,
+        "control_config": {
+            "Kp": 3837.0,
+            "Kd": 63.96
+        }
+    },
+    "hipYaw_Right": {
+        "absolute_pos_zero": 0.356267,
+        "control_config": {
+            "Kp": 1337.4,
+            "Kd": 26.75
+        }
+    },
+    "hipPitch_Right": {
+        "absolute_pos_zero": 4.23225,
+        "control_config": {
+            "Kp": 467.1,
+            "Kd": 15.57
+        }
+    },
+    "kneePitch_Right": {
+        "absolute_pos_zero": 1.08491,
+        "control_config": {
+            "Kp": 296.0,
+            "Kd": 14.8
+        }
+    },
+    "anklePitch_Right": {
+        "absolute_pos_zero": 1.20341,
+        "control_config": {
+            "Kp": 178.0,
+            "Kd": 3.56
+        }
+    },
+    "ankleRoll_Right": {
+        "absolute_pos_zero": 1.10677,
+        "control_config": {
+            "Kp": 0.0,
+            "Kd": 0.497
+        }
+    },
+    "waistYaw": {
+        "absolute_pos_zero": 0.0,
+        "control_config": {
+            "Kp": 2542.8,
+            "Kd": 50.86
+        }
+    },
+    "waistPitch": {
+        "absolute_pos_zero": 6.17236,
+        "control_config": {
+            "Kp": 2676.0,
+            "Kd": 53.52
+        }
+    },
+    "waistRoll": {
+        "absolute_pos_zero": 2.46779,
+        "control_config": {
+            "Kp": 2580.0,
+            "Kd": 51.6
+        }
+    },
+    "shoulderPitch_Left": {
+        "absolute_pos_zero": 0.0,
+        "control_config": {
+            "Kp": 237.6,
+            "Kd": 7.92
+        }
+    },
+    "shoulderRoll_Left": {
+        "absolute_pos_zero": 0.0,
+        "control_config": {
+            "Kp": 237.6,
+            "Kd": 7.92
+        }
+    },
+    "shoulderYaw_Left": {
+        "absolute_pos_zero": 0.0,
+        "control_config": {
+            "Kp": 237.6,
+            "Kd": 7.92
+        }
+    },
+    "elbow_Left": {
+        "absolute_pos_zero": 0.0,
+        "control_config": {
+            "Kp": 237.6,
+            "Kd": 7.92
+        }
+    },
+    "shoulderPitch_Right": {
+        "absolute_pos_zero": 0.0,
+        "control_config": {
+            "Kp": 237.6,
+            "Kd": 7.92
+        }
+    },
+    "shoulderRoll_Right": {
+        "absolute_pos_zero": 0.0,
+        "control_config": {
+            "Kp": 237.6,
+            "Kd": 7.92
+        }
+    },
+    "shoulderYaw_Right": {
+        "absolute_pos_zero": 0.0,
+        "control_config": {
+            "Kp": 237.6,
+            "Kd": 7.92
+        }
+    },
+    "elbow_Right": {
+        "absolute_pos_zero": 0.0,
+        "control_config": {
+            "Kp": 237.6,
+            "Kd": 7.92
+        }
+    }
+}

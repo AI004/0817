@@ -1,0 +1,10 @@
+foc_f407\arm_cos_f32.o: ..\DSP\arm_cos_f32.c
+foc_f407\arm_cos_f32.o: ..\DSP\arm_math.h
+foc_f407\arm_cos_f32.o: ../Drivers/CMSIS/Include/core_cm4.h
+foc_f407\arm_cos_f32.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+foc_f407\arm_cos_f32.o: ../Drivers/CMSIS/Include/cmsis_version.h
+foc_f407\arm_cos_f32.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
+foc_f407\arm_cos_f32.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
+foc_f407\arm_cos_f32.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+foc_f407\arm_cos_f32.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+foc_f407\arm_cos_f32.o: ..\DSP\arm_common_tables.h

@@ -1,0 +1,17 @@
+/bin
+/build
+/Webots/controllers/mpc_controller/mpc_controller
+/Webots/controllers/mpc_controller/Sources
+/Webots/controllers/mpc_controller/*log.txt
+/Webots/controllers/mpc_controller/data/
+/.vscode
+/Webots/worlds/.humanoid.wbproj
+/Webots/worlds/.humanoid_new.wbproj
+/Webots/protos
+
+/cmake/
+/cmake-build-release/
+/.idea
+/Sources/python_scripts/abs.json
+/Webots/worlds/*.*.jpg
+/Webots/worlds/*.*.wbproj
