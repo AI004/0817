@@ -26,7 +26,7 @@ Robot {
       }
       geometry DEF base Mesh {
         url [
-          "/home/g/Documents/0817/webots_world/DuckDuck-15DOF/meshes/base.STL"
+          "../meshes/base.STL"
         ]
       }
     }
@@ -54,7 +54,7 @@ Robot {
             }
             geometry DEF left_hip_yaw Mesh {
               url [
-                "/home/g/Documents/0817/webots_world/DuckDuck-15DOF/meshes/left_hip_yaw.STL"
+                "../meshes/left_hip_yaw.STL"
               ]
             }
           }
@@ -80,7 +80,7 @@ Robot {
                   }
                   geometry DEF left_hip_roll Mesh {
                     url [
-                      "/home/g/Documents/0817/webots_world/DuckDuck-15DOF/meshes/left_hip_roll.STL"
+                      "../meshes/left_hip_roll.STL"
                     ]
                   }
                 }
@@ -107,7 +107,7 @@ Robot {
                         }
                         geometry DEF left_hip_pitch Mesh {
                           url [
-                            "/home/g/Documents/0817/webots_world/DuckDuck-15DOF/meshes/left_hip_pitch.STL"
+                            "../meshes/left_hip_pitch.STL"
                           ]
                         }
                       }
@@ -136,7 +136,7 @@ Robot {
                               }
                               geometry DEF left_knee_pitch Mesh {
                                 url [
-                                  "/home/g/Documents/0817/webots_world/DuckDuck-15DOF/meshes/left_knee_pitch.STL"
+                                  "../meshes/left_knee_pitch.STL"
                                 ]
                               }
                             }
@@ -165,7 +165,7 @@ Robot {
                                     }
                                     geometry DEF left_ankle_pitch Mesh {
                                       url [
-                                        "/home/g/Documents/0817/webots_world/DuckDuck-15DOF/meshes/left_ankle_pitch.STL"
+                                        "../meshes/left_ankle_pitch.STL"
                                       ]
                                     }
                                   }
@@ -193,7 +193,7 @@ Robot {
                                           }
                                           geometry DEF left_ankle_roll Mesh {
                                             url [
-                                              "/home/g/Documents/0817/webots_world/DuckDuck-15DOF/meshes/left_ankle_roll.STL"
+                                              "../meshes/left_ankle_roll.STL"
                                             ]
                                           }
                                         }
@@ -317,7 +317,7 @@ Robot {
             }
             geometry DEF right_hip_yaw Mesh {
               url [
-                "/home/g/Documents/0817/webots_world/DuckDuck-15DOF/meshes/right_hip_yaw.STL"
+                "../meshes/right_hip_yaw.STL"
               ]
             }
           }
@@ -343,7 +343,7 @@ Robot {
                   }
                   geometry DEF right_hip_roll Mesh {
                     url [
-                      "/home/g/Documents/0817/webots_world/DuckDuck-15DOF/meshes/right_hip_roll.STL"
+                      "../meshes/right_hip_roll.STL"
                     ]
                   }
                 }
@@ -370,7 +370,7 @@ Robot {
                         }
                         geometry DEF right_hip_pitch Mesh {
                           url [
-                            "/home/g/Documents/0817/webots_world/DuckDuck-15DOF/meshes/right_hip_pitch.STL"
+                            "../meshes/right_hip_pitch.STL"
                           ]
                         }
                       }
@@ -399,7 +399,7 @@ Robot {
                               }
                               geometry DEF right_knee_pitch Mesh {
                                 url [
-                                  "/home/g/Documents/0817/webots_world/DuckDuck-15DOF/meshes/right_knee_pitch.STL"
+                                  "../meshes/right_knee_pitch.STL"
                                 ]
                               }
                             }
@@ -428,7 +428,7 @@ Robot {
                                     }
                                     geometry DEF right_ankle_pitch Mesh {
                                       url [
-                                        "/home/g/Documents/0817/webots_world/DuckDuck-15DOF/meshes/right_ankle_pitch.STL"
+                                        "../meshes/right_ankle_pitch.STL"
                                       ]
                                     }
                                   }
@@ -456,7 +456,7 @@ Robot {
                                           }
                                           geometry DEF right_ankle_roll Mesh {
                                             url [
-                                              "/home/g/Documents/0817/webots_world/DuckDuck-15DOF/meshes/right_ankle_roll.STL"
+                                              "../meshes/right_ankle_roll.STL"
                                             ]
                                           }
                                         }
@@ -581,7 +581,7 @@ Robot {
             }
             geometry DEF neck_pitch Mesh {
               url [
-                "/home/g/Documents/0817/webots_world/DuckDuck-15DOF/meshes/neck_pitch.STL"
+                "../meshes/neck_pitch.STL"
               ]
             }
           }
@@ -610,7 +610,7 @@ Robot {
                   }
                   geometry DEF neck_roll Mesh {
                     url [
-                      "/home/g/Documents/0817/webots_world/DuckDuck-15DOF/meshes/neck_roll.STL"
+                      "../meshes/neck_roll.STL"
                     ]
                   }
                 }
@@ -638,7 +638,7 @@ Robot {
                         }
                         geometry DEF neck_yaw Mesh {
                           url [
-                            "/home/g/Documents/0817/webots_world/DuckDuck-15DOF/meshes/neck_yaw.STL"
+                            "../meshes/neck_yaw.STL"
                           ]
                         }
                       }
