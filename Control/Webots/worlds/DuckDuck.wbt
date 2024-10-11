@@ -5,10 +5,11 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/Floor.proto"
 
 WorldInfo {
+  basicTimeStep 1.25
 }
 Viewpoint {
   orientation -0.14443442634587353 0.07898112093599616 0.9863572775733102 2.152321421144641
-  position 1.104928659314878 -1.5795556896409755 0.9630166467538298
+  position 0.6243392665489598 -0.8297755246825845 0.6964802875973289
 }
 TexturedBackground {
 }

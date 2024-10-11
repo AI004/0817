@@ -233,7 +233,7 @@ void Robot_Constructor::robotconstructor(QString path, Robot_Data* robotdata) {
           std::cout << "robotdata->robot_model->mBodies.size(): " << robotdata->robot_model->mBodies.size()
                     << std::endl;
           for (int i = 0; i < robotdata->id_body.size(); i++) {
-            robotdata->id_body[i] = robotdata->robot_model->GetBodyId("pelvis") + i;
+            robotdata->id_body[i] = robotdata->robot_model->GetBodyId("base") + i;
           }
 
           robotdata->wbcsolver = Wbc_Solver_type(2);

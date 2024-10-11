@@ -137,7 +137,7 @@ void Zero::init() {
   //
   avr_v = 0.1;
   totaltime = 0;
-  qCmd = Eigen::VectorXd::Zero(12);
+  qCmd = Eigen::VectorXd::Ones(12);
   qDotCmd = Eigen::VectorXd::Zero(12);
   xStand = Eigen::VectorXd::Zero(6);
 
@@ -154,14 +154,14 @@ void Zero::onEnter() {
   qa = gait->robot_controller_._robot_data->q_a;
   qa_dot = gait->robot_controller_._robot_data->q_dot_a;
   // init position
-  xStand(0) = -0.01;
-  xStand(1) = 0.12;
-  xStand(2) = -0.83;
-  xStand(3) = -0.01;
-  xStand(4) = -0.12;
-  xStand(5) = -0.83;
-  footflag = true;
-  wkSpace2Joint(xStand, qCmd, qDotCmd, footflag);
+  // xStand(0) = -0.01;
+  // xStand(1) = 0.12;
+  // xStand(2) = -0.83;
+  // xStand(3) = -0.01;
+  // xStand(4) = -0.12;
+  // xStand(5) = -0.83;
+  // footflag = true;
+  // wkSpace2Joint(xStand, qCmd, qDotCmd, footflag);
   qd.setZero();
   qd.block(6, 0, 12, 1) = qCmd;
 
@@ -198,13 +198,13 @@ void Zero::onEnter() {
 
   qd_dot.setZero();
   //
-  Eigen::VectorXd qArmCmd = Eigen::VectorXd::Zero(adam_upper_except_waist_actor_num);
-  Eigen::VectorXd qArmCmd_temp = Eigen::VectorXd::Zero(8);
-  armPolyJoint(Eigen::Vector2d(0.42, 0.42), qArmCmd_temp);
-  qArmCmd.setZero();
-  qArmCmd.head(4) = qArmCmd_temp.head(4);
-  qArmCmd.segment(arm_l_actor_num + hand_l_actor_num, 4) = qArmCmd_temp.tail(4);
-  qd.block(21, 0, adam_upper_except_waist_actor_num, 1) = qArmCmd;
+  // Eigen::VectorXd qArmCmd = Eigen::VectorXd::Zero(adam_upper_except_waist_actor_num);
+  // Eigen::VectorXd qArmCmd_temp = Eigen::VectorXd::Zero(8);
+  // armPolyJoint(Eigen::Vector2d(0.42, 0.42), qArmCmd_temp);
+  // qArmCmd.setZero();
+  // qArmCmd.head(4) = qArmCmd_temp.head(4);
+  // qArmCmd.segment(arm_l_actor_num + hand_l_actor_num, 4) = qArmCmd_temp.tail(4);
+  // qd.block(21, 0, adam_upper_except_waist_actor_num, 1) = qArmCmd;
 
   // init total time
   avr_v = 0.6;
