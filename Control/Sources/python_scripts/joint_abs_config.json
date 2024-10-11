@@ -1,0 +1,176 @@
+{
+    "hipPitch_Left": {
+        "absolute_pos_zero": 3.52317,
+        "absolute_pos_dir": -1,
+        "absolute_pos_gear_ratio": 4.0,
+        "motor_rotor_abs_pos": 6.073796929633196
+    },
+    "hipRoll_Left": {
+        "absolute_pos_zero": 6.05922,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 3.3846,
+        "motor_rotor_abs_pos": 5.745525041025669
+    },
+    "hipYaw_Left": {
+        "absolute_pos_zero": 2.82674,
+        "absolute_pos_dir": -1,
+        "absolute_pos_gear_ratio": 2.7143,
+        "motor_rotor_abs_pos": 2.34123817751046
+    },
+    "kneePitch_Left": {
+        "absolute_pos_zero": 5.14229,
+        "absolute_pos_dir": -1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 3.466796580621549
+    },
+    "anklePitch_Left": {
+        "absolute_pos_zero": 1.05768,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 0.9986214929135524
+    },
+    "ankleRoll_Left": {
+        "absolute_pos_zero": 2.05285,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 6.192680440694334
+    },
+    "hipPitch_Right": {
+        "absolute_pos_zero": 2.03751,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 4.0,
+        "motor_rotor_abs_pos": 0.7221214558971656
+    },
+    "hipRoll_Right": {
+        "absolute_pos_zero": 6.03545,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 3.3846,
+        "motor_rotor_abs_pos": 3.0150392385892277
+    },
+    "hipYaw_Right": {
+        "absolute_pos_zero": 2.8371,
+        "absolute_pos_dir": -1,
+        "absolute_pos_gear_ratio": 2.7143,
+        "motor_rotor_abs_pos": 2.799514937891295
+    },
+    "kneePitch_Right": {
+        "absolute_pos_zero": 1.64136,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 6.240233845118788
+    },
+    "anklePitch_Right": {
+        "absolute_pos_zero": 2.61582,
+        "absolute_pos_dir": -1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 0.24236896448593132
+    },
+    "ankleRoll_Right": {
+        "absolute_pos_zero": 6.24138,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 1.8392429646748838
+    },
+    "waistRoll": {
+        "absolute_pos_zero": 5.97447,
+        "absolute_pos_dir": -1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 3.3720732669696107
+    },
+    "waistPitch": {
+        "absolute_pos_zero": 0.83717,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 4.978534647082848
+    },
+    "waistYaw": {
+        "absolute_pos_zero": 4.95092,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 2.7143,
+        "motor_rotor_abs_pos": 4.4807578814139575
+    },
+    "shoulderPitch_Left": {
+        "absolute_pos_zero": 2.31401,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 5.959898856132687
+    },
+    "shoulderRoll_Left": {
+        "absolute_pos_zero": 5.07633,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 1.748738098189631
+    },
+    "shoulderYaw_Left": {
+        "absolute_pos_zero": 2.8045,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 4.183932598958086
+    },
+    "elbow_Left": {
+        "absolute_pos_zero": 1.41433,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 0.8080243800187615
+    },
+    "wristYaw_Left": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 0.0
+    },
+    "wristPitch_Left": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 0.0
+    },
+    "wristRoll_Left": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 0.0
+    },
+    "shoulderPitch_Right": {
+        "absolute_pos_zero": 5.51006,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 1.1163545183837753
+    },
+    "shoulderRoll_Right": {
+        "absolute_pos_zero": 3.37821,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 1.2060923944750854
+    },
+    "shoulderYaw_Right": {
+        "absolute_pos_zero": 2.25265,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 2.775738235679068
+    },
+    "elbow_Right": {
+        "absolute_pos_zero": 4.37185,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 3.821913133017075
+    },
+    "wristYaw_Right": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 0.0
+    },
+    "wristPitch_Right": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 0.0
+    },
+    "wristRoll_Right": {
+        "absolute_pos_zero": 0,
+        "absolute_pos_dir": 1,
+        "absolute_pos_gear_ratio": 1.0,
+        "motor_rotor_abs_pos": 0.0
+    }
+}

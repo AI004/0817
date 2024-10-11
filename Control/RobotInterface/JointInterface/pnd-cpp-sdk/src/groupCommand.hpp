@@ -157,6 +157,11 @@ class GroupCommand final {
    */
   void setNetworkSetting(const std::vector<NetworkSetting *> &config);
 
+  /**
+   * @brief Get Motor rotor absolute position
+   */
+  void getMotorRotorAbsPos(const std::vector<bool> &flag);
+
   // For latency test
   void setLatencyTest(const std::vector<bool> &flag);
 

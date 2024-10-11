@@ -1,7 +1,6 @@
 //
 #include "functionIKID_S2P.h"
 functionIKID_S2P::functionIKID_S2P() {
-
   leftAnkleALimb = 40.0;
   leftAnkleZLimb1 = 275.0;
   leftAnkleZLimb2 = 202.0;
@@ -148,10 +147,8 @@ functionIKID_S2P::functionIKID_S2P() {
   qDotEst.setZero();
 }
 functionIKID_S2P::~functionIKID_S2P() {}
-bool functionIKID_S2P::setEst(const Eigen::VectorXd &qEst,
-                              const Eigen::VectorXd &qDotEst,
-                              const Eigen::VectorXd &qTorEst) {
-
+bool functionIKID_S2P::setEst(const Eigen::VectorXd& qEst, const Eigen::VectorXd& qDotEst,
+                              const Eigen::VectorXd& qTorEst) {
   alpha1LeftEst = qEst(0) - 0.5071;
   alpha2LeftEst = qEst(1) - 0.5656;
   alpha1RightEst = qEst(2) - 0.5071;
@@ -166,8 +163,7 @@ bool functionIKID_S2P::setEst(const Eigen::VectorXd &qEst,
   return 1;
 }
 
-bool functionIKID_S2P::setDes(const Eigen::VectorXd &ankleOrienRef,
-                              const Eigen::VectorXd &ankleOmegaRef) {
+bool functionIKID_S2P::setDes(const Eigen::VectorXd& ankleOrienRef, const Eigen::VectorXd& ankleOmegaRef) {
   rollLeftRef = ankleOrienRef(1);
   pitchLeftRef = ankleOrienRef(0);
   rollRightRef = ankleOrienRef(3);
@@ -176,13 +172,12 @@ bool functionIKID_S2P::setDes(const Eigen::VectorXd &ankleOrienRef,
   omegaRightRef = ankleOmegaRef.tail(2);
   return 1;
 }
-bool functionIKID_S2P::setDesTorque(const Eigen::VectorXd &tauSDes) {
+bool functionIKID_S2P::setDesTorque(const Eigen::VectorXd& tauSDes) {
   ankleTauSLeftDes = tauSDes.head(2);
   ankleTauSRightDes = tauSDes.tail(2);
   return 1;
 }
-bool functionIKID_S2P::getDes(Eigen::VectorXd &qDes, Eigen::VectorXd &qDotDes,
-                              Eigen::VectorXd &tauDes) {
+bool functionIKID_S2P::getDes(Eigen::VectorXd& qDes, Eigen::VectorXd& qDotDes, Eigen::VectorXd& tauDes) {
   qDes = qRef;
   qDotDes = qDotRef;
   tauDes = tauDesjointFB;
@@ -195,32 +190,23 @@ bool functionIKID_S2P::calcJointPosRef() {
   return 1;
 }
 bool functionIKID_S2P::calcJointPosRefLeft() {
-
-  rotXLeftRef << 1.0, 0.0, 0.0, 0.0, cos(rollLeftRef), -sin(rollLeftRef), 0,
-      sin(rollLeftRef), cos(rollLeftRef);
-  rotYLeftRef << cos(pitchLeftRef), 0.0, sin(pitchLeftRef), 0.0, 1.0, 0.0,
-      -sin(pitchLeftRef), 0.0, cos(pitchLeftRef);
+  rotXLeftRef << 1.0, 0.0, 0.0, 0.0, cos(rollLeftRef), -sin(rollLeftRef), 0, sin(rollLeftRef), cos(rollLeftRef);
+  rotYLeftRef << cos(pitchLeftRef), 0.0, sin(pitchLeftRef), 0.0, 1.0, 0.0, -sin(pitchLeftRef), 0.0, cos(pitchLeftRef);
   oP1BodyLeftRef = rotYLeftRef * rotXLeftRef * oP1LeftFoot;
   oP2BodyLeftRef = rotYLeftRef * rotXLeftRef * oP2LeftFoot;
   double a1 = -2.0 * oP1BodyLeftRef(0) * leftAnkleALimb;
   double b1 = 2.0 * (oP1BodyLeftRef(2) - leftAnkleZLimb1) * leftAnkleALimb;
   double c1 = oP1BodyLeftRef(0) * oP1BodyLeftRef(0) +
-              (oP1BodyLeftRef(1) - leftAnkleBaseDis) *
-                  (oP1BodyLeftRef(1) - leftAnkleBaseDis) +
-              (oP1BodyLeftRef(2) - leftAnkleZLimb1) *
-                  (oP1BodyLeftRef(2) - leftAnkleZLimb1) +
-              leftAnkleALimb * leftAnkleALimb -
-              leftAnklePLimb1 * leftAnklePLimb1;
+              (oP1BodyLeftRef(1) - leftAnkleBaseDis) * (oP1BodyLeftRef(1) - leftAnkleBaseDis) +
+              (oP1BodyLeftRef(2) - leftAnkleZLimb1) * (oP1BodyLeftRef(2) - leftAnkleZLimb1) +
+              leftAnkleALimb * leftAnkleALimb - leftAnklePLimb1 * leftAnklePLimb1;
 
   double a2 = -2.0 * oP2BodyLeftRef(0) * leftAnkleALimb;
   double b2 = 2.0 * (oP2BodyLeftRef(2) - leftAnkleZLimb2) * leftAnkleALimb;
   double c2 = oP2BodyLeftRef(0) * oP2BodyLeftRef(0) +
-              (oP2BodyLeftRef(1) + leftAnkleBaseDis) *
-                  (oP2BodyLeftRef(1) + leftAnkleBaseDis) +
-              (oP2BodyLeftRef(2) - leftAnkleZLimb2) *
-                  (oP2BodyLeftRef(2) - leftAnkleZLimb2) +
-              leftAnkleALimb * leftAnkleALimb -
-              leftAnklePLimb2 * leftAnklePLimb2;
+              (oP2BodyLeftRef(1) + leftAnkleBaseDis) * (oP2BodyLeftRef(1) + leftAnkleBaseDis) +
+              (oP2BodyLeftRef(2) - leftAnkleZLimb2) * (oP2BodyLeftRef(2) - leftAnkleZLimb2) +
+              leftAnkleALimb * leftAnkleALimb - leftAnklePLimb2 * leftAnklePLimb2;
 
   if (a1 * a1 + b1 * b1 - c1 * c1 < 0.0) {
     std::cout << "ErrorID00 : Cannot solved !" << std::endl;
@@ -229,14 +215,10 @@ bool functionIKID_S2P::calcJointPosRefLeft() {
     std::cout << "ErrorID01 : Cannot solved !" << std::endl;
     return false;
   } else {
-    double csalpha11 = (a1 * c1 + b1 * sqrt(a1 * a1 + b1 * b1 - c1 * c1)) /
-                       (a1 * a1 + b1 * b1);
-    double csalpha12 = (a1 * c1 - b1 * sqrt(a1 * a1 + b1 * b1 - c1 * c1)) /
-                       (a1 * a1 + b1 * b1);
-    double csalpha21 = (a2 * c2 + b2 * sqrt(a2 * a2 + b2 * b2 - c2 * c2)) /
-                       (a2 * a2 + b2 * b2);
-    double csalpha22 = (a2 * c2 - b2 * sqrt(a2 * a2 + b2 * b2 - c2 * c2)) /
-                       (a2 * a2 + b2 * b2);
+    double csalpha11 = (a1 * c1 + b1 * sqrt(a1 * a1 + b1 * b1 - c1 * c1)) / (a1 * a1 + b1 * b1);
+    double csalpha12 = (a1 * c1 - b1 * sqrt(a1 * a1 + b1 * b1 - c1 * c1)) / (a1 * a1 + b1 * b1);
+    double csalpha21 = (a2 * c2 + b2 * sqrt(a2 * a2 + b2 * b2 - c2 * c2)) / (a2 * a2 + b2 * b2);
+    double csalpha22 = (a2 * c2 - b2 * sqrt(a2 * a2 + b2 * b2 - c2 * c2)) / (a2 * a2 + b2 * b2);
     if (abs(csalpha11) > 1.0) {
       std::cout << "ErrorID02 : !!!!!!limb1 !" << std::endl;
       return false;
@@ -264,17 +246,14 @@ bool functionIKID_S2P::calcJointPosRefLeft() {
       alpha2_p << alpha21, alpha22, alpha23, alpha24;
       for (int i = 0; i < 4; i++) {
         if (alpha1_p(i) >= -PI / 2 && alpha1_p(i) <= PI / 2) {
-
-          if (abs(a1 * cos(alpha1_p(i)) + b1 * sin(alpha1_p(i)) - c1) <=
-              0.0000001) {
+          if (abs(a1 * cos(alpha1_p(i)) + b1 * sin(alpha1_p(i)) - c1) <= 0.0000001) {
             alpha1LeftRef = alpha1_p(i);
           }
         }
       }
       for (int i = 0; i < 4; i++) {
         if (alpha2_p(i) >= -PI / 2 && alpha2_p(i) <= PI / 2) {
-          if (abs(a2 * cos(alpha2_p(i)) + b2 * sin(alpha2_p(i)) - c2) <=
-              0.0000001) {
+          if (abs(a2 * cos(alpha2_p(i)) + b2 * sin(alpha2_p(i)) - c2) <= 0.0000001) {
             alpha2LeftRef = alpha2_p(i);
           }
         }
@@ -288,32 +267,24 @@ bool functionIKID_S2P::calcJointPosRefLeft() {
   return 1;
 }
 bool functionIKID_S2P::calcJointPosRefRight() {
-
-  rotXRightRef << 1.0, 0.0, 0.0, 0.0, cos(rollRightRef), -sin(rollRightRef), 0,
-      sin(rollRightRef), cos(rollRightRef);
-  rotYRightRef << cos(pitchRightRef), 0.0, sin(pitchRightRef), 0.0, 1.0, 0.0,
-      -sin(pitchRightRef), 0.0, cos(pitchRightRef);
+  rotXRightRef << 1.0, 0.0, 0.0, 0.0, cos(rollRightRef), -sin(rollRightRef), 0, sin(rollRightRef), cos(rollRightRef);
+  rotYRightRef << cos(pitchRightRef), 0.0, sin(pitchRightRef), 0.0, 1.0, 0.0, -sin(pitchRightRef), 0.0,
+      cos(pitchRightRef);
   oP1BodyRightRef = rotYRightRef * rotXRightRef * oP1RightFoot;
   oP2BodyRightRef = rotYRightRef * rotXRightRef * oP2RightFoot;
   double a1 = -2.0 * oP1BodyRightRef(0) * rightAnkleALimb;
   double b1 = 2.0 * (oP1BodyRightRef(2) - rightAnkleZLimb1) * rightAnkleALimb;
   double c1 = oP1BodyRightRef(0) * oP1BodyRightRef(0) +
-              (oP1BodyRightRef(1) + rightAnkleBaseDis) *
-                  (oP1BodyRightRef(1) + rightAnkleBaseDis) +
-              (oP1BodyRightRef(2) - rightAnkleZLimb1) *
-                  (oP1BodyRightRef(2) - rightAnkleZLimb1) +
-              rightAnkleALimb * rightAnkleALimb -
-              rightAnklePLimb1 * rightAnklePLimb1;
+              (oP1BodyRightRef(1) + rightAnkleBaseDis) * (oP1BodyRightRef(1) + rightAnkleBaseDis) +
+              (oP1BodyRightRef(2) - rightAnkleZLimb1) * (oP1BodyRightRef(2) - rightAnkleZLimb1) +
+              rightAnkleALimb * rightAnkleALimb - rightAnklePLimb1 * rightAnklePLimb1;
 
   double a2 = -2.0 * oP2BodyRightRef(0) * rightAnkleALimb;
   double b2 = 2.0 * (oP2BodyRightRef(2) - rightAnkleZLimb2) * rightAnkleALimb;
   double c2 = oP2BodyRightRef(0) * oP2BodyRightRef(0) +
-              (oP2BodyRightRef(1) - rightAnkleBaseDis) *
-                  (oP2BodyRightRef(1) - rightAnkleBaseDis) +
-              (oP2BodyRightRef(2) - rightAnkleZLimb2) *
-                  (oP2BodyRightRef(2) - rightAnkleZLimb2) +
-              rightAnkleALimb * rightAnkleALimb -
-              rightAnklePLimb2 * rightAnklePLimb2;
+              (oP2BodyRightRef(1) - rightAnkleBaseDis) * (oP2BodyRightRef(1) - rightAnkleBaseDis) +
+              (oP2BodyRightRef(2) - rightAnkleZLimb2) * (oP2BodyRightRef(2) - rightAnkleZLimb2) +
+              rightAnkleALimb * rightAnkleALimb - rightAnklePLimb2 * rightAnklePLimb2;
 
   if (a1 * a1 + b1 * b1 - c1 * c1 < 0.0) {
     std::cout << "ErrorID00 : Cannot solved !" << std::endl;
@@ -322,14 +293,10 @@ bool functionIKID_S2P::calcJointPosRefRight() {
     std::cout << "ErrorID01 : Cannot solved !" << std::endl;
     return false;
   } else {
-    double csalpha11 = (a1 * c1 + b1 * sqrt(a1 * a1 + b1 * b1 - c1 * c1)) /
-                       (a1 * a1 + b1 * b1);
-    double csalpha12 = (a1 * c1 - b1 * sqrt(a1 * a1 + b1 * b1 - c1 * c1)) /
-                       (a1 * a1 + b1 * b1);
-    double csalpha21 = (a2 * c2 + b2 * sqrt(a2 * a2 + b2 * b2 - c2 * c2)) /
-                       (a2 * a2 + b2 * b2);
-    double csalpha22 = (a2 * c2 - b2 * sqrt(a2 * a2 + b2 * b2 - c2 * c2)) /
-                       (a2 * a2 + b2 * b2);
+    double csalpha11 = (a1 * c1 + b1 * sqrt(a1 * a1 + b1 * b1 - c1 * c1)) / (a1 * a1 + b1 * b1);
+    double csalpha12 = (a1 * c1 - b1 * sqrt(a1 * a1 + b1 * b1 - c1 * c1)) / (a1 * a1 + b1 * b1);
+    double csalpha21 = (a2 * c2 + b2 * sqrt(a2 * a2 + b2 * b2 - c2 * c2)) / (a2 * a2 + b2 * b2);
+    double csalpha22 = (a2 * c2 - b2 * sqrt(a2 * a2 + b2 * b2 - c2 * c2)) / (a2 * a2 + b2 * b2);
     if (abs(csalpha11) > 1.0) {
       std::cout << "ErrorID02 : !!!!!!limb1 !" << std::endl;
       return false;
@@ -357,16 +324,14 @@ bool functionIKID_S2P::calcJointPosRefRight() {
       alpha2_p << alpha21, alpha22, alpha23, alpha24;
       for (int i = 0; i < 4; i++) {
         if (alpha1_p(i) >= -PI / 2 && alpha1_p(i) <= PI / 2) {
-          if (abs(a1 * cos(alpha1_p(i)) + b1 * sin(alpha1_p(i)) - c1) <=
-              0.0000001) {
+          if (abs(a1 * cos(alpha1_p(i)) + b1 * sin(alpha1_p(i)) - c1) <= 0.0000001) {
             alpha1RightRef = alpha1_p(i);
           }
         }
       }
       for (int i = 0; i < 4; i++) {
         if (alpha2_p(i) >= -PI / 2 && alpha2_p(i) <= PI / 2) {
-          if (abs(a2 * cos(alpha2_p(i)) + b2 * sin(alpha2_p(i)) - c2) <=
-              0.0000001) {
+          if (abs(a2 * cos(alpha2_p(i)) + b2 * sin(alpha2_p(i)) - c2) <= 0.0000001) {
             alpha2RightRef = alpha2_p(i);
           }
         }
@@ -386,37 +351,29 @@ bool functionIKID_S2P::calcFK() {
 }
 
 bool functionIKID_S2P::calcAnkleEstLeft() {
-  static const float b_a[50]{
-      3.59178543F,   0.775940239F,  1.24691415F,  -5.07508802F, 2.40616512F,
-      -0.604540408F, -5.0010376F,   1.61057806F,  -3.09902048F, 1.94651365F,
-      -0.211533889F, -0.129851863F, 2.49764037F,  0.129169494F, -1.95933187F,
-      -0.201830804F, -4.24206257F,  3.38318372F,  0.62031883F,  5.58123398F,
-      -4.23221731F,  6.32177687F,   1.35723114F,  -3.84512877F, -2.89399F,
-      -5.53990841F,  4.66575718F,   5.66879654F,  4.68981028F,  -1.29733133F,
-      -3.07611585F,  -1.73929477F,  -3.75354934F, 3.33007216F,  -1.3362695F,
-      -1.24159634F,  -6.16725826F,  -1.67880929F, 6.17626429F,  1.27029467F,
-      -1.35327601F,  3.944767F,     -2.71123481F, 2.58899856F,  -3.3408823F,
-      5.64190865F,   -2.57107902F,  3.83001328F,  -1.91180086F, -5.4636426F};
+  static const float b_a[50]{3.59178543F,  0.775940239F, 1.24691415F,  -5.07508802F,  2.40616512F,   -0.604540408F,
+                             -5.0010376F,  1.61057806F,  -3.09902048F, 1.94651365F,   -0.211533889F, -0.129851863F,
+                             2.49764037F,  0.129169494F, -1.95933187F, -0.201830804F, -4.24206257F,  3.38318372F,
+                             0.62031883F,  5.58123398F,  -4.23221731F, 6.32177687F,   1.35723114F,   -3.84512877F,
+                             -2.89399F,    -5.53990841F, 4.66575718F,  5.66879654F,   4.68981028F,   -1.29733133F,
+                             -3.07611585F, -1.73929477F, -3.75354934F, 3.33007216F,   -1.3362695F,   -1.24159634F,
+                             -6.16725826F, -1.67880929F, 6.17626429F,  1.27029467F,   -1.35327601F,  3.944767F,
+                             -2.71123481F, 2.58899856F,  -3.3408823F,  5.64190865F,   -2.57107902F,  3.83001328F,
+                             -1.91180086F, -5.4636426F};
   static const float c_a[50]{
-      -0.571474791F,   -0.306457788F,   0.00565536972F, -0.0678443089F,
-      0.0100264493F,   0.0219776984F,   -0.624789774F,  0.166214675F,
-      -0.35164389F,    0.00229097856F,  -0.026138939F,  0.0251090359F,
-      0.000309568713F, 0.000186517354F, 0.00285909977F, 0.000529525511F,
-      0.201675698F,    -0.0258218329F,  -0.663394928F,  -0.0903202072F,
-      -0.301209271F,   0.43761003F,     -0.337631851F,  0.537240088F,
-      -0.171232209F,   -0.0424098745F,  -0.336149663F,  0.534753382F,
-      0.740822732F,    0.246673137F,    -0.394871175F,  0.603340268F,
-      -0.19152014F,    -0.0679072589F,  -0.97987324F,   -0.367859572F,
-      0.0732798278F,   -0.137250915F,   0.044957146F,   0.0476667322F,
-      0.0107350014F,   0.0179120507F,   0.0508709699F,  -0.00389487064F,
-      0.048437871F,    -0.0956749767F,  0.0588298F,     -0.0262468122F,
-      -0.0575751F,     0.0991663188F};
-  static const float fv[25]{
-      -7.08717394F,  -5.17271185F, -6.17403316F,  5.37523031F,   -2.1499157F,
-      2.72721028F,   3.00402284F,  -1.33928549F,  2.60191917F,   -0.79004544F,
-      0.628515601F,  0.228955984F, -0.112595975F, -0.229212746F, -0.714729667F,
-      -0.659370422F, -2.54766536F, 2.55712104F,   2.23827672F,   4.14827299F,
-      -4.30017614F,  5.56251049F,  4.31973553F,   -5.77351F,     -7.7286644F};
+      -0.571474791F,  -0.306457788F,   0.00565536972F, -0.0678443089F, 0.0100264493F,  0.0219776984F,   -0.624789774F,
+      0.166214675F,   -0.35164389F,    0.00229097856F, -0.026138939F,  0.0251090359F,  0.000309568713F, 0.000186517354F,
+      0.00285909977F, 0.000529525511F, 0.201675698F,   -0.0258218329F, -0.663394928F,  -0.0903202072F,  -0.301209271F,
+      0.43761003F,    -0.337631851F,   0.537240088F,   -0.171232209F,  -0.0424098745F, -0.336149663F,   0.534753382F,
+      0.740822732F,   0.246673137F,    -0.394871175F,  0.603340268F,   -0.19152014F,   -0.0679072589F,  -0.97987324F,
+      -0.367859572F,  0.0732798278F,   -0.137250915F,  0.044957146F,   0.0476667322F,  0.0107350014F,   0.0179120507F,
+      0.0508709699F,  -0.00389487064F, 0.048437871F,   -0.0956749767F, 0.0588298F,     -0.0262468122F,  -0.0575751F,
+      0.0991663188F};
+  static const float fv[25]{-7.08717394F,  -5.17271185F, -6.17403316F,  5.37523031F,   -2.1499157F,
+                            2.72721028F,   3.00402284F,  -1.33928549F,  2.60191917F,   -0.79004544F,
+                            0.628515601F,  0.228955984F, -0.112595975F, -0.229212746F, -0.714729667F,
+                            -0.659370422F, -2.54766536F, 2.55712104F,   2.23827672F,   4.14827299F,
+                            -4.30017614F,  5.56251049F,  4.31973553F,   -5.77351F,     -7.7286644F};
   static const float fv1[2]{0.200858429F, 0.00381205324F};
   float a[25];
   float xp1_idx_0;
@@ -438,12 +395,7 @@ bool functionIKID_S2P::calcAnkleEstLeft() {
   //  Sigmoid Symmetric Transfer Function
   //  Layer 2
   for (int k{0}; k < 25; k++) {
-    a[k] =
-        2.0F /
-            (std::exp(-2.0F * ((b_a[k] * xp1_idx_0 + b_a[k + 25] * xp1_idx_1) +
-                               fv[k])) +
-             1.0F) -
-        1.0F;
+    a[k] = 2.0F / (std::exp(-2.0F * ((b_a[k] * xp1_idx_0 + b_a[k + 25] * xp1_idx_1) + fv[k])) + 1.0F) - 1.0F;
   }
   //  Output 1
   //  Map Minimum and Maximum Output Reverse-Processing Function
@@ -453,8 +405,7 @@ bool functionIKID_S2P::calcAnkleEstLeft() {
     for (int i{0}; i < 25; i++) {
       xp1_idx_0 += c_a[k + (i << 1)] * a[i];
     }
-    b_y1[k] = ((xp1_idx_0 + fv1[k]) - -1.0F) /
-                  (-0.943695307F * static_cast<float>(k) + 2.29183125F) +
+    b_y1[k] = ((xp1_idx_0 + fv1[k]) - -1.0F) / (-0.943695307F * static_cast<float>(k) + 2.29183125F) +
               (-0.610865235F * static_cast<float>(k) - 0.436332315F);
   }
 
@@ -463,38 +414,29 @@ bool functionIKID_S2P::calcAnkleEstLeft() {
   return 1;
 }
 bool functionIKID_S2P::calcAnkleEstRight() {
-
-  static const float b_a[50]{
-      3.59178543F,   0.775940239F,  1.24691415F,  -5.07508802F, 2.40616512F,
-      -0.604540408F, -5.0010376F,   1.61057806F,  -3.09902048F, 1.94651365F,
-      -0.211533889F, -0.129851863F, 2.49764037F,  0.129169494F, -1.95933187F,
-      -0.201830804F, -4.24206257F,  3.38318372F,  0.62031883F,  5.58123398F,
-      -4.23221731F,  6.32177687F,   1.35723114F,  -3.84512877F, -2.89399F,
-      -5.53990841F,  4.66575718F,   5.66879654F,  4.68981028F,  -1.29733133F,
-      -3.07611585F,  -1.73929477F,  -3.75354934F, 3.33007216F,  -1.3362695F,
-      -1.24159634F,  -6.16725826F,  -1.67880929F, 6.17626429F,  1.27029467F,
-      -1.35327601F,  3.944767F,     -2.71123481F, 2.58899856F,  -3.3408823F,
-      5.64190865F,   -2.57107902F,  3.83001328F,  -1.91180086F, -5.4636426F};
+  static const float b_a[50]{3.59178543F,  0.775940239F, 1.24691415F,  -5.07508802F,  2.40616512F,   -0.604540408F,
+                             -5.0010376F,  1.61057806F,  -3.09902048F, 1.94651365F,   -0.211533889F, -0.129851863F,
+                             2.49764037F,  0.129169494F, -1.95933187F, -0.201830804F, -4.24206257F,  3.38318372F,
+                             0.62031883F,  5.58123398F,  -4.23221731F, 6.32177687F,   1.35723114F,   -3.84512877F,
+                             -2.89399F,    -5.53990841F, 4.66575718F,  5.66879654F,   4.68981028F,   -1.29733133F,
+                             -3.07611585F, -1.73929477F, -3.75354934F, 3.33007216F,   -1.3362695F,   -1.24159634F,
+                             -6.16725826F, -1.67880929F, 6.17626429F,  1.27029467F,   -1.35327601F,  3.944767F,
+                             -2.71123481F, 2.58899856F,  -3.3408823F,  5.64190865F,   -2.57107902F,  3.83001328F,
+                             -1.91180086F, -5.4636426F};
   static const float c_a[50]{
-      -0.571474791F,   -0.306457788F,   0.00565536972F, -0.0678443089F,
-      0.0100264493F,   0.0219776984F,   -0.624789774F,  0.166214675F,
-      -0.35164389F,    0.00229097856F,  -0.026138939F,  0.0251090359F,
-      0.000309568713F, 0.000186517354F, 0.00285909977F, 0.000529525511F,
-      0.201675698F,    -0.0258218329F,  -0.663394928F,  -0.0903202072F,
-      -0.301209271F,   0.43761003F,     -0.337631851F,  0.537240088F,
-      -0.171232209F,   -0.0424098745F,  -0.336149663F,  0.534753382F,
-      0.740822732F,    0.246673137F,    -0.394871175F,  0.603340268F,
-      -0.19152014F,    -0.0679072589F,  -0.97987324F,   -0.367859572F,
-      0.0732798278F,   -0.137250915F,   0.044957146F,   0.0476667322F,
-      0.0107350014F,   0.0179120507F,   0.0508709699F,  -0.00389487064F,
-      0.048437871F,    -0.0956749767F,  0.0588298F,     -0.0262468122F,
-      -0.0575751F,     0.0991663188F};
-  static const float fv[25]{
-      -7.08717394F,  -5.17271185F, -6.17403316F,  5.37523031F,   -2.1499157F,
-      2.72721028F,   3.00402284F,  -1.33928549F,  2.60191917F,   -0.79004544F,
-      0.628515601F,  0.228955984F, -0.112595975F, -0.229212746F, -0.714729667F,
-      -0.659370422F, -2.54766536F, 2.55712104F,   2.23827672F,   4.14827299F,
-      -4.30017614F,  5.56251049F,  4.31973553F,   -5.77351F,     -7.7286644F};
+      -0.571474791F,  -0.306457788F,   0.00565536972F, -0.0678443089F, 0.0100264493F,  0.0219776984F,   -0.624789774F,
+      0.166214675F,   -0.35164389F,    0.00229097856F, -0.026138939F,  0.0251090359F,  0.000309568713F, 0.000186517354F,
+      0.00285909977F, 0.000529525511F, 0.201675698F,   -0.0258218329F, -0.663394928F,  -0.0903202072F,  -0.301209271F,
+      0.43761003F,    -0.337631851F,   0.537240088F,   -0.171232209F,  -0.0424098745F, -0.336149663F,   0.534753382F,
+      0.740822732F,   0.246673137F,    -0.394871175F,  0.603340268F,   -0.19152014F,   -0.0679072589F,  -0.97987324F,
+      -0.367859572F,  0.0732798278F,   -0.137250915F,  0.044957146F,   0.0476667322F,  0.0107350014F,   0.0179120507F,
+      0.0508709699F,  -0.00389487064F, 0.048437871F,   -0.0956749767F, 0.0588298F,     -0.0262468122F,  -0.0575751F,
+      0.0991663188F};
+  static const float fv[25]{-7.08717394F,  -5.17271185F, -6.17403316F,  5.37523031F,   -2.1499157F,
+                            2.72721028F,   3.00402284F,  -1.33928549F,  2.60191917F,   -0.79004544F,
+                            0.628515601F,  0.228955984F, -0.112595975F, -0.229212746F, -0.714729667F,
+                            -0.659370422F, -2.54766536F, 2.55712104F,   2.23827672F,   4.14827299F,
+                            -4.30017614F,  5.56251049F,  4.31973553F,   -5.77351F,     -7.7286644F};
   static const float fv1[2]{0.200858429F, 0.00381205324F};
   float a[25];
   float xp1_idx_0;
@@ -516,12 +458,7 @@ bool functionIKID_S2P::calcAnkleEstRight() {
   //  Sigmoid Symmetric Transfer Function
   //  Layer 2
   for (int k{0}; k < 25; k++) {
-    a[k] =
-        2.0F /
-            (std::exp(-2.0F * ((b_a[k] * xp1_idx_0 + b_a[k + 25] * xp1_idx_1) +
-                               fv[k])) +
-             1.0F) -
-        1.0F;
+    a[k] = 2.0F / (std::exp(-2.0F * ((b_a[k] * xp1_idx_0 + b_a[k + 25] * xp1_idx_1) + fv[k])) + 1.0F) - 1.0F;
   }
   //  Output 1
   //  Map Minimum and Maximum Output Reverse-Processing Function
@@ -531,8 +468,7 @@ bool functionIKID_S2P::calcAnkleEstRight() {
     for (int i{0}; i < 25; i++) {
       xp1_idx_0 += c_a[k + (i << 1)] * a[i];
     }
-    b_y1[k] = ((xp1_idx_0 + fv1[k]) - -1.0F) /
-                  (-0.943695307F * static_cast<float>(k) + 2.29183125F) +
+    b_y1[k] = ((xp1_idx_0 + fv1[k]) - -1.0F) / (-0.943695307F * static_cast<float>(k) + 2.29183125F) +
               (-0.610865235F * static_cast<float>(k) - 0.436332315F);
   }
 
@@ -548,48 +484,35 @@ bool functionIKID_S2P::calcIK() {
   return 1;
 }
 bool functionIKID_S2P::calcJLeft() {
-
-  rotXLeft << 1.0, 0.0, 0.0, 0.0, cos(rollLeftEst), -sin(rollLeftEst), 0,
-      sin(rollLeftEst), cos(rollLeftEst);
-  rotYLeft << cos(pitchLeftEst), 0.0, sin(pitchLeftEst), 0.0, 1.0, 0.0,
-      -sin(pitchLeftEst), 0.0, cos(pitchLeftEst);
+  rotXLeft << 1.0, 0.0, 0.0, 0.0, cos(rollLeftEst), -sin(rollLeftEst), 0, sin(rollLeftEst), cos(rollLeftEst);
+  rotYLeft << cos(pitchLeftEst), 0.0, sin(pitchLeftEst), 0.0, 1.0, 0.0, -sin(pitchLeftEst), 0.0, cos(pitchLeftEst);
 
   rotYXLeft = rotYLeft * rotXLeft;
   oP1BodyLeft = rotYXLeft * oP1LeftFoot;
   oP2BodyLeft = rotYXLeft * oP2LeftFoot;
   // footComPosBodyLeft = rotYXLeft*footComPos;
 
-  C1P1Left << oP1BodyLeft(0) + leftAnkleALimb * cos(alpha1LeftEst),
-      oP1BodyLeft(1) - leftAnkleBaseDis,
+  C1P1Left << oP1BodyLeft(0) + leftAnkleALimb * cos(alpha1LeftEst), oP1BodyLeft(1) - leftAnkleBaseDis,
       oP1BodyLeft(2) - leftAnkleZLimb1 - leftAnkleALimb * sin(alpha1LeftEst);
-  C2P2Left << oP2BodyLeft(0) + leftAnkleALimb * cos(alpha2LeftEst),
-      oP2BodyLeft(1) + leftAnkleBaseDis,
+  C2P2Left << oP2BodyLeft(0) + leftAnkleALimb * cos(alpha2LeftEst), oP2BodyLeft(1) + leftAnkleBaseDis,
       oP2BodyLeft(2) - leftAnkleZLimb2 - leftAnkleALimb * sin(alpha2LeftEst);
 
-  ROmegaLeft << 0.0, rotYXLeft(0, 0), 1.0, rotYXLeft(1, 0), 0.0,
-      rotYXLeft(2, 0);
+  ROmegaLeft << 0.0, rotYXLeft(0, 0), 1.0, rotYXLeft(1, 0), 0.0, rotYXLeft(2, 0);
 
   JP1Left = -Skew(oP1BodyLeft) * ROmegaLeft;
   JP2Left = -Skew(oP2BodyLeft) * ROmegaLeft;
   // JFootComLeft = -Skew(footComPosBodyLeft) * ROmegaLeft;
 
-  B1C1Left << -leftAnkleALimb * cos(alpha1LeftEst), 0,
-      leftAnkleALimb * sin(alpha1LeftEst),
-      B2C2Left << -leftAnkleALimb * cos(alpha2LeftEst), 0,
-      leftAnkleALimb * sin(alpha2LeftEst);
+  B1C1Left << -leftAnkleALimb * cos(alpha1LeftEst), 0, leftAnkleALimb * sin(alpha1LeftEst),
+      B2C2Left << -leftAnkleALimb * cos(alpha2LeftEst), 0, leftAnkleALimb * sin(alpha2LeftEst);
 
-  JLeft << C1P1Left.transpose() * JP1Left /
-               (B1C1Left(2) * C1P1Left(0) - B1C1Left(0) * C1P1Left(2)),
-      C2P2Left.transpose() * JP2Left /
-          (B2C2Left(2) * C2P2Left(0) - B2C2Left(0) * C2P2Left(2));
-  JC1Left << B1C1Left(2) * JLeft.block(0, 0, 1, 2), 0.0, 0.0,
-      -B1C1Left(0) * JLeft.block(0, 0, 1, 2);
-  JC2Left << B2C2Left(2) * JLeft.block(1, 0, 1, 2), 0.0, 0.0,
-      -B2C2Left(0) * JLeft.block(1, 0, 1, 2);
+  JLeft << C1P1Left.transpose() * JP1Left / (B1C1Left(2) * C1P1Left(0) - B1C1Left(0) * C1P1Left(2)),
+      C2P2Left.transpose() * JP2Left / (B2C2Left(2) * C2P2Left(0) - B2C2Left(0) * C2P2Left(2));
+  JC1Left << B1C1Left(2) * JLeft.block(0, 0, 1, 2), 0.0, 0.0, -B1C1Left(0) * JLeft.block(0, 0, 1, 2);
+  JC2Left << B2C2Left(2) * JLeft.block(1, 0, 1, 2), 0.0, 0.0, -B2C2Left(0) * JLeft.block(1, 0, 1, 2);
   // std::cout<<"JLeft:"<<std::endl<<JLeft<<std::endl;
 
-  omegaLeftEstBeforeFilt =
-      JLeft.completeOrthogonalDecomposition().pseudoInverse() * qDotLeftEst;
+  omegaLeftEstBeforeFilt = JLeft.completeOrthogonalDecomposition().pseudoInverse() * qDotLeftEst;
   omegaLeftEst = omegaLeftEstBeforeFilt;
   torLeftEst = JLeft.transpose() * qTorLeftEst;
   //     for (int i = 0; i < 2; i++)
@@ -607,81 +530,59 @@ bool functionIKID_S2P::calcJDotLeft() {
   JP2DotLeft = -Skew(vP2Left) * ROmegaLeft;
 
   JDotLeft << (C1P1Left.transpose() *
-                   (JP1DotLeft + B1C1Left * JLeft.block(0, 0, 1, 2) *
-                                     omegaLeftEst * JLeft.block(0, 0, 1, 2)) +
-               omegaLeftEst.transpose() * (JP1Left - JC1Left).transpose() *
-                   (JP1Left - JC1Left)) /
+                   (JP1DotLeft + B1C1Left * JLeft.block(0, 0, 1, 2) * omegaLeftEst * JLeft.block(0, 0, 1, 2)) +
+               omegaLeftEst.transpose() * (JP1Left - JC1Left).transpose() * (JP1Left - JC1Left)) /
                   (B1C1Left(2) * C1P1Left(0) - B1C1Left(0) * C1P1Left(2)),
       (C2P2Left.transpose() *
-           (JP2DotLeft + B2C2Left * JLeft.block(1, 0, 1, 2) * omegaLeftEst *
-                             JLeft.block(1, 0, 1, 2)) +
-       omegaLeftEst.transpose() * (JP2Left - JC2Left).transpose() *
-           (JP2Left - JC2Left)) /
+           (JP2DotLeft + B2C2Left * JLeft.block(1, 0, 1, 2) * omegaLeftEst * JLeft.block(1, 0, 1, 2)) +
+       omegaLeftEst.transpose() * (JP2Left - JC2Left).transpose() * (JP2Left - JC2Left)) /
           (B2C2Left(2) * C2P2Left(0) - B2C2Left(0) * C2P2Left(2));
 
   Eigen::MatrixXd JC1Dot_ = Eigen::MatrixXd::Zero(3, 2);
   Eigen::MatrixXd JC2Dot_ = Eigen::MatrixXd::Zero(3, 2);
-  JC1Dot_ << B1C1Left(2) * JDotLeft.block(0, 0, 1, 2), 0.0, 0.0,
-      -B1C1Left(0) * JDotLeft.block(0, 0, 1, 2);
-  JC2Dot_ << B2C2Left(2) * JDotLeft.block(1, 0, 1, 2), 0.0, 0.0,
-      -B2C2Left(0) * JDotLeft.block(1, 0, 1, 2);
+  JC1Dot_ << B1C1Left(2) * JDotLeft.block(0, 0, 1, 2), 0.0, 0.0, -B1C1Left(0) * JDotLeft.block(0, 0, 1, 2);
+  JC2Dot_ << B2C2Left(2) * JDotLeft.block(1, 0, 1, 2), 0.0, 0.0, -B2C2Left(0) * JDotLeft.block(1, 0, 1, 2);
 
   JC1DotLeft = -qDotLeftEst(0) * B1C1Left * JLeft.block(0, 0, 1, 2) + JC1Dot_;
   JC2DotLeft = -qDotLeftEst(1) * B2C2Left * JLeft.block(1, 0, 1, 2) + JC2Dot_;
 
-  ROmegaDotLeft << 0.0, -sin(pitchLeftEst) * omegaLeftEst(0), 0.0, 0.0, 0.0,
-      -cos(pitchLeftEst) * omegaLeftEst(0);
+  ROmegaDotLeft << 0.0, -sin(pitchLeftEst) * omegaLeftEst(0), 0.0, 0.0, 0.0, -cos(pitchLeftEst) * omegaLeftEst(0);
   return 1;
 }
 bool functionIKID_S2P::calcJRight() {
-
-  rotXRight << 1.0, 0.0, 0.0, 0.0, cos(rollRightEst), -sin(rollRightEst), 0,
-      sin(rollRightEst), cos(rollRightEst);
-  rotYRight << cos(pitchRightEst), 0.0, sin(pitchRightEst), 0.0, 1.0, 0.0,
-      -sin(pitchRightEst), 0.0, cos(pitchRightEst);
+  rotXRight << 1.0, 0.0, 0.0, 0.0, cos(rollRightEst), -sin(rollRightEst), 0, sin(rollRightEst), cos(rollRightEst);
+  rotYRight << cos(pitchRightEst), 0.0, sin(pitchRightEst), 0.0, 1.0, 0.0, -sin(pitchRightEst), 0.0, cos(pitchRightEst);
 
   rotYXRight = rotYRight * rotXRight;
   oP1BodyRight = rotYXRight * oP1RightFoot;
   oP2BodyRight = rotYXRight * oP2RightFoot;
   footComPosBodyRight = rotYXRight * footComPos;
 
-  C1P1Right << oP1BodyRight(0) + rightAnkleALimb * cos(alpha1RightEst),
-      oP1BodyRight(1) + rightAnkleBaseDis,
-      oP1BodyRight(2) - rightAnkleZLimb1 -
-          rightAnkleALimb * sin(alpha1RightEst);
-  C2P2Right << oP2BodyRight(0) + rightAnkleALimb * cos(alpha2RightEst),
-      oP2BodyRight(1) - rightAnkleBaseDis,
-      oP2BodyRight(2) - rightAnkleZLimb2 -
-          rightAnkleALimb * sin(alpha2RightEst);
+  C1P1Right << oP1BodyRight(0) + rightAnkleALimb * cos(alpha1RightEst), oP1BodyRight(1) + rightAnkleBaseDis,
+      oP1BodyRight(2) - rightAnkleZLimb1 - rightAnkleALimb * sin(alpha1RightEst);
+  C2P2Right << oP2BodyRight(0) + rightAnkleALimb * cos(alpha2RightEst), oP2BodyRight(1) - rightAnkleBaseDis,
+      oP2BodyRight(2) - rightAnkleZLimb2 - rightAnkleALimb * sin(alpha2RightEst);
 
-  ROmegaRight << 0.0, rotYXRight(0, 0), 1.0, rotYXRight(1, 0), 0.0,
-      rotYXRight(2, 0);
+  ROmegaRight << 0.0, rotYXRight(0, 0), 1.0, rotYXRight(1, 0), 0.0, rotYXRight(2, 0);
 
   JP1Right = -Skew(oP1BodyRight) * ROmegaRight;
   JP2Right = -Skew(oP2BodyRight) * ROmegaRight;
   JFootComRight = -Skew(footComPosBodyRight) * ROmegaRight;
 
-  B1C1Right << -rightAnkleALimb * cos(alpha1RightEst), 0,
-      rightAnkleALimb * sin(alpha1RightEst),
-      B2C2Right << -rightAnkleALimb * cos(alpha2RightEst), 0,
-      rightAnkleALimb * sin(alpha2RightEst);
-  JRight << C1P1Right.transpose() * JP1Right /
-                (B1C1Right(2) * C1P1Right(0) - B1C1Right(0) * C1P1Right(2)),
-      C2P2Right.transpose() * JP2Right /
-          (B2C2Right(2) * C2P2Right(0) - B2C2Right(0) * C2P2Right(2));
+  B1C1Right << -rightAnkleALimb * cos(alpha1RightEst), 0, rightAnkleALimb * sin(alpha1RightEst),
+      B2C2Right << -rightAnkleALimb * cos(alpha2RightEst), 0, rightAnkleALimb * sin(alpha2RightEst);
+  JRight << C1P1Right.transpose() * JP1Right / (B1C1Right(2) * C1P1Right(0) - B1C1Right(0) * C1P1Right(2)),
+      C2P2Right.transpose() * JP2Right / (B2C2Right(2) * C2P2Right(0) - B2C2Right(0) * C2P2Right(2));
 
-  omegaRightEstBeforeFilt =
-      JRight.completeOrthogonalDecomposition().pseudoInverse() * qDotRightEst;
+  omegaRightEstBeforeFilt = JRight.completeOrthogonalDecomposition().pseudoInverse() * qDotRightEst;
   omegaRightEst = omegaRightEstBeforeFilt;
   //     for (int i = 0; i < 2; i++)
   //         {
   //           omegaLeftEst[i] = filter(omegaLeftEst[i],
   //           &omegaLeftEstFilter[i],8);
   //         }
-  JC1Right << B1C1Right(2) * JRight.block(0, 0, 1, 2), 0.0, 0.0,
-      -B1C1Right(0) * JRight.block(0, 0, 1, 2);
-  JC2Right << B2C2Right(2) * JRight.block(1, 0, 1, 2), 0.0, 0.0,
-      -B2C2Right(0) * JRight.block(1, 0, 1, 2);
+  JC1Right << B1C1Right(2) * JRight.block(0, 0, 1, 2), 0.0, 0.0, -B1C1Right(0) * JRight.block(0, 0, 1, 2);
+  JC2Right << B2C2Right(2) * JRight.block(1, 0, 1, 2), 0.0, 0.0, -B2C2Right(0) * JRight.block(1, 0, 1, 2);
   torRightEst = JRight.transpose() * qTorRightEst;
   return 1;
 }
@@ -693,39 +594,28 @@ bool functionIKID_S2P::calcJDotRight() {
   // std::cout<<"JP1DotLeft:"<<std::endl<<JP1DotLeft<<std::endl;
   // std::cout<<"JP2DotLeft:"<<std::endl<<JP2DotLeft<<std::endl;
   JDotRight << (C1P1Right.transpose() *
-                    (JP1DotRight + B1C1Right * JRight.block(0, 0, 1, 2) *
-                                       omegaRightEst *
-                                       JRight.block(0, 0, 1, 2)) +
-                omegaRightEst.transpose() * (JP1Right - JC1Right).transpose() *
-                    (JP1Right - JC1Right)) /
+                    (JP1DotRight + B1C1Right * JRight.block(0, 0, 1, 2) * omegaRightEst * JRight.block(0, 0, 1, 2)) +
+                omegaRightEst.transpose() * (JP1Right - JC1Right).transpose() * (JP1Right - JC1Right)) /
                    (B1C1Right(2) * C1P1Right(0) - B1C1Right(0) * C1P1Right(2)),
       (C2P2Right.transpose() *
-           (JP2DotRight + B2C2Right * JRight.block(1, 0, 1, 2) * omegaRightEst *
-                              JRight.block(1, 0, 1, 2)) +
-       omegaRightEst.transpose() * (JP2Right - JC2Right).transpose() *
-           (JP2Right - JC2Right)) /
+           (JP2DotRight + B2C2Right * JRight.block(1, 0, 1, 2) * omegaRightEst * JRight.block(1, 0, 1, 2)) +
+       omegaRightEst.transpose() * (JP2Right - JC2Right).transpose() * (JP2Right - JC2Right)) /
           (B2C2Right(2) * C2P2Right(0) - B2C2Right(0) * C2P2Right(2));
   // std::cout<<"JDotLeft:"<<std::endl<<JDotLeft<<std::endl;
 
   Eigen::MatrixXd JC1Dot_ = Eigen::MatrixXd::Zero(3, 2);
   Eigen::MatrixXd JC2Dot_ = Eigen::MatrixXd::Zero(3, 2);
-  JC1Dot_ << B1C1Right(2) * JDotRight.block(0, 0, 1, 2), 0.0, 0.0,
-      -B1C1Right(0) * JDotRight.block(0, 0, 1, 2);
-  JC2Dot_ << B2C2Right(2) * JDotRight.block(1, 0, 1, 2), 0.0, 0.0,
-      -B2C2Right(0) * JDotRight.block(1, 0, 1, 2);
+  JC1Dot_ << B1C1Right(2) * JDotRight.block(0, 0, 1, 2), 0.0, 0.0, -B1C1Right(0) * JDotRight.block(0, 0, 1, 2);
+  JC2Dot_ << B2C2Right(2) * JDotRight.block(1, 0, 1, 2), 0.0, 0.0, -B2C2Right(0) * JDotRight.block(1, 0, 1, 2);
 
-  JC1DotRight =
-      -qDotRightEst(0) * B1C1Right * JRight.block(0, 0, 1, 2) + JC1Dot_;
-  JC2DotRight =
-      -qDotRightEst(1) * B2C2Right * JRight.block(1, 0, 1, 2) + JC2Dot_;
+  JC1DotRight = -qDotRightEst(0) * B1C1Right * JRight.block(0, 0, 1, 2) + JC1Dot_;
+  JC2DotRight = -qDotRightEst(1) * B2C2Right * JRight.block(1, 0, 1, 2) + JC2Dot_;
 
-  ROmegaDotRight << 0.0, -sin(pitchRightEst) * omegaRightEst(0), 0.0, 0.0, 0.0,
-      -cos(pitchRightEst) * omegaRightEst(0);
+  ROmegaDotRight << 0.0, -sin(pitchRightEst) * omegaRightEst(0), 0.0, 0.0, 0.0, -cos(pitchRightEst) * omegaRightEst(0);
   return 1;
 }
-bool functionIKID_S2P::getAnkleState(Eigen::VectorXd &ankleOrienEst,
-                                     Eigen::VectorXd &ankleOmegaEst,
-                                     Eigen::VectorXd &ankleTorEst) {
+bool functionIKID_S2P::getAnkleState(Eigen::VectorXd& ankleOrienEst, Eigen::VectorXd& ankleOmegaEst,
+                                     Eigen::VectorXd& ankleTorEst) {
   ankleOrienEst << pitchLeftEst, rollLeftEst, pitchRightEst, rollRightEst;
   ankleOmegaEst << omegaLeftEst, omegaRightEst;
   ankleTorEst << torLeftEst, torRightEst;
@@ -733,12 +623,8 @@ bool functionIKID_S2P::getAnkleState(Eigen::VectorXd &ankleOrienEst,
 }
 
 bool functionIKID_S2P::calcJointTorDes() {
-  tauLeftDes =
-      JLeft.completeOrthogonalDecomposition().pseudoInverse().transpose() *
-      (ankleTauSLeftDes);
-  tauRightDes =
-      JRight.completeOrthogonalDecomposition().pseudoInverse().transpose() *
-      (ankleTauSRightDes);
+  tauLeftDes = JLeft.completeOrthogonalDecomposition().pseudoInverse().transpose() * (ankleTauSLeftDes);
+  tauRightDes = JRight.completeOrthogonalDecomposition().pseudoInverse().transpose() * (ankleTauSRightDes);
   tauDes << tauLeftDes, tauRightDes;
   // Eigen::Vector4d Kp;
   // Kp << 30.0,25.0, 25.0, 30.0;
@@ -752,8 +638,8 @@ bool functionIKID_S2P::calcJointTorDes() {
   qDotRightRef = JRight * omegaRightRef;
   qDotRef << qDotLeftRef, qDotRightRef;
   qDotEst << qDotLeftEst, qDotRightEst;
-  tauDesjointFB = tauDes; // + Kp.asDiagonal()*(qRef-qEst) +
-                          // Kd.asDiagonal()*(qDotRef-qDotEst);
+  tauDesjointFB = tauDes;  // + Kp.asDiagonal()*(qRef-qEst) +
+                           // Kd.asDiagonal()*(qDotRef-qDotEst);
 
   double torLimit = 55.0;
   if (tauDesjointFB(0) >= torLimit) {
@@ -952,7 +838,7 @@ bool functionIKID_S2P::calcJointTorDes() {
 //     }
 // }
 
-Eigen::Matrix3d functionIKID_S2P::Skew(const Eigen::Vector3d &omg) {
+Eigen::Matrix3d functionIKID_S2P::Skew(const Eigen::Vector3d& omg) {
   Eigen::Matrix3d m_ret;
   m_ret << 0.0, -omg(2), omg(1), omg(2), 0.0, -omg(0), -omg(1), omg(0), 0.0;
   return m_ret;

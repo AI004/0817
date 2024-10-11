@@ -1,12 +1,12 @@
 #ifndef XFsmState_H
 #define XFsmState_H
 
-#include <map>
 #include <stdio.h>
+#include <map>
 #include <string>
 
-//#include  "ArmController.h"
-// #include "XApp.h"
+// #include  "ArmController.h"
+//  #include "XApp.h"
 
 // typedef void (*TRANS_FUNC)(void* oldData, string event, void* newData);
 
@@ -15,21 +15,21 @@ using namespace std;
  *
  */
 class XFsmState {
-public:
+ public:
   // XFsmState(void* _robotData);
-  XFsmState(void *app);
+  XFsmState(void* app);
 
-  virtual void init() = 0; // {}
+  virtual void init() = 0;  // {}
   // Behavior to be carried out when entering a state
-  virtual void onEnter() = 0; // {}
+  virtual void onEnter() = 0;  // {}
 
   // Run the normal behavior for the state
-  virtual void run() = 0; //{}
+  virtual void run() = 0;  //{}
 
   // Behavior to be carried out when exiting a state
-  virtual void onExit() = 0; // {}
+  virtual void onExit() = 0;  // {}
 
-  string stateName; // state name string
+  string stateName;  // state name string
 
   virtual int transitionByEvent(string event) { return 0; }
   virtual int transitionByDuration() { return 0; }
@@ -38,13 +38,13 @@ public:
   int addDurationTrans(int loops, string nextState);
   string transition(string event);
   int endDuration();
-  void *app;
+  void* app;
 
-private:
+ private:
   map<string, string> eventMap;
   int duration;
   int elapse;
   string durationState;
 };
 
-#endif // XFsmState_H
+#endif  // XFsmState_H

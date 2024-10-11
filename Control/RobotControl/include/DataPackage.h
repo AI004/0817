@@ -3,7 +3,7 @@
 #include <Eigen/Dense>
 #include <vector>
 class DataPackage {
-public:
+ public:
   // construct function
   DataPackage();
   // data
@@ -11,6 +11,7 @@ public:
   int dim;
   // control cycle time
   double dt;
+  Eigen::Matrix<double, Eigen::Dynamic, 1> q_d_hands;
   /**
    * @brief q_a
    *     joint position sense
@@ -18,6 +19,7 @@ public:
    * qa = [q_joint] for fixed robot
    */
   Eigen::Matrix<double, Eigen::Dynamic, 1> q_a;
+  bool hands_motion_flag{false};
   // joint velocity sense
   Eigen::Matrix<double, Eigen::Dynamic, 1> q_dot_a;
   // joint acceleration command
@@ -96,4 +98,4 @@ public:
   Eigen::VectorXd dataL;
 };
 
-#endif // DATAPACKAGE_H
+#endif  // DATAPACKAGE_H

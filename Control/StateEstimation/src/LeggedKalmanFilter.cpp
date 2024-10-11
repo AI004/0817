@@ -4,22 +4,20 @@
 
 LeggedKalmanFilter::LeggedKalmanFilter() {}
 
-LeggedKalmanFilter::LeggedKalmanFilter(Eigen::VectorXd d_SysNoise,
-                                       Eigen::VectorXd d_MeaNoise, double dt,
-                                       int nState, int nOutput, int nInput) {
+LeggedKalmanFilter::LeggedKalmanFilter(Eigen::VectorXd d_SysNoise, Eigen::VectorXd d_MeaNoise, double dt, int nState,
+                                       int nOutput, int nInput) {
   numState = nState;
   numOutput = nOutput;
   numInput = nInput;
-  sysNoise = d_SysNoise; // standard deviation of system noise
-  meaNoise = d_MeaNoise; // standard deviation of measurement noise
+  sysNoise = d_SysNoise;  // standard deviation of system noise
+  meaNoise = d_MeaNoise;  // standard deviation of measurement noise
   high_suspect_number = 100.0;
 
   estimation_last = Eigen::VectorXd::Zero(numState);
   estimation_now = Eigen::VectorXd::Zero(numState);
-  estimation_noise_std =
-      0.0 * Eigen::MatrixXd::Identity(numState, numState);          // P
-  filter_noise_per = Eigen::MatrixXd::Identity(numState, numState); // P-
-  filter_noise = Eigen::MatrixXd::Identity(numState, numOutput);    // K
+  estimation_noise_std = 0.0 * Eigen::MatrixXd::Identity(numState, numState);  // P
+  filter_noise_per = Eigen::MatrixXd::Identity(numState, numState);            // P-
+  filter_noise = Eigen::MatrixXd::Identity(numState, numOutput);               // K
 
   // A = Eigen::MatrixXd::Identity(numState, numState);
   // A(3, 2) = dt;
@@ -47,8 +45,7 @@ LeggedKalmanFilter::LeggedKalmanFilter(Eigen::VectorXd d_SysNoise,
   A.block(0, 3, 3, 3) = dt * Eigen::MatrixXd::Identity(3, 3);
 
   B = Eigen::MatrixXd::Zero(numState, numInput);
-  B.block(3, 0, numInput, numInput) =
-      Eigen::MatrixXd::Identity(numInput, numInput) * dt;
+  B.block(3, 0, numInput, numInput) = Eigen::MatrixXd::Identity(numInput, numInput) * dt;
 
   C = Eigen::MatrixXd::Zero(numOutput, numState);
   C.block(0, 0, 3, 3) = Eigen::MatrixXd::Identity(3, 3);
@@ -71,9 +68,7 @@ LeggedKalmanFilter::LeggedKalmanFilter(Eigen::VectorXd d_SysNoise,
 
 LeggedKalmanFilter::~LeggedKalmanFilter() {}
 
-Eigen::VectorXd LeggedKalmanFilter::mFilter(Eigen::VectorXd sigIn,
-                                            Eigen::VectorXd aIn,
-                                            Eigen::VectorXd trust) {
+Eigen::VectorXd LeggedKalmanFilter::mFilter(Eigen::VectorXd sigIn, Eigen::VectorXd aIn, Eigen::VectorXd trust) {
   // the first time ,set the origin values as the filter ones
   if (nit == 0) {
     estimation_last = sigIn.head(numState);
@@ -87,26 +82,18 @@ Eigen::VectorXd LeggedKalmanFilter::mFilter(Eigen::VectorXd sigIn,
   // R.block(0, 0, 4, 4); R_.block(4, 4, 4, 4) = (1. + (1. - trust(1)) *
   // high_suspect_number) * R.block(4, 4, 4, 4);
 
-  Q_.block(6, 6, 2, 2) =
-      (1. + (1. - trust(0)) * high_suspect_number) * Q.block(6, 6, 2, 2);
-  Q_.block(8, 8, 2, 2) =
-      (1. + (1. - trust(1)) * high_suspect_number) * Q.block(8, 8, 2, 2);
-  R_.block(2, 2, 4, 4) =
-      (1. + (1. - trust(0)) * high_suspect_number) * R.block(2, 2, 4, 4);
-  R_.block(8, 8, 4, 4) =
-      (1. + (1. - trust(1)) * high_suspect_number) * R.block(8, 8, 4, 4);
+  Q_.block(6, 6, 2, 2) = (1. + (1. - trust(0)) * high_suspect_number) * Q.block(6, 6, 2, 2);
+  Q_.block(8, 8, 2, 2) = (1. + (1. - trust(1)) * high_suspect_number) * Q.block(8, 8, 2, 2);
+  R_.block(2, 2, 4, 4) = (1. + (1. - trust(0)) * high_suspect_number) * R.block(2, 2, 4, 4);
+  R_.block(8, 8, 4, 4) = (1. + (1. - trust(1)) * high_suspect_number) * R.block(8, 8, 4, 4);
 
   estimation_now = A * estimation_last + B * aIn;
 
   filter_noise_per = A * estimation_noise_std * A.transpose() + Q_;
   filter_noise = (filter_noise_per * C.transpose()) *
-                 (C * filter_noise_per * C.transpose() + R_)
-                     .completeOrthogonalDecomposition()
-                     .pseudoInverse();
+                 (C * filter_noise_per * C.transpose() + R_).completeOrthogonalDecomposition().pseudoInverse();
   estimation_now = estimation_now + filter_noise * (sigIn - C * estimation_now);
-  estimation_noise_std =
-      (Eigen::MatrixXd::Identity(numState, numState) - filter_noise * C) *
-      filter_noise_per;
+  estimation_noise_std = (Eigen::MatrixXd::Identity(numState, numState) - filter_noise * C) * filter_noise_per;
   Eigen::MatrixXd temp = estimation_noise_std.transpose();
   estimation_noise_std = 0.5 * estimation_noise_std + 0.5 * temp;
   // update the last filter value for the next estimation
@@ -115,4 +102,4 @@ Eigen::VectorXd LeggedKalmanFilter::mFilter(Eigen::VectorXd sigIn,
   // std::cout << "err: " << (sigIn- estimation_now).transpose()<< std::endl;
   return estimation_now;
 
-} // LeggedKalmanFilter
+}  // LeggedKalmanFilter

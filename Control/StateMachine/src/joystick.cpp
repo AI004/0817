@@ -8,7 +8,7 @@ Joystick_humanoid::~Joystick_humanoid() {
   std::cout << "joystick end" << std::endl;
 }
 
-int Joystick_humanoid::xbox_open(const char *file_name) {
+int Joystick_humanoid::xbox_open(const char* file_name) {
   int xbox_fd;
 
   xbox_fd = open(file_name, O_RDONLY);
@@ -20,7 +20,7 @@ int Joystick_humanoid::xbox_open(const char *file_name) {
   return xbox_fd;
 }
 
-int Joystick_humanoid::xbox_map_read(xbox_map_t *map) {
+int Joystick_humanoid::xbox_map_read(xbox_map_t* map) {
   int len, type, number, value;
   struct js_event js;
 
@@ -38,93 +38,93 @@ int Joystick_humanoid::xbox_map_read(xbox_map_t *map) {
 
   if (type == JS_EVENT_BUTTON) {
     switch (number) {
-    case XBOX_BUTTON_A:
-      map->a = value;
-      break;
+      case XBOX_BUTTON_A:
+        map->a = value;
+        break;
 
-    case XBOX_BUTTON_B:
-      map->b = value;
-      break;
+      case XBOX_BUTTON_B:
+        map->b = value;
+        break;
 
-    case XBOX_BUTTON_X:
-      map->x = value;
-      break;
+      case XBOX_BUTTON_X:
+        map->x = value;
+        break;
 
-    case XBOX_BUTTON_Y:
-      map->y = value;
-      break;
+      case XBOX_BUTTON_Y:
+        map->y = value;
+        break;
 
-    case XBOX_BUTTON_LB:
-      map->lb = value;
-      break;
+      case XBOX_BUTTON_LB:
+        map->lb = value;
+        break;
 
-    case XBOX_BUTTON_RB:
-      map->rb = value;
-      break;
+      case XBOX_BUTTON_RB:
+        map->rb = value;
+        break;
 
-    case XBOX_BUTTON_START:
-      map->start = value;
-      break;
+      case XBOX_BUTTON_START:
+        map->start = value;
+        break;
 
-    case XBOX_BUTTON_BACK:
-      map->back = value;
-      break;
+      case XBOX_BUTTON_BACK:
+        map->back = value;
+        break;
 
-    case XBOX_BUTTON_HOME:
-      map->home = value;
-      break;
+      case XBOX_BUTTON_HOME:
+        map->home = value;
+        break;
 
-    case XBOX_BUTTON_LO:
-      map->lo = value;
-      break;
+      case XBOX_BUTTON_LO:
+        map->lo = value;
+        break;
 
-    case XBOX_BUTTON_RO:
-      map->ro = value;
-      break;
+      case XBOX_BUTTON_RO:
+        map->ro = value;
+        break;
 
-    case XBOX_BUTTON_SEL:
-      map->sel = value;
-      break;
+      case XBOX_BUTTON_SEL:
+        map->sel = value;
+        break;
 
-    default:
-      break;
+      default:
+        break;
     }
   } else if (type == JS_EVENT_AXIS) {
     switch (number) {
-    case XBOX_AXIS_LX:
-      map->lx = value;
-      break;
+      case XBOX_AXIS_LX:
+        map->lx = value;
+        break;
 
-    case XBOX_AXIS_LY:
-      map->ly = value;
-      break;
+      case XBOX_AXIS_LY:
+        map->ly = value;
+        break;
 
-    case XBOX_AXIS_RX:
-      map->rx = value;
-      break;
+      case XBOX_AXIS_RX:
+        map->rx = value;
+        break;
 
-    case XBOX_AXIS_RY:
-      map->ry = value;
-      break;
+      case XBOX_AXIS_RY:
+        map->ry = value;
+        break;
 
-    case XBOX_AXIS_LT:
-      map->lt = value;
-      break;
+      case XBOX_AXIS_LT:
+        map->lt = value;
+        break;
 
-    case XBOX_AXIS_RT:
-      map->rt = value;
-      break;
+      case XBOX_AXIS_RT:
+        map->rt = value;
+        break;
 
-    case XBOX_AXIS_XX:
-      map->xx = value;
-      break;
+      case XBOX_AXIS_XX:
+        map->xx = value;
+        break;
 
-    case XBOX_AXIS_YY:
-      map->yy = value;
-      break;
+      case XBOX_AXIS_YY:
+        map->yy = value;
+        break;
 
-    default:
-      break;
+      default:
+        break;
     }
   } else {
     /* Init do nothing */
@@ -151,8 +151,7 @@ int Joystick_humanoid::xbox_init(void) {
   return 0;
 }
 
-int Joystick_humanoid::xbox_read(xbox_map_t *xbox_m) {
-
+int Joystick_humanoid::xbox_read(xbox_map_t* xbox_m) {
   int len = xbox_map_read(xbox_m);
   if (len < 0) {
     return -1;
@@ -176,6 +175,8 @@ void Joystick_humanoid::init() {
   xbox_m.lb = 0.0;
   xbox_m.lt = -32767;
   xbox_m.rt = -32767;
+  xbox_m.ro = 0.0;
+  xbox_m.lo = 0.0;
   xbox_m.sel = 0;
   current_fsmstate_command = "";
   // ret = pthread_create(&Joystick::xbox_thread, NULL, Joystick::xbox_run,
@@ -249,9 +250,7 @@ std::string Joystick_humanoid::get_state_change() {
   }
 }
 
-std::string Joystick_humanoid::get_current_state_command() {
-  return current_fsmstate_command;
-}
+std::string Joystick_humanoid::get_current_state_command() { return current_fsmstate_command; }
 
 double Joystick_humanoid::get_walk_x_direction_speed() {
   int lt_value = xbox_m.lt;
@@ -259,11 +258,9 @@ double Joystick_humanoid::get_walk_x_direction_speed() {
     int x_value = xbox_m.ly;
     if ((abs(x_value) > deadarea) && (abs(x_value) <= maxvalue)) {
       if (x_value > 0) {
-        return ly_dir * maxspeed_x *
-               ((double)(abs(x_value) - deadarea) / (maxvalue - deadarea));
+        return ly_dir * maxspeed_x * ((double)(abs(x_value) - deadarea) / (maxvalue - deadarea));
       } else {
-        return ly_dir * minspeed_x *
-               ((double)(abs(x_value) - deadarea) / (maxvalue - deadarea));
+        return ly_dir * minspeed_x * ((double)(abs(x_value) - deadarea) / (maxvalue - deadarea));
       }
     } else {
       return 0.0;
@@ -277,11 +274,9 @@ double Joystick_humanoid::get_walk_y_direction_speed() {
   int y_value = xbox_m.lx;
   if ((abs(y_value) > deadarea) && (abs(y_value) <= maxvalue)) {
     if (y_value > 0) {
-      return lx_dir * maxspeed_y *
-             ((double)(abs(y_value) - deadarea) / (maxvalue - deadarea));
+      return lx_dir * maxspeed_y * ((double)(abs(y_value) - deadarea) / (maxvalue - deadarea));
     } else {
-      return lx_dir * minspeed_y *
-             ((double)(abs(y_value) - deadarea) / (maxvalue - deadarea));
+      return lx_dir * minspeed_y * ((double)(abs(y_value) - deadarea) / (maxvalue - deadarea));
     }
   } else {
     return 0.0;
@@ -292,11 +287,9 @@ double Joystick_humanoid::get_walk_yaw_direction_speed() {
   int yaw_value = xbox_m.rx;
   if ((abs(yaw_value) > deadarea) && (abs(yaw_value) <= maxvalue)) {
     if (yaw_value > 0) {
-      return rx_dir * maxspeed_yaw *
-             ((double)(abs(yaw_value) - deadarea) / (maxvalue - deadarea));
+      return rx_dir * maxspeed_yaw * ((double)(abs(yaw_value) - deadarea) / (maxvalue - deadarea));
     } else {
-      return rx_dir * minspeed_yaw *
-             ((double)(abs(yaw_value) - deadarea) / (maxvalue - deadarea));
+      return rx_dir * minspeed_yaw * ((double)(abs(yaw_value) - deadarea) / (maxvalue - deadarea));
     }
   } else {
     return 0.0;
@@ -336,11 +329,9 @@ double Joystick_humanoid::get_stand_x_direction_position() {
   int x_value = xbox_m.ly;
   if ((abs(x_value) > deadarea) && (abs(x_value) <= maxvalue)) {
     if (x_value > 0) {
-      return ly_dir * maxposition_x *
-             ((double)(abs(x_value) - deadarea) / (maxvalue - deadarea));
+      return ly_dir * maxposition_x * ((double)(abs(x_value) - deadarea) / (maxvalue - deadarea));
     } else {
-      return ly_dir * minposition_x *
-             ((double)(abs(x_value) - deadarea) / (maxvalue - deadarea));
+      return ly_dir * minposition_x * ((double)(abs(x_value) - deadarea) / (maxvalue - deadarea));
     }
   } else {
     return 0.0;
@@ -351,11 +342,9 @@ double Joystick_humanoid::get_stand_y_direction_posiiton() {
   int y_value = xbox_m.lx;
   if ((abs(y_value) > deadarea) && (abs(y_value) <= maxvalue)) {
     if (y_value > 0) {
-      return lx_dir * maxposition_y *
-             ((double)(abs(y_value) - deadarea) / (maxvalue - deadarea));
+      return lx_dir * maxposition_y * ((double)(abs(y_value) - deadarea) / (maxvalue - deadarea));
     } else {
-      return lx_dir * minposition_y *
-             ((double)(abs(y_value) - deadarea) / (maxvalue - deadarea));
+      return lx_dir * minposition_y * ((double)(abs(y_value) - deadarea) / (maxvalue - deadarea));
     }
   } else {
     return 0.0;
@@ -366,11 +355,9 @@ double Joystick_humanoid::get_stand_z_direction_posiiton() {
   int z_value = xbox_m.ry;
   if ((abs(z_value) > deadarea) && (abs(z_value) <= maxvalue)) {
     if (z_value > 0) {
-      return ry_dir * maxposition_z *
-             ((double)(abs(z_value) - deadarea) / (maxvalue - deadarea));
+      return ry_dir * maxposition_z * ((double)(abs(z_value) - deadarea) / (maxvalue - deadarea));
     } else {
-      return ry_dir * minposition_z *
-             ((double)(abs(z_value) - deadarea) / (maxvalue - deadarea));
+      return ry_dir * minposition_z * ((double)(abs(z_value) - deadarea) / (maxvalue - deadarea));
     }
   } else {
     return 0.0;
@@ -423,11 +410,9 @@ double Joystick_humanoid::get_stand_yaw_direction_posiiton() {
   int yaw_value = xbox_m.rx;
   if ((abs(yaw_value) > deadarea) && (abs(yaw_value) <= maxvalue)) {
     if (yaw_value > 0) {
-      return rx_dir * maxposition_yaw *
-             ((double)(abs(yaw_value) - deadarea) / (maxvalue - deadarea));
+      return rx_dir * maxposition_yaw * ((double)(abs(yaw_value) - deadarea) / (maxvalue - deadarea));
     } else {
-      return rx_dir * minposition_yaw *
-             ((double)(abs(yaw_value) - deadarea) / (maxvalue - deadarea));
+      return rx_dir * minposition_yaw * ((double)(abs(yaw_value) - deadarea) / (maxvalue - deadarea));
     }
   } else {
     return 0.0;
@@ -454,3 +439,17 @@ bool Joystick_humanoid::disableJoints() {
   }
 }
 bool Joystick_humanoid::get_calibration_flag() { return xbox_m.sel; }
+
+bool Joystick_humanoid::get_momentumController_on() {
+  double ro = xbox_m.ro;
+
+  if (!button_processed_ && ro == 1.0) {
+    get_momentumController_on_flag_ = !get_momentumController_on_flag_;
+    std::cout << "momentumTurnOn changed to: " << get_momentumController_on_flag_ << std::endl;
+    button_processed_ = true;
+  } else if (ro == 0.0) {
+    button_processed_ = false;
+  }
+
+  return get_momentumController_on_flag_;
+};

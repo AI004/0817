@@ -6,8 +6,8 @@ KalmanFilter::KalmanFilter() {}
 
 KalmanFilter::KalmanFilter(double d_SysNoise, double d_MeaNoise, int nFilter) {
   numFilter = nFilter;
-  sysNoise = d_SysNoise; // standard deviation of system noise
-  meaNoise = d_MeaNoise; // standard deviation of measurement noise
+  sysNoise = d_SysNoise;  // standard deviation of system noise
+  meaNoise = d_MeaNoise;  // standard deviation of measurement noise
 
   estimation_last = Eigen::VectorXd::Zero(numFilter);
   estimation_now = Eigen::VectorXd::Zero(numFilter);
@@ -17,7 +17,6 @@ KalmanFilter::KalmanFilter(double d_SysNoise, double d_MeaNoise, int nFilter) {
 KalmanFilter::~KalmanFilter() {}
 
 Eigen::VectorXd KalmanFilter::mFilter(Eigen::VectorXd sigIn) {
-
   // the first time ,set the origin values as the filter ones
   if (nit == 0) {
     estimation_last = sigIn;
@@ -40,4 +39,4 @@ Eigen::VectorXd KalmanFilter::mFilter(Eigen::VectorXd sigIn) {
   // std::cout << "err: " << (sigIn- estimation_now).transpose()<< std::endl;
   return estimation_now;
 
-} // KalmanFilter
+}  // KalmanFilter

@@ -1,8 +1,8 @@
-{   
-    "taskNum": 4,
+{
+    "taskNum": 6,
     "wbcType": "WQP",
     "taskConfig": [
-        {   
+        {
             "TaskName": "left_foot",
             "TaskType": "contact",
             "TaskID": 1,
@@ -83,7 +83,7 @@
                 "Kp_5": 200.0,
                 "Kd_5": 15.0,
                 "Kp_6": 200.0,
-                "Kd_6": 15.0 
+                "Kd_6": 15.0
             },
             "WeightX": 1000.0,
             "WeightY": 1000.0,
@@ -92,7 +92,7 @@
             "WeightPitch": 1000.0,
             "WeightYaw": 1000.0
         },
-        {   
+        {
             "TaskName": "base",
             "TaskType": "general",
             "TaskID": 3,
@@ -128,7 +128,7 @@
                 "Kp_5": 130.0,
                 "Kd_5": 13.0,
                 "Kp_6": 200.0,
-                "Kd_6": 20.0    
+                "Kd_6": 20.0
             },
             "WeightX": 100.0,
             "WeightY": 100.0,
@@ -137,7 +137,7 @@
             "WeightPitch": 100.0,
             "WeightYaw": 100.0
         },
-        {   
+        {
             "TaskName": "CoM",
             "TaskType": "CoM",
             "TaskID": 4,
@@ -181,9 +181,69 @@
             "WeightRoll": 100.0,
             "WeightPitch": 100.0,
             "WeightYaw": 100.0
+        },
+        {
+            "TaskName": "torso",
+            "TaskType": "general",
+            "TaskID": 5,
+            "ControlFrame": "world",
+            "SolidNum": 15,
+            "TaskLevel": 1,
+            "TransVector": [
+                0,
+                0,
+                0.18300318
+            ],
+            "RotMatrix": [
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                1
+            ],
+            "ControlConfig": {
+                "Type": "pd",
+                "Kp_1": 100.0,
+                "Kd_1": 10.0,
+                "Kp_2": 100.0,
+                "Kd_2": 10.0,
+                "Kp_3": 50.0,
+                "Kd_3": 10.0,
+                "Kp_4": 150.0,
+                "Kd_4": 15.0,
+                "Kp_5": 150.0,
+                "Kd_5": 15.0,
+                "Kp_6": 150.0,
+                "Kd_6": 15.0
+            },
+            "WeightX": 0.0,
+            "WeightY": 0.0,
+            "WeightZ": 0.0,
+            "WeightRoll": 0.0,
+            "WeightPitch": 0.0,
+            "WeightYaw": 0.0
+        },
+        {
+            "TaskName": "arm_waist_joints",
+            "TaskType": "joint",
+            "TaskID": 6,
+            "StartJoint": 13,
+            "JointsDim": 0,
+            "TaskLevel": 1,
+            "ControlConfig": {
+                "Type": "joint_pd",
+                "Kp_1": 100.0,
+                "Kd_1": 10.0,
+                "Kp_2": 50.0,
+                "Kd_2": 5.0
+            }
         }
     ],
-    "weightForce":[
+    "weightForce": [
         0.1,
         0.1,
         0.1,
@@ -197,7 +257,7 @@
         0.1,
         0.001
     ],
-    "weightDeltaForce":[
+    "weightDeltaForce": [
         0.001,
         0.001,
         0.001,
@@ -211,7 +271,7 @@
         0.001,
         0.0001
     ],
-    "urdf": "./Sources/urdf/adam_lite_simple.urdf",
+    "urdf": "./Sources/urdf/DuckDuck.urdf",
     "imu_x_offset": 0.0,
     "imu_y_offset": 0.0,
     "imu_z_offset": 0.0,
@@ -238,5 +298,14 @@
     "vel_x_FFratio": 1.0,
     "vel_y_FFratio": 1.0,
     "vel_x_FBratio": 1.0,
-    "vel_y_FBratio": 1.0
+    "vel_y_FBratio": 1.0,
+    "use_AM_calcFootHold": 0,
+    "l_start_offset": 0.32,
+    "r_start_offset": 0.32,
+    "forward_offset": 0.16,
+    "impact_threshold": 2.5,
+    "impact_factor": 1.0,
+    "mocap_with_hand": 0.0,
+    "momentum_factor": 0.5,
+    "use_IMU_correction": 0.0
 }

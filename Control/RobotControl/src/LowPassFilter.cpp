@@ -8,8 +8,7 @@
  * dampRatio : the recommanded value is 0.707, which controls the maximum
  * overshoot dTime : is the sampling period
  */
-LowPassFilter::LowPassFilter(double cutOffFreq, double dampRatio, double dTime,
-                             int nFilter) {
+LowPassFilter::LowPassFilter(double cutOffFreq, double dampRatio, double dTime, int nFilter) {
   dT = dTime;
   sigIn_1 = Eigen::VectorXd::Zero(nFilter);
   sigIn_2 = Eigen::VectorXd::Zero(nFilter);
@@ -38,9 +37,7 @@ LowPassFilter::LowPassFilter(double cutOffFreq, double dampRatio, double dTime,
 }
 
 Eigen::VectorXd LowPassFilter::mFilter(Eigen::VectorXd sigIn) {
-
-  Eigen::VectorXd sigOut =
-      a2 * sigIn + a1 * sigIn_1 + a0 * sigIn_2 - b1 * sigOut_1 - b0 * sigOut_2;
+  Eigen::VectorXd sigOut = a2 * sigIn + a1 * sigIn_1 + a0 * sigIn_2 - b1 * sigOut_1 - b0 * sigOut_2;
   sigIn_2 = sigIn_1;
   sigIn_1 = sigIn;
   sigOut_2 = sigOut_1;

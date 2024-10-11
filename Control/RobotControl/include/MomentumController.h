@@ -8,10 +8,7 @@ class MomentumController {
  public:
   MomentumController();
 
-  void setInputData(Eigen::MatrixXd input_a,
-                    Eigen::MatrixXd input_d,
-                    const Eigen::MatrixXd& para,
-                    Eigen::MatrixXd IG);
+  void setInputData(Eigen::MatrixXd input_a, Eigen::MatrixXd input_d, const Eigen::MatrixXd& para, Eigen::MatrixXd IG);
 
   void controllerRun(Robot_Data* robotdata);
 
@@ -35,6 +32,12 @@ class MomentumController {
   bool inReflexPhase = false;
   bool inRecoveryPhase = false;
   bool inWalkRecoveryPhase = false;
+
+  // lhj: copy
+  bool inPrePushPhase_;
+  bool inReflexPhase_;
+  bool inRecoveryPhase_;
+  bool inWalkRecoveryPhase_;
 
   double prePushTimer = 0.0;
   double reflexTimer = 0.0;

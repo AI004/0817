@@ -2,7 +2,7 @@
 cmake_minimum_required (VERSION 3.14)
 
 cmake_policy(SET CMP0048 NEW)
-project (pnd_cpp_api VERSION 1.4.4 LANGUAGES CXX)
+project (pnd_cpp_api VERSION 1.5.1 LANGUAGES CXX)
 
 set(CMAKE_BUILD_TYPE "Release")
 

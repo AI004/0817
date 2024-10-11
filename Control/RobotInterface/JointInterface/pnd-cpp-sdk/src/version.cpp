@@ -11,6 +11,6 @@ VersionNumber getCVersion() {
 }
 
 // pndc++ VERSION
-VersionNumber getCppVersion() { return VersionNumber(1, 4, 4); }
+VersionNumber getCppVersion() { return VersionNumber(1, 5, 1); }
 
 }  // namespace Pnd

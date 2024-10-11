@@ -52,6 +52,7 @@ SET(AIOS_SOURCES
   ${ROOT_DIR}/examples/src/motion/torque_pt.cpp
   ${ROOT_DIR}/examples/src/config/motion_control_config.cpp
   ${ROOT_DIR}/examples/src/encoder/encoder.cpp
+  ${ROOT_DIR}/examples/src/encoder/motor_rotor_abs_pos.cpp
   ${ROOT_DIR}/examples/src/rcu/rcu.cpp
 )
 

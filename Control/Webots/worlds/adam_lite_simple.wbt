@@ -8,8 +8,8 @@ WorldInfo {
   basicTimeStep 1.25
 }
 Viewpoint {
-  orientation 0.12380218790353287 0.30585852247840856 -0.9439934229101511 0.8101202000198977
-  position -1.150516658487306 1.0940300031668195 0.9669571838288451
+  orientation 0.08278777035146948 0.39893823740283946 -0.9132329756519681 0.44685098926583655
+  position -0.6187319228937426 0.3334105480840757 0.349248555532053
 }
 TexturedBackground {
 }
@@ -38,7 +38,7 @@ DEF Adam Robot {
       }
       geometry DEF pelvis Mesh {
         url [
-          "../meshes_lite/pelvis.STL"
+          "../meshes_lite_simple/pelvis.STL"
         ]
       }
     }
@@ -61,7 +61,7 @@ DEF Adam Robot {
       ]
       endPoint Solid {
         translation 0 0.096192 -0.033241
-        rotation -1 0 0 0.61087
+        rotation -1 0 0 0.6108700000000002
         children [
           Shape {
             appearance DEF hipPitchLeft_material PBRAppearance {
@@ -70,7 +70,7 @@ DEF Adam Robot {
             }
             geometry DEF hipPitchLeft Mesh {
               url [
-                "../meshes_lite/hipPitchLeft.STL"
+                "../meshes_lite_simple/hipPitchLeft.STL"
               ]
             }
           }
@@ -92,7 +92,7 @@ DEF Adam Robot {
             ]
             endPoint Solid {
               translation -0.0255 0.069 0
-              rotation 1 0 0 0.61087
+              rotation 1 0 0 0.6108700000000002
               children [
                 Shape {
                   appearance DEF hipRollLeft_material PBRAppearance {
@@ -101,7 +101,7 @@ DEF Adam Robot {
                   }
                   geometry DEF hipRollLeft Mesh {
                     url [
-                      "../meshes_lite/hipRollLeft.STL"
+                      "../meshes_lite_simple/hipRollLeft.STL"
                     ]
                   }
                 }
@@ -132,7 +132,7 @@ DEF Adam Robot {
                         }
                         geometry DEF thighLeft Mesh {
                           url [
-                            "../meshes_lite/thighLeft.STL"
+                            "../meshes_lite_simple/thighLeft.STL"
                           ]
                         }
                       }
@@ -155,6 +155,7 @@ DEF Adam Robot {
                         ]
                         endPoint Solid {
                           translation 0 -0.0355 -0.369
+                          rotation 0 1 0 0
                           children [
                             Shape {
                               appearance DEF shinLeft_material PBRAppearance {
@@ -163,7 +164,7 @@ DEF Adam Robot {
                               }
                               geometry DEF shinLeft Mesh {
                                 url [
-                                  "../meshes_lite/shinLeft.STL"
+                                  "../meshes_lite_simple/shinLeft.STL"
                                 ]
                               }
                             }
@@ -186,6 +187,7 @@ DEF Adam Robot {
                               ]
                               endPoint Solid {
                                 translation 0 0 -0.37
+                                rotation 0 1 0 0
                                 children [
                                   Shape {
                                     appearance DEF anklePitchLeft_material PBRAppearance {
@@ -194,7 +196,7 @@ DEF Adam Robot {
                                     }
                                     geometry DEF anklePitchLeft Mesh {
                                       url [
-                                        "../meshes_lite/anklePitchLeft.STL"
+                                        "../meshes_lite_simple/anklePitchLeft.STL"
                                       ]
                                     }
                                   }
@@ -214,6 +216,7 @@ DEF Adam Robot {
                                       }
                                     ]
                                     endPoint Solid {
+                                      rotation 1 0 0 0
                                       children [
                                         Shape {
                                           appearance DEF toeLeft_material PBRAppearance {
@@ -223,7 +226,7 @@ DEF Adam Robot {
                                           }
                                           geometry DEF toeLeft Mesh {
                                             url [
-                                              "../meshes_lite/toeLeft.STL"
+                                              "../meshes_lite_simple/toeLeft.STL"
                                             ]
                                           }
                                         }
@@ -352,7 +355,7 @@ DEF Adam Robot {
       ]
       endPoint Solid {
         translation 0 -0.096192 -0.033241
-        rotation 1 0 0 0.61087
+        rotation 1 0 0 0.6108700000000002
         children [
           Shape {
             appearance DEF hipPitchRight_material PBRAppearance {
@@ -361,7 +364,7 @@ DEF Adam Robot {
             }
             geometry DEF hipPitchRight Mesh {
               url [
-                "../meshes_lite/hipPitchRight.STL"
+                "../meshes_lite_simple/hipPitchRight.STL"
               ]
             }
           }
@@ -383,7 +386,7 @@ DEF Adam Robot {
             ]
             endPoint Solid {
               translation -0.0255 -0.069 0
-              rotation -1 0 0 0.61087
+              rotation -1 0 0 0.6108700000000002
               children [
                 Shape {
                   appearance DEF hipRollRight_material PBRAppearance {
@@ -392,7 +395,7 @@ DEF Adam Robot {
                   }
                   geometry DEF hipRollRight Mesh {
                     url [
-                      "../meshes_lite/hipRollRight.STL"
+                      "../meshes_lite_simple/hipRollRight.STL"
                     ]
                   }
                 }
@@ -423,7 +426,7 @@ DEF Adam Robot {
                         }
                         geometry DEF thighRight Mesh {
                           url [
-                            "../meshes_lite/thighRight.STL"
+                            "../meshes_lite_simple/thighRight.STL"
                           ]
                         }
                       }
@@ -446,6 +449,7 @@ DEF Adam Robot {
                         ]
                         endPoint Solid {
                           translation 0 0.0355 -0.369
+                          rotation 0 1 0 0
                           children [
                             Shape {
                               appearance DEF shinRight_material PBRAppearance {
@@ -454,7 +458,7 @@ DEF Adam Robot {
                               }
                               geometry DEF shinRight Mesh {
                                 url [
-                                  "../meshes_lite/shinRight.STL"
+                                  "../meshes_lite_simple/shinRight.STL"
                                 ]
                               }
                             }
@@ -477,6 +481,7 @@ DEF Adam Robot {
                               ]
                               endPoint Solid {
                                 translation 0 0 -0.37
+                                rotation 0 1 0 0
                                 children [
                                   Shape {
                                     appearance DEF anklePitchRight_material PBRAppearance {
@@ -486,7 +491,7 @@ DEF Adam Robot {
                                     }
                                     geometry DEF anklePitchRight Mesh {
                                       url [
-                                        "../meshes_lite/anklePitchRight.STL"
+                                        "../meshes_lite_simple/anklePitchRight.STL"
                                       ]
                                     }
                                   }
@@ -506,6 +511,7 @@ DEF Adam Robot {
                                       }
                                     ]
                                     endPoint Solid {
+                                      rotation 1 0 0 0
                                       children [
                                         Shape {
                                           appearance DEF toeRight_material PBRAppearance {
@@ -515,7 +521,7 @@ DEF Adam Robot {
                                           }
                                           geometry DEF toeRight Mesh {
                                             url [
-                                              "../meshes_lite/toeRight.STL"
+                                              "../meshes_lite_simple/toeRight.STL"
                                             ]
                                           }
                                         }

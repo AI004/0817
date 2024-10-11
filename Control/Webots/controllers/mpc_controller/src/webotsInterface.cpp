@@ -6,150 +6,200 @@ void WebotsRobot::initWebots() {
   // motors
   legMotor.resize(nJoint);
   int i = 0;
-  legMotor[i] = robot->getMotor("hipPitch_Left");i++;
-  legMotor[i] = robot->getMotor("hipRoll_Left");i++;
-  legMotor[i] = robot->getMotor("hipYaw_Left");i++;
-  legMotor[i] = robot->getMotor("kneePitch_Left");i++;
-  legMotor[i] = robot->getMotor("anklePitch_Left");i++;
-  legMotor[i] = robot->getMotor("ankleRoll_Left");i++;
-  legMotor[i] = robot->getMotor("hipPitch_Right");i++;
-  legMotor[i] = robot->getMotor("hipRoll_Right");i++;
-  legMotor[i] = robot->getMotor("hipYaw_Right");i++;
-  legMotor[i] = robot->getMotor("kneePitch_Right");i++;
-  legMotor[i] = robot->getMotor("anklePitch_Right");i++;
-  legMotor[i] = robot->getMotor("ankleRoll_Right");i++;
-  
-  //waist
-  if(adam_type==ADAM_TYPE::AdamLite){
-    legMotor[i] = robot->getMotor("waistRoll");i++;
-    legMotor[i] = robot->getMotor("waistPitch");i++;
-    legMotor[i] = robot->getMotor("waistYaw");i++;
-  }else if(adam_type==ADAM_TYPE::AdamLiteSimple){
-  }else if(adam_type==ADAM_TYPE::AdamStandard){
-    legMotor[i] = robot->getMotor("waistRoll");i++;
-    legMotor[i] = robot->getMotor("waistPitch");i++;
-    legMotor[i] = robot->getMotor("waistYaw");i++;
-  }else if(adam_type==ADAM_TYPE::StandardPlus23){
-    legMotor[i] = robot->getMotor("waistRoll");i++;
-    legMotor[i] = robot->getMotor("waistPitch");i++;
-    legMotor[i] = robot->getMotor("waistYaw");i++;
-  }else if(adam_type==ADAM_TYPE::StandardPlus29){
-    legMotor[i] = robot->getMotor("waistRoll");i++;
-    legMotor[i] = robot->getMotor("waistPitch");i++;
-    legMotor[i] = robot->getMotor("waistYaw");i++;
-  }else if(adam_type==ADAM_TYPE::StandardPlus53){
-    legMotor[i] = robot->getMotor("waistRoll");i++;
-    legMotor[i] = robot->getMotor("waistPitch");i++;
-    legMotor[i] = robot->getMotor("waistYaw");i++;
+  if (adam_type == ADAM_TYPE::DuckDuck) {
+    legMotor[i] = robot->getMotor("left_hip_yaw_joint");
+    i++;
+    legMotor[i] = robot->getMotor("left_hip_roll_joint");
+    i++;
+    legMotor[i] = robot->getMotor("left_hip_pitch_joint");
+    i++;
+    legMotor[i] = robot->getMotor("left_knee_pitch_joint");
+    i++;
+    legMotor[i] = robot->getMotor("left_ankle_pitch_joint");
+    i++;
+    legMotor[i] = robot->getMotor("left_ankle_roll_joint");
+    i++;
+    legMotor[i] = robot->getMotor("right_hip_yaw_joint");
+    i++;
+    legMotor[i] = robot->getMotor("right_hip_roll_joint");
+    i++;
+    legMotor[i] = robot->getMotor("right_hip_pitch_joint");
+    i++;
+    legMotor[i] = robot->getMotor("right_knee_pitch_joint");
+    i++;
+    legMotor[i] = robot->getMotor("right_ankle_pitch_joint");
+    i++;
+    legMotor[i] = robot->getMotor("right_ankle_roll_joint");
+    i++;
+    legMotor[i] = robot->getMotor("neck_pitch_joint");
+    i++;
+    legMotor[i] = robot->getMotor("neck_roll_joint");
+    i++;
+    legMotor[i] = robot->getMotor("neck_yaw_joint");
+    i++;
+  } else {
+    legMotor[i] = robot->getMotor("hipPitch_Left");
+    i++;
+    legMotor[i] = robot->getMotor("hipRoll_Left");
+    i++;
+    legMotor[i] = robot->getMotor("hipYaw_Left");
+    i++;
+    legMotor[i] = robot->getMotor("kneePitch_Left");
+    i++;
+    legMotor[i] = robot->getMotor("anklePitch_Left");
+    i++;
+    legMotor[i] = robot->getMotor("ankleRoll_Left");
+    i++;
+    legMotor[i] = robot->getMotor("hipPitch_Right");
+    i++;
+    legMotor[i] = robot->getMotor("hipRoll_Right");
+    i++;
+    legMotor[i] = robot->getMotor("hipYaw_Right");
+    i++;
+    legMotor[i] = robot->getMotor("kneePitch_Right");
+    i++;
+    legMotor[i] = robot->getMotor("anklePitch_Right");
+    i++;
+    legMotor[i] = robot->getMotor("ankleRoll_Right");
+    i++;
+    if (adam_type == ADAM_TYPE::AdamLiteSimple) {
+    } else {
+      legMotor[i] = robot->getMotor("waistRoll");
+      i++;
+      legMotor[i] = robot->getMotor("waistPitch");
+      i++;
+      legMotor[i] = robot->getMotor("waistYaw");
+      i++;
+    }
   }
 
-  // left arm and hand
-  if(adam_type==ADAM_TYPE::AdamLite){
-    legMotor[i] = robot->getMotor("shoulderPitch_Left");i++;
-    legMotor[i] = robot->getMotor("shoulderRoll_Left");i++;
-    legMotor[i] = robot->getMotor("shoulderYaw_Left");i++;
-    legMotor[i] = robot->getMotor("elbow_Left");i++;
-  }else if(adam_type==ADAM_TYPE::AdamLiteSimple){
-  }else if(adam_type==ADAM_TYPE::AdamStandard){
-    legMotor[i] = robot->getMotor("shoulderPitch_Left");i++;
-    legMotor[i] = robot->getMotor("shoulderRoll_Left");i++;
-    legMotor[i] = robot->getMotor("shoulderYaw_Left");i++;
-    legMotor[i] = robot->getMotor("elbow_Left");i++;
-
-    legMotor[i] = robot->getMotor("wristYaw_Left");i++;
-    legMotor[i] = robot->getMotor("wristPitch_Left");i++;
-    legMotor[i] = robot->getMotor("wristRoll_Left");i++;
-    legMotor[i] = robot->getMotor("gripper_Left");i++;
-  }else if(adam_type==ADAM_TYPE::StandardPlus23){
-    legMotor[i] = robot->getMotor("shoulderPitch_Left");i++;
-    legMotor[i] = robot->getMotor("shoulderRoll_Left");i++;
-    legMotor[i] = robot->getMotor("shoulderYaw_Left");i++;
-    legMotor[i] = robot->getMotor("elbow_Left");i++;
-  }else if(adam_type==ADAM_TYPE::StandardPlus29){
-    legMotor[i] = robot->getMotor("shoulderPitch_Left");i++;
-    legMotor[i] = robot->getMotor("shoulderRoll_Left");i++;
-    legMotor[i] = robot->getMotor("shoulderYaw_Left");i++;
-    legMotor[i] = robot->getMotor("elbow_Left");i++;
-    
-    legMotor[i] = robot->getMotor("wristYaw_Left");i++;
-    legMotor[i] = robot->getMotor("wristPitch_Left");i++;
-    legMotor[i] = robot->getMotor("wristRoll_Left");i++;
-  }else if(adam_type==ADAM_TYPE::StandardPlus53){
-    legMotor[i] = robot->getMotor("shoulderPitch_Left");i++;
-    legMotor[i] = robot->getMotor("shoulderRoll_Left");i++;
-    legMotor[i] = robot->getMotor("shoulderYaw_Left");i++;
-    legMotor[i] = robot->getMotor("elbow_Left");i++;
-    
-    legMotor[i] = robot->getMotor("wristYaw_Left");i++;
-    legMotor[i] = robot->getMotor("wristPitch_Left");i++;
-    legMotor[i] = robot->getMotor("wristRoll_Left");i++;
-
-    legMotor[i] = robot->getMotor("L_thumb_MCP_joint1");i++;
-    legMotor[i] = robot->getMotor("L_thumb_MCP_joint2");i++;
-    legMotor[i] = robot->getMotor("L_thumb_PIP_joint");i++;
-    legMotor[i] = robot->getMotor("L_thumb_DIP_joint");i++;
-    legMotor[i] = robot->getMotor("L_index_MCP_joint");i++;
-    legMotor[i] = robot->getMotor("L_index_DIP_joint");i++;
-    legMotor[i] = robot->getMotor("L_middle_MCP_joint");i++;
-    legMotor[i] = robot->getMotor("L_middle_DIP_joint");i++;
-    legMotor[i] = robot->getMotor("L_ring_MCP_joint");i++;
-    legMotor[i] = robot->getMotor("L_ring_DIP_joint");i++;
-    legMotor[i] = robot->getMotor("L_pinky_MCP_joint");i++;
-    legMotor[i] = robot->getMotor("L_pinky_DIP_joint");i++;
+  if (adam_type == ADAM_TYPE::DuckDuck) {
+  } else if (adam_type == ADAM_TYPE::AdamLiteSimple) {
+  } else {
+    legMotor[i] = robot->getMotor("shoulderPitch_Left");
+    i++;
+    legMotor[i] = robot->getMotor("shoulderRoll_Left");
+    i++;
+    legMotor[i] = robot->getMotor("shoulderYaw_Left");
+    i++;
+    legMotor[i] = robot->getMotor("elbow_Left");
+    i++;
   }
 
-  // right arm and hand
-  if(adam_type==ADAM_TYPE::AdamLite){
-    legMotor[i] = robot->getMotor("shoulderPitch_Right");i++;
-    legMotor[i] = robot->getMotor("shoulderRoll_Right");i++;
-    legMotor[i] = robot->getMotor("shoulderYaw_Right");i++;
-    legMotor[i] = robot->getMotor("elbow_Right");i++;
-  }else if(adam_type==ADAM_TYPE::AdamLiteSimple){
-  }else if(adam_type==ADAM_TYPE::AdamStandard){
-    legMotor[i] = robot->getMotor("shoulderPitch_Right");i++;
-    legMotor[i] = robot->getMotor("shoulderRoll_Right");i++;
-    legMotor[i] = robot->getMotor("shoulderYaw_Right");i++;
-    legMotor[i] = robot->getMotor("elbow_Right");i++;
+  if (adam_type == ADAM_TYPE::AdamLite) {
+  } else if (adam_type == ADAM_TYPE::AdamStandard) {
+    legMotor[i] = robot->getMotor("wristYaw_Left");
+    i++;
+    legMotor[i] = robot->getMotor("wristPitch_Left");
+    i++;
+    legMotor[i] = robot->getMotor("wristRoll_Left");
+    i++;
+    legMotor[i] = robot->getMotor("gripper_Left");
+    i++;
+  } else if (adam_type == ADAM_TYPE::StandardPlus23) {
+  } else if (adam_type == ADAM_TYPE::StandardPlus29) {
+    legMotor[i] = robot->getMotor("wristYaw_Left");
+    i++;
+    legMotor[i] = robot->getMotor("wristPitch_Left");
+    i++;
+    legMotor[i] = robot->getMotor("wristRoll_Left");
+    i++;
+  } else if (adam_type == ADAM_TYPE::StandardPlus53) {
+    legMotor[i] = robot->getMotor("wristYaw_Left");
+    i++;
+    legMotor[i] = robot->getMotor("wristPitch_Left");
+    i++;
+    legMotor[i] = robot->getMotor("wristRoll_Left");
+    i++;
 
-    legMotor[i] = robot->getMotor("wristYaw_Right");i++;
-    legMotor[i] = robot->getMotor("wristPitch_Right");i++;
-    legMotor[i] = robot->getMotor("wristRoll_Right");i++;
-    legMotor[i] = robot->getMotor("gripper_Right");i++;
-  }else if(adam_type==ADAM_TYPE::StandardPlus23){
-    legMotor[i] = robot->getMotor("shoulderPitch_Right");i++;
-    legMotor[i] = robot->getMotor("shoulderRoll_Right");i++;
-    legMotor[i] = robot->getMotor("shoulderYaw_Right");i++;
-    legMotor[i] = robot->getMotor("elbow_Right");i++;
-  }else if(adam_type==ADAM_TYPE::StandardPlus29){
-    legMotor[i] = robot->getMotor("shoulderPitch_Right");i++;
-    legMotor[i] = robot->getMotor("shoulderRoll_Right");i++;
-    legMotor[i] = robot->getMotor("shoulderYaw_Right");i++;
-    legMotor[i] = robot->getMotor("elbow_Right");i++;
-    
-    legMotor[i] = robot->getMotor("wristYaw_Right");i++;
-    legMotor[i] = robot->getMotor("wristPitch_Right");i++;
-    legMotor[i] = robot->getMotor("wristRoll_Right");i++;
-  }else if(adam_type==ADAM_TYPE::StandardPlus53){
-    legMotor[i] = robot->getMotor("shoulderPitch_Right");i++;
-    legMotor[i] = robot->getMotor("shoulderRoll_Right");i++;
-    legMotor[i] = robot->getMotor("shoulderYaw_Right");i++;
-    legMotor[i] = robot->getMotor("elbow_Right");i++;
-    
-    legMotor[i] = robot->getMotor("wristYaw_Right");i++;
-    legMotor[i] = robot->getMotor("wristPitch_Right");i++;
-    legMotor[i] = robot->getMotor("wristRoll_Right");i++;
+    legMotor[i] = robot->getMotor("L_thumb_MCP_joint1");
+    i++;
+    legMotor[i] = robot->getMotor("L_thumb_MCP_joint2");
+    i++;
+    legMotor[i] = robot->getMotor("L_thumb_PIP_joint");
+    i++;
+    legMotor[i] = robot->getMotor("L_thumb_DIP_joint");
+    i++;
+    legMotor[i] = robot->getMotor("L_index_MCP_joint");
+    i++;
+    legMotor[i] = robot->getMotor("L_index_DIP_joint");
+    i++;
+    legMotor[i] = robot->getMotor("L_middle_MCP_joint");
+    i++;
+    legMotor[i] = robot->getMotor("L_middle_DIP_joint");
+    i++;
+    legMotor[i] = robot->getMotor("L_ring_MCP_joint");
+    i++;
+    legMotor[i] = robot->getMotor("L_ring_DIP_joint");
+    i++;
+    legMotor[i] = robot->getMotor("L_pinky_MCP_joint");
+    i++;
+    legMotor[i] = robot->getMotor("L_pinky_DIP_joint");
+    i++;
+  }
 
-    legMotor[i] = robot->getMotor("R_thumb_MCP_joint1");i++;
-    legMotor[i] = robot->getMotor("R_thumb_MCP_joint2");i++;
-    legMotor[i] = robot->getMotor("R_thumb_PIP_joint");i++;
-    legMotor[i] = robot->getMotor("R_thumb_DIP_joint");i++;
-    legMotor[i] = robot->getMotor("R_index_MCP_joint");i++;
-    legMotor[i] = robot->getMotor("R_index_DIP_joint");i++;
-    legMotor[i] = robot->getMotor("R_middle_MCP_joint");i++;
-    legMotor[i] = robot->getMotor("R_middle_DIP_joint");i++;
-    legMotor[i] = robot->getMotor("R_ring_MCP_joint");i++;
-    legMotor[i] = robot->getMotor("R_ring_DIP_joint");i++;
-    legMotor[i] = robot->getMotor("R_pinky_MCP_joint");i++;
+  if (adam_type == ADAM_TYPE::DuckDuck) {
+  } else if (adam_type == ADAM_TYPE::AdamLiteSimple) {
+  } else {
+    legMotor[i] = robot->getMotor("shoulderPitch_Right");
+    i++;
+    legMotor[i] = robot->getMotor("shoulderRoll_Right");
+    i++;
+    legMotor[i] = robot->getMotor("shoulderYaw_Right");
+    i++;
+    legMotor[i] = robot->getMotor("elbow_Right");
+    i++;
+  }
+
+  if (adam_type == ADAM_TYPE::AdamLite) {
+  } else if (adam_type == ADAM_TYPE::AdamStandard) {
+    legMotor[i] = robot->getMotor("wristYaw_Right");
+    i++;
+    legMotor[i] = robot->getMotor("wristPitch_Right");
+    i++;
+    legMotor[i] = robot->getMotor("wristRoll_Right");
+    i++;
+    legMotor[i] = robot->getMotor("gripper_Right");
+    i++;
+  } else if (adam_type == ADAM_TYPE::StandardPlus23) {
+  } else if (adam_type == ADAM_TYPE::StandardPlus29) {
+    legMotor[i] = robot->getMotor("wristYaw_Right");
+    i++;
+    legMotor[i] = robot->getMotor("wristPitch_Right");
+    i++;
+    legMotor[i] = robot->getMotor("wristRoll_Right");
+    i++;
+
+  } else if (adam_type == ADAM_TYPE::StandardPlus53) {
+    legMotor[i] = robot->getMotor("wristYaw_Right");
+    i++;
+    legMotor[i] = robot->getMotor("wristPitch_Right");
+    i++;
+    legMotor[i] = robot->getMotor("wristRoll_Right");
+    i++;
+
+    legMotor[i] = robot->getMotor("R_thumb_MCP_joint1");
+    i++;
+    legMotor[i] = robot->getMotor("R_thumb_MCP_joint2");
+    i++;
+    legMotor[i] = robot->getMotor("R_thumb_PIP_joint");
+    i++;
+    legMotor[i] = robot->getMotor("R_thumb_DIP_joint");
+    i++;
+    legMotor[i] = robot->getMotor("R_index_MCP_joint");
+    i++;
+    legMotor[i] = robot->getMotor("R_index_DIP_joint");
+    i++;
+    legMotor[i] = robot->getMotor("R_middle_MCP_joint");
+    i++;
+    legMotor[i] = robot->getMotor("R_middle_DIP_joint");
+    i++;
+    legMotor[i] = robot->getMotor("R_ring_MCP_joint");
+    i++;
+    legMotor[i] = robot->getMotor("R_ring_DIP_joint");
+    i++;
+    legMotor[i] = robot->getMotor("R_pinky_MCP_joint");
+    i++;
     legMotor[i] = robot->getMotor("R_pinky_DIP_joint");
   }
 
@@ -160,153 +210,203 @@ void WebotsRobot::initWebots() {
   // motor sensors
   legSensor.resize(nJoint);
   i = 0;
-  legSensor[i] = robot->getPositionSensor("hipPitch_Left_sensor");i++;
-  legSensor[i] = robot->getPositionSensor("hipRoll_Left_sensor");i++;
-  legSensor[i] = robot->getPositionSensor("hipYaw_Left_sensor");i++;
-  legSensor[i] = robot->getPositionSensor("kneePitch_Left_sensor");i++;
-  legSensor[i] = robot->getPositionSensor("anklePitch_Left_sensor");i++;
-  legSensor[i] = robot->getPositionSensor("ankleRoll_Left_sensor");i++;
-  legSensor[i] = robot->getPositionSensor("hipPitch_Right_sensor");i++;
-  legSensor[i] = robot->getPositionSensor("hipRoll_Right_sensor");i++;
-  legSensor[i] = robot->getPositionSensor("hipYaw_Right_sensor");i++;
-  legSensor[i] = robot->getPositionSensor("kneePitch_Right_sensor");i++;
-  legSensor[i] = robot->getPositionSensor("anklePitch_Right_sensor");i++;
-  legSensor[i] = robot->getPositionSensor("ankleRoll_Right_sensor");i++;
-
-  //waist
-  if(adam_type==ADAM_TYPE::AdamLite){
-    legSensor[i] = robot->getPositionSensor("waistRoll_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("waistPitch_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("waistYaw_sensor");i++;
-  }else if(adam_type==ADAM_TYPE::AdamLiteSimple){
-  }else if(adam_type==ADAM_TYPE::AdamStandard){
-    legSensor[i] = robot->getPositionSensor("waistRoll_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("waistPitch_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("waistYaw_sensor");i++;
-  }else if(adam_type==ADAM_TYPE::StandardPlus23){
-    legSensor[i] = robot->getPositionSensor("waistRoll_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("waistPitch_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("waistYaw_sensor");i++;
-  }else if(adam_type==ADAM_TYPE::StandardPlus29){
-    legSensor[i] = robot->getPositionSensor("waistRoll_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("waistPitch_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("waistYaw_sensor");i++;
-  }else if(adam_type==ADAM_TYPE::StandardPlus53){
-    legSensor[i] = robot->getPositionSensor("waistRoll_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("waistPitch_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("waistYaw_sensor");i++;
+  if (adam_type == ADAM_TYPE::DuckDuck) {
+    legSensor[i] = robot->getPositionSensor("left_hip_yaw_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("left_hip_roll_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("left_hip_pitch_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("left_knee_pitch_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("left_ankle_pitch_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("left_ankle_roll_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("right_hip_yaw_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("right_hip_roll_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("right_hip_pitch_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("right_knee_pitch_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("right_ankle_pitch_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("right_ankle_roll_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("neck_pitch_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("neck_roll_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("neck_yaw_joint_sensor");
+    i++;
+  } else {
+    legSensor[i] = robot->getPositionSensor("hipPitch_Left_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("hipRoll_Left_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("hipYaw_Left_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("kneePitch_Left_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("anklePitch_Left_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("ankleRoll_Left_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("hipPitch_Right_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("hipRoll_Right_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("hipYaw_Right_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("kneePitch_Right_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("anklePitch_Right_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("ankleRoll_Right_sensor");
+    i++;
+    i++;
+    if (adam_type == ADAM_TYPE::AdamLiteSimple) {
+    } else {
+      legSensor[i] = robot->getPositionSensor("waistRoll_sensor");
+      i++;
+      legSensor[i] = robot->getPositionSensor("waistPitch_sensor");
+      i++;
+      legSensor[i] = robot->getPositionSensor("waistYaw_sensor");
+      i++;
+    }
   }
 
-  // left arm and hand
-  if(adam_type==ADAM_TYPE::AdamLite){
-    legSensor[i] = robot->getPositionSensor("shoulderPitch_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderRoll_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderYaw_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("elbow_Left_sensor");i++;
-  }else if(adam_type==ADAM_TYPE::AdamLiteSimple){
-  }else if(adam_type==ADAM_TYPE::AdamStandard){
-    legSensor[i] = robot->getPositionSensor("shoulderPitch_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderRoll_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderYaw_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("elbow_Left_sensor");i++;
-
-    legSensor[i] = robot->getPositionSensor("wristYaw_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("wristPitch_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("wristRoll_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("gripper_Left_sensor");i++;
-  }else if(adam_type==ADAM_TYPE::StandardPlus23){
-    legSensor[i] = robot->getPositionSensor("shoulderPitch_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderRoll_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderYaw_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("elbow_Left_sensor");i++;
-  }else if(adam_type==ADAM_TYPE::StandardPlus29){
-    legSensor[i] = robot->getPositionSensor("shoulderPitch_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderRoll_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderYaw_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("elbow_Left_sensor");i++;
-
-    legSensor[i] = robot->getPositionSensor("wristYaw_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("wristPitch_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("wristRoll_Left_sensor");i++;
-  }else if(adam_type==ADAM_TYPE::StandardPlus53){
-    legSensor[i] = robot->getPositionSensor("shoulderPitch_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderRoll_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderYaw_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("elbow_Left_sensor");i++;
-
-    legSensor[i] = robot->getPositionSensor("wristYaw_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("wristPitch_Left_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("wristRoll_Left_sensor");i++;
-
-    legSensor[i] = robot->getPositionSensor("L_thumb_MCP_joint1_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("L_thumb_MCP_joint2_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("L_thumb_PIP_joint_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("L_thumb_DIP_joint_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("L_index_MCP_joint_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("L_index_DIP_joint_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("L_middle_MCP_joint_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("L_middle_DIP_joint_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("L_ring_MCP_joint_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("L_ring_DIP_joint_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("L_pinky_MCP_joint_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("L_pinky_DIP_joint_sensor");i++;
+  if (adam_type == ADAM_TYPE::DuckDuck) {
+  } else if (adam_type == ADAM_TYPE::AdamLiteSimple) {
+  } else {
+    legSensor[i] = robot->getPositionSensor("shoulderPitch_Left_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("shoulderRoll_Left_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("shoulderYaw_Left_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("elbow_Left_sensor");
+    i++;
   }
 
-  // right arm and hand
-  if(adam_type==ADAM_TYPE::AdamLite){
-    legSensor[i] = robot->getPositionSensor("shoulderPitch_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderRoll_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderYaw_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("elbow_Right_sensor");i++;
-  }else if(adam_type==ADAM_TYPE::AdamLiteSimple){
-  }else if(adam_type==ADAM_TYPE::AdamStandard){
-    legSensor[i] = robot->getPositionSensor("shoulderPitch_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderRoll_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderYaw_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("elbow_Right_sensor");i++;
+  if (adam_type == ADAM_TYPE::AdamLite) {
+  } else if (adam_type == ADAM_TYPE::AdamStandard) {
+    legSensor[i] = robot->getPositionSensor("wristYaw_Left_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("wristPitch_Left_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("wristRoll_Left_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("gripper_Left_sensor");
+    i++;
+  } else if (adam_type == ADAM_TYPE::StandardPlus23) {
+  } else if (adam_type == ADAM_TYPE::StandardPlus29) {
+    legSensor[i] = robot->getPositionSensor("wristYaw_Left_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("wristPitch_Left_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("wristRoll_Left_sensor");
+    i++;
+  } else if (adam_type == ADAM_TYPE::StandardPlus53) {
+    legSensor[i] = robot->getPositionSensor("wristYaw_Left_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("wristPitch_Left_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("wristRoll_Left_sensor");
+    i++;
 
-    legSensor[i] = robot->getPositionSensor("wristYaw_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("wristPitch_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("wristRoll_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("gripper_Right_sensor");i++;
-  }else if(adam_type==ADAM_TYPE::StandardPlus23){
-    legSensor[i] = robot->getPositionSensor("shoulderPitch_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderRoll_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderYaw_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("elbow_Right_sensor");i++;
-  }else if(adam_type==ADAM_TYPE::StandardPlus29){
-    legSensor[i] = robot->getPositionSensor("shoulderPitch_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderRoll_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderYaw_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("elbow_Right_sensor");i++;
+    legSensor[i] = robot->getPositionSensor("L_thumb_MCP_joint1_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("L_thumb_MCP_joint2_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("L_thumb_PIP_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("L_thumb_DIP_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("L_index_MCP_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("L_index_DIP_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("L_middle_MCP_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("L_middle_DIP_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("L_ring_MCP_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("L_ring_DIP_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("L_pinky_MCP_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("L_pinky_DIP_joint_sensor");
+    i++;
+  }
 
-    legSensor[i] = robot->getPositionSensor("wristYaw_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("wristPitch_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("wristRoll_Right_sensor");i++;
-  }else if(adam_type==ADAM_TYPE::StandardPlus53){
-    legSensor[i] = robot->getPositionSensor("shoulderPitch_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderRoll_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("shoulderYaw_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("elbow_Right_sensor");i++;
+  if (adam_type == ADAM_TYPE::DuckDuck) {
+  } else if (adam_type == ADAM_TYPE::AdamLiteSimple) {
+  } else {
+    legSensor[i] = robot->getPositionSensor("shoulderPitch_Right_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("shoulderRoll_Right_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("shoulderYaw_Right_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("elbow_Right_sensor");
+    i++;
+  }
 
-    legSensor[i] = robot->getPositionSensor("wristYaw_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("wristPitch_Right_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("wristRoll_Right_sensor");i++;
+  if (adam_type == ADAM_TYPE::AdamLite) {
+  } else if (adam_type == ADAM_TYPE::AdamStandard) {
+    legSensor[i] = robot->getPositionSensor("wristYaw_Right_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("wristPitch_Right_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("wristRoll_Right_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("gripper_Right_sensor");
+    i++;
+  } else if (adam_type == ADAM_TYPE::StandardPlus23) {
+  } else if (adam_type == ADAM_TYPE::StandardPlus29) {
+    legSensor[i] = robot->getPositionSensor("wristYaw_Right_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("wristPitch_Right_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("wristRoll_Right_sensor");
+    i++;
+  } else if (adam_type == ADAM_TYPE::StandardPlus53) {
+    legSensor[i] = robot->getPositionSensor("wristYaw_Right_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("wristPitch_Right_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("wristRoll_Right_sensor");
+    i++;
 
-    legSensor[i] = robot->getPositionSensor("R_thumb_MCP_joint1_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("R_thumb_MCP_joint2_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("R_thumb_PIP_joint_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("R_thumb_DIP_joint_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("R_index_MCP_joint_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("R_index_DIP_joint_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("R_middle_MCP_joint_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("R_middle_DIP_joint_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("R_ring_MCP_joint_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("R_ring_DIP_joint_sensor");i++;
-    legSensor[i] = robot->getPositionSensor("R_pinky_MCP_joint_sensor");i++;
+    legSensor[i] = robot->getPositionSensor("R_thumb_MCP_joint1_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("R_thumb_MCP_joint2_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("R_thumb_PIP_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("R_thumb_DIP_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("R_index_MCP_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("R_index_DIP_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("R_middle_MCP_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("R_middle_DIP_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("R_ring_MCP_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("R_ring_DIP_joint_sensor");
+    i++;
+    legSensor[i] = robot->getPositionSensor("R_pinky_MCP_joint_sensor");
+    i++;
     legSensor[i] = robot->getPositionSensor("R_pinky_DIP_joint_sensor");
   }
-  
+
   // torque sensors
   // torqueSensor.resize(6);
   // torqueSensor[0] = robot->getMotor("Left_torqueX_sensor");
@@ -327,7 +427,7 @@ void WebotsRobot::initWebots() {
   // Waistgps = robot->getGPS("gps_upperBody");
   // LFootGps = robot->getGPS("gps_LeftFoot");
   // RFootGps = robot->getGPS("gps_RightFoot");
-  Waist = robot->getFromDef("Adam"); //all types are call Adam
+  Waist = robot->getFromDef("DuckDuck");  // all types are call Adam
   // SoleLeft = robot->getFromDef("Sole_Left");
   // SoleRight = robot->getFromDef("Sole_Right");
   // enable
@@ -362,7 +462,7 @@ void WebotsRobot::initWebots() {
 
 void WebotsRobot::deleteRobot() { delete robot; }
 
-bool WebotsRobot::readData(double simTime, webotState &robotStateSim) {
+bool WebotsRobot::readData(double simTime, webotState& robotStateSim) {
   // Motor pos
   robotStateSim.jointPosAct = getMotorPos();
 
@@ -373,18 +473,17 @@ bool WebotsRobot::readData(double simTime, webotState &robotStateSim) {
     }
   }
   for (int i = 0; i < nJoint; i++) {
-    robotStateSim.jointVelAct(i) =
-        dJnt.at(i).mSig(robotStateSim.jointPosAct(i), SAMPLE_TIME);
+    robotStateSim.jointVelAct(i) = dJnt.at(i).mSig(robotStateSim.jointPosAct(i), SAMPLE_TIME);
   }
 
   // Motor torque
   robotStateSim.jointTorAct = getMotorTau();
 
   // IMU Data 9-dof
-  const double *rotmArray = Waist->getOrientation();
+  const double* rotmArray = Waist->getOrientation();
   Eigen::Matrix3d rotm;
-  rotm << rotmArray[0], rotmArray[1], rotmArray[2], rotmArray[3], rotmArray[4],
-      rotmArray[5], rotmArray[6], rotmArray[7], rotmArray[8];
+  rotm << rotmArray[0], rotmArray[1], rotmArray[2], rotmArray[3], rotmArray[4], rotmArray[5], rotmArray[6],
+      rotmArray[7], rotmArray[8];
   // robotStateSim.waistRpyAct = rotm2Rpy(rotm);
   // if (simTime > SAMPLE_TIME - 1e-6 && simTime < SAMPLE_TIME + 1e-6){
   //     for (int i = 0; i < 3; i++) {
@@ -398,16 +497,14 @@ bool WebotsRobot::readData(double simTime, webotState &robotStateSim) {
   Eigen::Vector3d rpy = rotm2Rpy(rotm);
   robotStateSim.waistRpyAct << rpy(2), rpy(1), rpy(0);
 
-  const double *waistVel =
-      Waist->getVelocity(); // the first three is linear velocity the second
-                            // three is angular velocity
+  const double* waistVel = Waist->getVelocity();  // the first three is linear velocity the second
+                                                  // three is angular velocity
   Eigen::Vector3d angularRate;
   angularRate << waistVel[3], waistVel[4], waistVel[5];
   robotStateSim.waistRpyVelAct = rotm.transpose() * angularRate;
 
   robotStateSim.waistXyzAccAct = getWaistAcc();
-  robotStateSim.imu9DAct << robotStateSim.waistRpyAct,
-      robotStateSim.waistRpyVelAct, robotStateSim.waistXyzAccAct;
+  robotStateSim.imu9DAct << robotStateSim.waistRpyAct, robotStateSim.waistRpyVelAct, robotStateSim.waistXyzAccAct;
 
   // External Force
   // robotStateSim.footGrfAct = getFootForce12D();
@@ -415,18 +512,16 @@ bool WebotsRobot::readData(double simTime, webotState &robotStateSim) {
   return true;
 }
 
-bool WebotsRobot::setMotorPos(const Eigen::VectorXd &jointPosTar) {
+bool WebotsRobot::setMotorPos(const Eigen::VectorXd& jointPosTar) {
   for (int i = 0; i < nJoint; i++) {
-    if (jointPosTar(i, 0) < 50000)
-      legMotor[i]->setPosition(jointPosTar(i, 0));
+    if (jointPosTar(i, 0) < 50000) legMotor[i]->setPosition(jointPosTar(i, 0));
   }
   return true;
 }
 
-bool WebotsRobot::setMotorTau(const Eigen::VectorXd &jointTauTar) {
+bool WebotsRobot::setMotorTau(const Eigen::VectorXd& jointTauTar) {
   for (int i = 0; i < nJoint; i++) {
-    if (jointTauTar(i, 0) < 50000)
-      legMotor[i]->setTorque(jointTauTar(i, 0));
+    if (jointTauTar(i, 0) < 50000) legMotor[i]->setTorque(jointTauTar(i, 0));
   }
   return true;
 }
@@ -448,7 +543,7 @@ Eigen::VectorXd WebotsRobot::getMotorTau() {
 }
 
 Eigen::Vector3d WebotsRobot::getWaistAcc() {
-  const double *data = accelerometer->getValues();
+  const double* data = accelerometer->getValues();
   Eigen::Vector3d acceleration(data[0], data[1], data[2]);
   return acceleration;
 }
@@ -499,16 +594,15 @@ Eigen::Vector3d WebotsRobot::getWaistAcc() {
 //     return FootForce;
 // }
 
-Eigen::Vector3d WebotsRobot::rotm2Rpy(const Eigen::Matrix3d &rotm) {
+Eigen::Vector3d WebotsRobot::rotm2Rpy(const Eigen::Matrix3d& rotm) {
   Eigen::Vector3d rpy = Eigen::Vector3d::Zero();
   rpy(0) = atan2(rotm(2, 1), rotm(2, 2));
-  rpy(1) = atan2(-rotm(2, 0),
-                 sqrt(rotm(2, 1) * rotm(2, 1) + rotm(2, 2) * rotm(2, 2)));
+  rpy(1) = atan2(-rotm(2, 0), sqrt(rotm(2, 1) * rotm(2, 1) + rotm(2, 2) * rotm(2, 2)));
   rpy(2) = atan2(rotm(1, 0), rotm(0, 0));
   return rpy;
 }
 
-Eigen::Vector3d WebotsRobot::rotm2xyz(const Eigen::Matrix3d &R) {
+Eigen::Vector3d WebotsRobot::rotm2xyz(const Eigen::Matrix3d& R) {
   Eigen::Vector3d euler = Eigen::Vector3d::Zero();
 
   euler.setZero();
@@ -528,8 +622,7 @@ Eigen::Vector3d WebotsRobot::rotm2xyz(const Eigen::Matrix3d &R) {
 
 Eigen::Matrix3d WebotsRobot::rotx(const double theta) {
   Eigen::Matrix3d matRes;
-  matRes << 1., 0., 0., 0., std::cos(theta), -std::sin(theta), 0.,
-      std::sin(theta), std::cos(theta);
+  matRes << 1., 0., 0., 0., std::cos(theta), -std::sin(theta), 0., std::sin(theta), std::cos(theta);
   return matRes;
 }
 

@@ -33,7 +33,7 @@ void Robot_Controller::init(QString path, double _dt) {
   init_flag = false;
 }
 
-void Robot_Controller::init_DataPackage(DataPackage *data) {
+void Robot_Controller::init_DataPackage(DataPackage* data) {
   data->dim = _robot_data->ndof;
   data->dt = _robot_data->dt;
   data->q_a.setZero(_robot_data->ndof, 1);
@@ -45,9 +45,8 @@ void Robot_Controller::init_DataPackage(DataPackage *data) {
   int _nimu = 1;
   data->ft_sensor.setZero(6, _nftsensor);
   data->imu_sensor.setZero(18, _nimu);
-  std::vector<Task *>::iterator task_iter;
-  for (task_iter = _robot_data->task_card_set.begin();
-       task_iter != _robot_data->task_card_set.end(); task_iter++) {
+  std::vector<Task*>::iterator task_iter;
+  for (task_iter = _robot_data->task_card_set.begin(); task_iter != _robot_data->task_card_set.end(); task_iter++) {
     Eigen::MatrixXd _n_task_desired;
     _n_task_desired.setZero(4, (*task_iter)->dim);
     data->task_desired_value.push_back(_n_task_desired);
@@ -75,20 +74,17 @@ void Robot_Controller::init_DataPackage(DataPackage *data) {
   data->tau_bound = _robot_data->tau_bound;
   data->dataL = _robot_data->dataL;
 }
-void Robot_Controller::changecontrollerpara(int task_id,
-                                            Eigen::MatrixXd _parachange) {
-  std::vector<Task *>::iterator task_iter;
-  for (task_iter = _robot_data->task_card_set.begin();
-       task_iter != _robot_data->task_card_set.end(); task_iter++) {
+void Robot_Controller::changecontrollerpara(int task_id, Eigen::MatrixXd _parachange) {
+  std::vector<Task*>::iterator task_iter;
+  for (task_iter = _robot_data->task_card_set.begin(); task_iter != _robot_data->task_card_set.end(); task_iter++) {
     if ((*task_iter)->task_id == task_id) {
       (*task_iter)->controller->para = _parachange;
-      std::cout << " task " << task_id << ": controller para has been changed!"
-                << std::endl;
+      std::cout << " task " << task_id << ": controller para has been changed!" << std::endl;
     }
   }
 }
 
-void Robot_Controller::set_inputdata(DataPackage *data) {
+void Robot_Controller::set_inputdata(DataPackage* data) {
   // std::cout << "data->q_a.size():" << data->q_a.size() << std::endl;
   // std::cout << "_robot_data->q_a.size():" << _robot_data->q_a.size() << std::endl;
   _robot_data->dt = data->dt;
@@ -108,11 +104,10 @@ void Robot_Controller::set_inputdata(DataPackage *data) {
     std::cout << "Started!" << std::endl;
   }
 
-  std::vector<Sensor *>::iterator sensor_iter;
+  std::vector<Sensor*>::iterator sensor_iter;
   int FTSensor_col = 0;
   int IMUSensor_col = 0;
-  for (sensor_iter = _robot_data->sensor_set.begin();
-       sensor_iter != _robot_data->sensor_set.end(); sensor_iter++) {
+  for (sensor_iter = _robot_data->sensor_set.begin(); sensor_iter != _robot_data->sensor_set.end(); sensor_iter++) {
     if ((*sensor_iter)->type == sensor_type::FT_sensor) {
       if (FTSensor_col < data->ft_sensor.cols()) {
         (*sensor_iter)->_data = data->ft_sensor.col(FTSensor_col);
@@ -129,12 +124,10 @@ void Robot_Controller::set_inputdata(DataPackage *data) {
     }
   }
 
-  std::vector<Task *>::iterator task_iter;
-  for (task_iter = _robot_data->task_card_set.begin();
-       task_iter != _robot_data->task_card_set.end(); task_iter++) {
+  std::vector<Task*>::iterator task_iter;
+  for (task_iter = _robot_data->task_card_set.begin(); task_iter != _robot_data->task_card_set.end(); task_iter++) {
     (*task_iter)->X_d = data->task_desired_value[(*task_iter)->task_id - 1];
-    (*task_iter)->contact_state_d =
-        data->task_desired_contact_state[(*task_iter)->task_id - 1];
+    (*task_iter)->contact_state_d = data->task_desired_contact_state[(*task_iter)->task_id - 1];
   }
   // to be delete
   // imu sensor data
@@ -179,36 +172,34 @@ void Robot_Controller::set_inputdata(DataPackage *data) {
   basicfunction::Euler_ZYXToMatrix(data->NED_R_YPRa, ypra);
   // std::cout<<"NED_R_YPRa: "<<std::endl<<data->NED_R_YPRa<<std::endl;
   Eigen::Matrix3d xyz_delt_R_act_init =
-      data->xyz_R_init * data->NED_R_YPR0.transpose() * data->NED_R_YPRa *
-      data->xyz_R_init.transpose();
+      data->xyz_R_init * data->NED_R_YPR0.transpose() * data->NED_R_YPRa * data->xyz_R_init.transpose();
   // std::cout<<"xyz_delt_R_act_init:
   // "<<std::endl<<xyz_delt_R_act_init<<std::endl;
   Eigen::Vector3d rpy = Eigen::Vector3d::Zero();
   basicfunction::matrixtoeulerxyz_(xyz_delt_R_act_init, rpy);
   // imu anzhaung pianzhi
-  rpy(0) = rpy(0) - 0.0; // 0.005;// + 0.01;
+  rpy(0) = rpy(0) - 0.0;  // 0.005;// + 0.01;
   rpy(2) = _robot_data->rCmd_joystick_last(2);
   _robot_data->q_a.block(3, 0, 3, 1) = rpy;
   // std::cout<<"rpy: "<<std::endl<<rpy.transpose()<<std::endl;
   //
-  Eigen::Matrix3d xyz_R_act =
-      data->xyz_R_init * data->NED_R_YPR0.transpose() * data->NED_R_YPRa;
+  Eigen::Matrix3d xyz_R_act = data->xyz_R_init * data->NED_R_YPR0.transpose() * data->NED_R_YPRa;
   Eigen::Matrix3d R_xyz_omega = Eigen::Matrix3d::Identity();
   R_xyz_omega.row(1) = basicfunction::RotX(rpy(0)).row(1);
-  R_xyz_omega.row(2) =
-      (basicfunction::RotX(rpy(0)) * basicfunction::RotY(rpy(1))).row(2);
-  _robot_data->q_dot_a.block(3, 0, 3, 1) =
-      R_xyz_omega.transpose() * xyz_R_act * data->imu_sensor.block(3, 0, 3, 1);
-  // std::cout<<"rpy_dot:
-  // "<<std::endl<<_robot_data->q_dot_a.block(3,0,3,1).transpose()<<std::endl;
-  //
+  R_xyz_omega.row(2) = (basicfunction::RotX(rpy(0)) * basicfunction::RotY(rpy(1))).row(2);
+  _robot_data->q_dot_a.block(3, 0, 3, 1) = R_xyz_omega.transpose() * xyz_R_act * data->imu_sensor.block(3, 0, 3, 1);
+
+  // lhj:use eular angle order ZYX
+  _robot_data->imu9D = data->imu_sensor.block(0, 0, 9, 1);
+
+  // use
   _robot_data->imuAcc = data->imu_sensor.block(6, 0, 3, 1);
   // std::cout<<_robot_data->imuAcc.transpose()<<std::endl;
   _robot_data->imuAcc += _robot_data->imu_acc_offset;
   _robot_data->dataL = data->dataL;
 }
 
-void Robot_Controller::get_outputdata(DataPackage *data) {
+void Robot_Controller::get_outputdata(DataPackage* data) {
   data->q_a = _robot_data->q_a;
   data->q_dot_a = _robot_data->q_dot_a;
   data->q_ddot_a = _robot_data->q_ddot_a;
@@ -232,6 +223,8 @@ void Robot_Controller::get_outputdata(DataPackage *data) {
     _robot_data->clearlog();
   }
   data->dataL = _robot_data->dataL;
+  data->q_d_hands = _robot_data->q_d_hands;
+  data->hands_motion_flag = _robot_data->hands_motion_flag;
   // std::cout<<"?"<<std::endl;
   // test ,gravity compensation + task space control
   // RigidBodyDynamics::Math::VectorNd CG =

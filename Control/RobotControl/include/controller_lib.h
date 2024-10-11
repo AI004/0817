@@ -22,7 +22,7 @@ enum basic_controller {
  * @brief The Controller_Lib class: the basic controller lib
  */
 class Controller_Lib {
-public:
+ public:
   // construct function
   Controller_Lib();
   virtual ~Controller_Lib();
@@ -72,12 +72,11 @@ public:
   void controller_run();
 
   // input and output
-  void setinput_data(Eigen::MatrixXd input_a, Eigen::MatrixXd input_d,
-                     int input_dim, double input_dt);
+  void setinput_data(Eigen::MatrixXd input_a, Eigen::MatrixXd input_d, int input_dim, double input_dt);
   void setcontrol_para(Eigen::VectorXd control_para);
-  void getoutput_data(Eigen::MatrixXd &output);
+  void getoutput_data(Eigen::MatrixXd& output);
 
-public:
+ public:
   // controller type
   enum basic_controller controller_type;
   // dim
@@ -97,4 +96,4 @@ public:
   double dt;
 };
 
-#endif // CONTROLLER_LIB_H
+#endif  // CONTROLLER_LIB_H

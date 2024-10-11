@@ -31,3 +31,7 @@
 6. 在`webotsInterface.cpp`中修改`webots`的接口
 
 7. 功能调试
+
+## Control说明
+
+1. 在`./Control/Webots/controllers/mpc_controller/src/webotsInterface.cpp`文件中这一行`Waist = robot->getFromDef("DuckDuck");`中修改模型名称，其中`"DuckDuck"`为`.wbt`文件中定义的机器人模型名称。如果想导入`PND`相关的机器人模型，将`"DuckDuck"`修改为`"Adam"`

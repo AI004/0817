@@ -11,28 +11,28 @@
 using namespace std;
 
 class XFsmMgr {
-public:
+ public:
   XFsmMgr();
 
   // Initializes the Control FSM instance
   void initialize();
 
-  void addState(XFsmState *state);
-  void addState(XFsmState *state, int firstflag);
-  XFsmState *getStateByName(string name);
+  void addState(XFsmState* state);
+  void addState(XFsmState* state, int firstflag);
+  XFsmState* getStateByName(string name);
 
   // Runs the FSM logic and handles the state transitions and normal runs
-  void runFSM(string &event);
+  void runFSM(string& event);
   // return currentstate name
-  void currentstatename(string &state);
+  void currentstatename(string& state);
 
   // FSM state information
-  std::map<string, XFsmState *> XFsmStatesMap;
+  std::map<string, XFsmState*> XFsmStatesMap;
 
-private:
+ private:
   string firstStateName;
-  XFsmState *currentState;
-  XFsmState *nextState;
+  XFsmState* currentState;
+  XFsmState* nextState;
 };
 
-#endif // CONTROLFSM_H
+#endif  // CONTROLFSM_H

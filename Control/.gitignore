@@ -3,6 +3,7 @@
 /Webots/controllers/mpc_controller/mpc_controller
 /Webots/controllers/mpc_controller/Sources
 /Webots/controllers/mpc_controller/*log.txt
+/Webots/controllers/mpc_controller/*log.*.txt
 /Webots/controllers/mpc_controller/data/
 /.vscode
 /Webots/worlds/.humanoid.wbproj

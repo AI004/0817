@@ -55,42 +55,44 @@
 \DoxyCodeLine{00151\ }
 \DoxyCodeLine{00158\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_ae91a4090f92e2a31f57c3c7c9f1a3bb3}{setNetworkSetting}}(\textcolor{keyword}{const}\ std::vector<NetworkSetting\ *>\ \&config);}
 \DoxyCodeLine{00159\ }
-\DoxyCodeLine{00160\ \ \ \textcolor{comment}{//\ For\ latency\ test}}
-\DoxyCodeLine{00161\ \ \ \textcolor{keywordtype}{void}\ setLatencyTest(\textcolor{keyword}{const}\ std::vector<bool>\ \&flag);}
-\DoxyCodeLine{00162\ }
-\DoxyCodeLine{00163\ \textcolor{comment}{\ \ /*******\ fw2\ .0\ *******/}}
-\DoxyCodeLine{00164\ \ \ \textcolor{keywordtype}{void}\ setInputPositionPt(\textcolor{keyword}{const}\ std::vector<PosPtInfo>\ \&param);}
-\DoxyCodeLine{00165\ }
-\DoxyCodeLine{00166\ \ \ \textcolor{keywordtype}{void}\ setInputVelocityPt(\textcolor{keyword}{const}\ std::vector<float>\ \&param);}
+\DoxyCodeLine{00163\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_a8235d142016d6b0840ae1278fffe4672}{getMotorRotorAbsPos}}(\textcolor{keyword}{const}\ std::vector<bool>\ \&flag);}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ \textcolor{comment}{//\ For\ latency\ test}}
+\DoxyCodeLine{00166\ \ \ \textcolor{keywordtype}{void}\ setLatencyTest(\textcolor{keyword}{const}\ std::vector<bool>\ \&flag);}
 \DoxyCodeLine{00167\ }
-\DoxyCodeLine{00168\ \ \ \textcolor{keywordtype}{void}\ setInputTorquePt(\textcolor{keyword}{const}\ std::vector<float>\ \&param);}
-\DoxyCodeLine{00169\ \textcolor{comment}{\ \ /*******\ fw2\ .0\ *******/}}
+\DoxyCodeLine{00168\ \textcolor{comment}{\ \ /*******\ fw2\ .0\ *******/}}
+\DoxyCodeLine{00169\ \ \ \textcolor{keywordtype}{void}\ setInputPositionPt(\textcolor{keyword}{const}\ std::vector<PosPtInfo>\ \&param);}
 \DoxyCodeLine{00170\ }
-\DoxyCodeLine{00177\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_a29ae7dbb82e5bb53e4cb81e3b3cfc7cf}{RcuPower}}(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
-\DoxyCodeLine{00178\ \ \ \textcolor{keywordtype}{void}\ RcuAV5VPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
-\DoxyCodeLine{00179\ \ \ \textcolor{keywordtype}{void}\ RcuV5VPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
-\DoxyCodeLine{00180\ \ \ \textcolor{keywordtype}{void}\ RcuV5VAPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
-\DoxyCodeLine{00181\ \ \ \textcolor{keywordtype}{void}\ RcuV5VBPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
-\DoxyCodeLine{00182\ \ \ \textcolor{keywordtype}{void}\ Rcu12VPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
-\DoxyCodeLine{00183\ \ \ \textcolor{keywordtype}{void}\ RcuFan12VPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
-\DoxyCodeLine{00184\ \ \ \textcolor{keywordtype}{void}\ Rcu19VPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
-\DoxyCodeLine{00185\ }
-\DoxyCodeLine{00186\ \ \ \textcolor{keywordtype}{void}\ RcuBrakeCmd(\textcolor{keyword}{const}\ std::vector<RcuBrake>\ \&param);}
-\DoxyCodeLine{00187\ \ \ \textcolor{keywordtype}{void}\ RcuAdcOffset(\textcolor{keyword}{const}\ std::vector<float>\ \&param);}
-\DoxyCodeLine{00188\ \ \ \textcolor{keywordtype}{void}\ RcuFwUpgrade();}
-\DoxyCodeLine{00189\ }
-\DoxyCodeLine{00190\ \ \ \textcolor{comment}{//\ Encoder}}
-\DoxyCodeLine{00191\ \ \ \textcolor{keywordtype}{void}\ getEncoderAngle(\textcolor{keyword}{const}\ std::vector<float>\ \&param);}
-\DoxyCodeLine{00192\ }
-\DoxyCodeLine{00193\ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00198\ \ \ PndGroupCommandPtr\ \mbox{\hyperlink{class_pnd_1_1_group_command_a74e0e3725aebda4005fd42c8e1485ae7}{internal\_}};}
-\DoxyCodeLine{00199\ }
-\DoxyCodeLine{00203\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_pnd_1_1_group_command_aa2ff642adc863837058345b463420ef6}{number\_of\_modules\_}};}
+\DoxyCodeLine{00171\ \ \ \textcolor{keywordtype}{void}\ setInputVelocityPt(\textcolor{keyword}{const}\ std::vector<float>\ \&param);}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ \ \ \textcolor{keywordtype}{void}\ setInputTorquePt(\textcolor{keyword}{const}\ std::vector<float>\ \&param);}
+\DoxyCodeLine{00174\ \textcolor{comment}{\ \ /*******\ fw2\ .0\ *******/}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00182\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_a29ae7dbb82e5bb53e4cb81e3b3cfc7cf}{RcuPower}}(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
+\DoxyCodeLine{00183\ \ \ \textcolor{keywordtype}{void}\ RcuAV5VPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
+\DoxyCodeLine{00184\ \ \ \textcolor{keywordtype}{void}\ RcuV5VPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
+\DoxyCodeLine{00185\ \ \ \textcolor{keywordtype}{void}\ RcuV5VAPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
+\DoxyCodeLine{00186\ \ \ \textcolor{keywordtype}{void}\ RcuV5VBPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
+\DoxyCodeLine{00187\ \ \ \textcolor{keywordtype}{void}\ Rcu12VPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
+\DoxyCodeLine{00188\ \ \ \textcolor{keywordtype}{void}\ RcuFan12VPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
+\DoxyCodeLine{00189\ \ \ \textcolor{keywordtype}{void}\ Rcu19VPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \ \ \textcolor{keywordtype}{void}\ RcuBrakeCmd(\textcolor{keyword}{const}\ std::vector<RcuBrake>\ \&param);}
+\DoxyCodeLine{00192\ \ \ \textcolor{keywordtype}{void}\ RcuAdcOffset(\textcolor{keyword}{const}\ std::vector<float>\ \&param);}
+\DoxyCodeLine{00193\ \ \ \textcolor{keywordtype}{void}\ RcuFwUpgrade();}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ \ \ \textcolor{comment}{//\ Encoder}}
+\DoxyCodeLine{00196\ \ \ \textcolor{keywordtype}{void}\ getEncoderAngle(\textcolor{keyword}{const}\ std::vector<float>\ \&param);}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00198\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00203\ \ \ PndGroupCommandPtr\ \mbox{\hyperlink{class_pnd_1_1_group_command_a74e0e3725aebda4005fd42c8e1485ae7}{internal\_}};}
 \DoxyCodeLine{00204\ }
-\DoxyCodeLine{00205\ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00209\ \ \ std::vector<PndCommandPtr>\ commands\_;}
-\DoxyCodeLine{00210\ \};}
-\DoxyCodeLine{00211\ }
-\DoxyCodeLine{00212\ \}\ \ \textcolor{comment}{//\ namespace\ Pnd}}
+\DoxyCodeLine{00208\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_pnd_1_1_group_command_aa2ff642adc863837058345b463420ef6}{number\_of\_modules\_}};}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00210\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00214\ \ \ std::vector<PndCommandPtr>\ commands\_;}
+\DoxyCodeLine{00215\ \};}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00217\ \}\ \ \textcolor{comment}{//\ namespace\ Pnd}}
 
 \end{DoxyCode}

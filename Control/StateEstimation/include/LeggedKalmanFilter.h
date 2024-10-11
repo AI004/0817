@@ -6,20 +6,19 @@
 #include <Eigen/Dense>
 
 class LeggedKalmanFilter {
-public:
+ public:
   LeggedKalmanFilter();
-  LeggedKalmanFilter(Eigen::VectorXd d_SysNoise, Eigen::VectorXd d_MeaNoise,
-                     double dt, int nState, int nOutput, int nInput);
+  LeggedKalmanFilter(Eigen::VectorXd d_SysNoise, Eigen::VectorXd d_MeaNoise, double dt, int nState, int nOutput,
+                     int nInput);
   ~LeggedKalmanFilter();
-  Eigen::VectorXd mFilter(Eigen::VectorXd sigIn, Eigen::VectorXd aIn,
-                          Eigen::VectorXd trust);
+  Eigen::VectorXd mFilter(Eigen::VectorXd sigIn, Eigen::VectorXd aIn, Eigen::VectorXd trust);
 
-private:
+ private:
   int numState = 1;
   int numOutput = 1;
   int numInput = 1;
-  Eigen::VectorXd sysNoise; // standard deviation of system noise
-  Eigen::VectorXd meaNoise; // standard deviation of measurement noise
+  Eigen::VectorXd sysNoise;  // standard deviation of system noise
+  Eigen::VectorXd meaNoise;  // standard deviation of measurement noise
   double high_suspect_number = 100.0;
   int nit = 0;
 

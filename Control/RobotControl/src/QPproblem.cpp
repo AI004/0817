@@ -45,7 +45,7 @@ void QPproblem::init(int taskdim, int constdim, double cputime, int nWSR) {
   qp_option.printLevel = qpOASES::PL_LOW;
   qp_option.terminationTolerance = 0.000001;
   qp_option.enableRegularisation = qpOASES::BT_TRUE;
-  qp_option.epsRegularisation = 0.00001; // 这个参数需要自行调节一下
+  qp_option.epsRegularisation = 0.00001;  // 这个参数需要自行调节一下
   // qp_option.numRegularisationSteps = 5000;
   // Enables or disables the use of far bounds, an idea to reliably detect
   // unboundedness
@@ -79,7 +79,6 @@ void QPproblem::init(int taskdim, int constdim, double cputime, int nWSR) {
 
 // init qp problem
 bool QPproblem::solve() {
-
   // update qp array
   updateQPArray();
 
@@ -90,16 +89,14 @@ bool QPproblem::solve() {
   // qp_init_flag = false;
   if (qp_init_flag == false) {
     cputime[0] = qp_cputime * 1;
-    QP_returnValue = qp_problem->init(qp_hessian, qp_gradient, qp_constraint,
-                                      qp_lbound, qp_ubound, qp_lbconstraint,
+    QP_returnValue = qp_problem->init(qp_hessian, qp_gradient, qp_constraint, qp_lbound, qp_ubound, qp_lbconstraint,
                                       qp_ubconstraint, nWSR, cputime);
     // qp_init_flag = true;
     // std::cout<<"qp init function!"<<std::endl;
   } else {
     cputime[0] = qp_cputime;
-    QP_returnValue = qp_problem->hotstart(
-        qp_hessian, qp_gradient, qp_constraint, qp_lbound, qp_ubound,
-        qp_lbconstraint, qp_ubconstraint, nWSR, cputime);
+    QP_returnValue = qp_problem->hotstart(qp_hessian, qp_gradient, qp_constraint, qp_lbound, qp_ubound, qp_lbconstraint,
+                                          qp_ubconstraint, nWSR, cputime);
     // qp_init_flag = true;
     // std::cout<<"qp hotstart  function!"<<std::endl;
   }
@@ -122,12 +119,9 @@ bool QPproblem::solve() {
 }
 
 // get optimal result
-Eigen::Matrix<double, Eigen::Dynamic, 1> QPproblem::getOptimal() {
-  return m_optimal;
-}
+Eigen::Matrix<double, Eigen::Dynamic, 1> QPproblem::getOptimal() { return m_optimal; }
 
-void QPproblem::MatrixToArray(qpOASES::real_t *arr,
-                              Eigen::MatrixXd input_matrix) {
+void QPproblem::MatrixToArray(qpOASES::real_t* arr, Eigen::MatrixXd input_matrix) {
   int col = input_matrix.cols();
   int row = input_matrix.rows();
 

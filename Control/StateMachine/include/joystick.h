@@ -1,16 +1,16 @@
 #ifndef JOYSTICK_H_
 #define JOYSTICK_H_
-#include <atomic>
 #include <errno.h>
 #include <fcntl.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <string.h>
-#include <string>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <thread>
 #include <unistd.h>
+#include <atomic>
+#include <string>
+#include <thread>
 
 #include <linux/input.h>
 #include <linux/joystick.h>
@@ -53,8 +53,8 @@
 #define XBOX_BUTTON_BACK 0x05
 #define XBOX_BUTTON_HOME 0x08
 #define XBOX_BUTTON_SEL 0x0a /* 右摇杆按键 */
-#define XBOX_BUTTON_LO 0x0b  /* 左摇杆按键 */
-#define XBOX_BUTTON_RO 0x0c  /* 右摇杆按键 */
+#define XBOX_BUTTON_LO 0x0d  /* 左摇杆按键 */
+#define XBOX_BUTTON_RO 0x0e  /* 右摇杆按键 */
 
 #define XBOX_BUTTON_ON 0x01
 #define XBOX_BUTTON_OFF 0x00
@@ -104,7 +104,7 @@ typedef struct xbox_map {
 } xbox_map_t;
 
 class Joystick_humanoid {
-public:
+ public:
   Joystick_humanoid();
   ~Joystick_humanoid();
   void init();
@@ -187,6 +187,8 @@ public:
   double yawdelt_cmd = 0.01;
   double yaw_cmd = 0.0;
 
+  bool get_momentumController_on();
+
   bool get_motion_state();
   bool get_carry_box_state();
   bool get_if_stand_carry();
@@ -195,7 +197,7 @@ public:
   bool disableJoints();
   bool get_calibration_flag();
 
-private:
+ private:
   // fsmstate
   std::string current_fsmstate_command;
   //
@@ -203,12 +205,14 @@ private:
   // pthread_t xbox_thread;
   std::thread xbox_thread;
   std::atomic<bool> exit_flag_;
+  bool get_momentumController_on_flag_;
+  bool button_processed_;
   // xbox
   int xbox_fd;
-  int xbox_open(const char *file_name);
-  int xbox_map_read(xbox_map_t *map);
+  int xbox_open(const char* file_name);
+  int xbox_map_read(xbox_map_t* map);
   void xbox_close(void);
   int xbox_init(void);
-  int xbox_read(xbox_map_t *xbox_m);
+  int xbox_read(xbox_map_t* xbox_m);
 };
 #endif

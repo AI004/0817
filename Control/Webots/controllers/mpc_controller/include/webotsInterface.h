@@ -19,24 +19,24 @@
 #include "public_parament.h"
 
 #ifndef PI
-#define PI 3.141592654
-#endif // PI
+#  define PI 3.141592654
+#endif  // PI
 
 #ifndef TIME_STEP
-#define TIME_STEP (2.5)
-#endif // TIME_STEP
+#  define TIME_STEP (2.5)
+#endif  // TIME_STEP
 
 #ifndef SAMPLE_TIME
-#define SAMPLE_TIME (0.0025f)
-#endif // SAMPLE_TIME
+#  define SAMPLE_TIME (0.0025f)
+#endif  // SAMPLE_TIME
 
 #ifndef LEFTFOOT
-#define LEFTFOOT 0
-#endif // LEFTFOOT
+#  define LEFTFOOT 0
+#endif  // LEFTFOOT
 
 #ifndef RIGHTFOOT
-#define RIGHTFOOT 1
-#endif // RIGHTFOOT
+#  define RIGHTFOOT 1
+#endif  // RIGHTFOOT
 
 using namespace webots;
 
@@ -55,13 +55,13 @@ using namespace webots;
  *                    1 + z^-1
  */
 class Derivative {
-public:
+ public:
   Derivative();
   Derivative(double dT, double c);
   void init(double dT, double c, double initValue);
   double mSig(double sigIn, double dT);
 
-private:
+ private:
   double a0, a1, b0, b1;
   double sigInPrev;
   double sigOutPrev;
@@ -84,42 +84,42 @@ struct webotState {
  * @brief The WebotsRobot class
  */
 class WebotsRobot {
-public:
-  Supervisor *robot = new Supervisor();
+ public:
+  Supervisor* robot = new Supervisor();
 
   void initWebots();
   void deleteRobot();
-  bool readData(double simTime, webotState &robotState);
-  bool setMotorPos(const Eigen::VectorXd &jointPosTar);
-  bool setMotorTau(const Eigen::VectorXd &jointTauTar);
+  bool readData(double simTime, webotState& robotState);
+  bool setMotorPos(const Eigen::VectorXd& jointPosTar);
+  bool setMotorTau(const Eigen::VectorXd& jointTauTar);
   int nJoint = actor_num;
-  std::vector<Motor *> legMotor;
+  std::vector<Motor*> legMotor;
 
-private:
+ private:
   Eigen::VectorXd getMotorPos();
   Eigen::VectorXd getMotorTau();
   Eigen::Vector3d getWaistAcc();
   // Eigen::VectorXd getFootForce6D(const int& footFlag);
   // Eigen::VectorXd getFootForce12D();
-  Eigen::Vector3d rotm2Rpy(const Eigen::Matrix3d &rotm);
-  Eigen::Vector3d rotm2xyz(const Eigen::Matrix3d &R);
+  Eigen::Vector3d rotm2Rpy(const Eigen::Matrix3d& rotm);
+  Eigen::Vector3d rotm2xyz(const Eigen::Matrix3d& R);
   Eigen::Matrix3d rotx(const double theta);
 
-  std::vector<PositionSensor *> legSensor;
-  std::vector<Motor *> torqueSensor;
-  std::vector<TouchSensor *> forceSensor;
-  InertialUnit *imu;
-  Gyro *gyro;
-  Accelerometer *accelerometer;
-  GPS *Waistgps;
-  GPS *LFootGps;
-  GPS *RFootGps;
-  Node *Waist;
-  Node *SoleLeft;
-  Node *SoleRight;
+  std::vector<PositionSensor*> legSensor;
+  std::vector<Motor*> torqueSensor;
+  std::vector<TouchSensor*> forceSensor;
+  InertialUnit* imu;
+  Gyro* gyro;
+  Accelerometer* accelerometer;
+  GPS* Waistgps;
+  GPS* LFootGps;
+  GPS* RFootGps;
+  Node* Waist;
+  Node* SoleLeft;
+  Node* SoleRight;
 
   std::vector<Derivative> dRpy;
   std::vector<Derivative> dJnt;
 };
 
-#endif // WEBOTS_INTERFACE_H
+#endif  // WEBOTS_INTERFACE_H

@@ -13,11 +13,13 @@ INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR})
 INCLUDE_DIRECTORIES(${RBDL_INCLUDE_DIR})
 INCLUDE_DIRECTORIES(JointInterface/include)
 INCLUDE_DIRECTORIES(S2P/include)
+INCLUDE_DIRECTORIES(wrist_S2P/include)
 INCLUDE_DIRECTORIES(StateEstimator/include)
 INCLUDE_DIRECTORIES(JointInterface/pnd-cpp-sdk/pnd/include)
 INCLUDE_DIRECTORIES(include)
 INCLUDE_DIRECTORIES(vnIMU/include)
 INCLUDE_DIRECTORIES(vnIMU/include/vn)
+INCLUDE_DIRECTORIES(abs)
 AUX_SOURCE_DIRECTORY(vnIMU/src vnIMU_DIR)
 AUX_SOURCE_DIRECTORY(vnIMU/src/vn vn_DIR)
 
@@ -39,6 +41,8 @@ ADD_LIBRARY(${PROJECT_NAME} SHARED
         # StateEstimator/src/LeggedKalmanFilter.cpp
         JointInterface/src/JointInterface.cpp
         S2P/src/functionIKID_S2P
+        wrist_S2P/src/series_parallel
+        abs/abs_encoder.cpp
         # vnIMU/src/vnIMU.cpp
         # ${vn_DIR}
         

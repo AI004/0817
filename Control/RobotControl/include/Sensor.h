@@ -11,7 +11,7 @@ enum sensor_type { FT_sensor = 1, Imu_sensor, Joint_external_torque_observer };
  * @brief The Sensor class
  */
 class Sensor {
-public:
+ public:
   // construct function
   Sensor();
   ~Sensor();
@@ -27,4 +27,4 @@ public:
   Eigen::Matrix4d T_offset;
 };
 
-#endif // SENSOR_H
+#endif  // SENSOR_H

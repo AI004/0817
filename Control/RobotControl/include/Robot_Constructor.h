@@ -12,12 +12,12 @@
  * @brief The Robot_Constructor class
  */
 class Robot_Constructor {
-public:
+ public:
   Robot_Constructor();
   // construct robot data from jason
-  void robotconstructor(QString path,         // input jason path
-                        Robot_Data *robotdata // robot data
+  void robotconstructor(QString path,          // input jason path
+                        Robot_Data* robotdata  // robot data
   );
 };
 
-#endif // ROBOT_CONSTRUCTOR_H
+#endif  // ROBOT_CONSTRUCTOR_H

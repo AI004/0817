@@ -136,6 +136,14 @@ void GroupCommand::setNetworkSetting(const std::vector<NetworkSetting *> &config
   }
 }
 
+void GroupCommand::getMotorRotorAbsPos(const std::vector<bool> &flag) {
+  if (flag.size() != number_of_modules_) return;
+  pndGroupCommandSetType(internal_, PndCommandGetMotorRotorAbsPos);
+  for (size_t i = 0; i < number_of_modules_; ++i) {
+    commands_[i]->bool_fields_ = flag[i];
+  }
+}
+
 void GroupCommand::setLatencyTest(const std::vector<bool> &flag) {
   if (flag.size() != number_of_modules_) return;
   pndGroupCommandSetType(internal_, PndCommandLatencyTest);

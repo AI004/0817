@@ -3,11 +3,10 @@
 
 AccKalmanFilter::AccKalmanFilter() {}
 
-AccKalmanFilter::AccKalmanFilter(double d_SysNoise, double d_MeaNoise,
-                                 double dt, int nFilter) {
+AccKalmanFilter::AccKalmanFilter(double d_SysNoise, double d_MeaNoise, double dt, int nFilter) {
   numFilter = nFilter;
-  sysNoise = d_SysNoise; // standard deviation of system noise
-  meaNoise = d_MeaNoise; // standard deviation of measurement noise
+  sysNoise = d_SysNoise;  // standard deviation of system noise
+  meaNoise = d_MeaNoise;  // standard deviation of measurement noise
   high_suspect_number = 100.0;
 
   estimation_last = Eigen::VectorXd::Zero(numFilter);
@@ -19,17 +18,14 @@ AccKalmanFilter::AccKalmanFilter(double d_SysNoise, double d_MeaNoise,
   A = Eigen::MatrixXd::Identity(numFilter, numFilter);
   B = Eigen::MatrixXd::Identity(numFilter, numFilter) * dt;
   C = Eigen::MatrixXd::Identity(numFilter, numFilter);
-  Q = Eigen::MatrixXd::Identity(numFilter, numFilter) * sysNoise * dt * 9.81 /
-      55.0;
+  Q = Eigen::MatrixXd::Identity(numFilter, numFilter) * sysNoise * dt * 9.81 / 55.0;
   Q(2, 2) = sysNoise * dt * 9.81;
   R = Eigen::MatrixXd::Identity(numFilter, numFilter) * meaNoise;
 }
 
 AccKalmanFilter::~AccKalmanFilter() {}
 
-Eigen::VectorXd AccKalmanFilter::mFilter(Eigen::VectorXd sigIn,
-                                         Eigen::VectorXd aIn, double trust) {
-
+Eigen::VectorXd AccKalmanFilter::mFilter(Eigen::VectorXd sigIn, Eigen::VectorXd aIn, double trust) {
   // the first time ,set the origin values as the filter ones
   if (nit == 0) {
     estimation_last = sigIn;
@@ -51,14 +47,9 @@ Eigen::VectorXd AccKalmanFilter::mFilter(Eigen::VectorXd sigIn,
 
   estimation_now = estimation_last + B * aIn;
   filter_noise_per = estimation_noise_std + Q_;
-  filter_noise = (filter_noise_per + R_)
-                     .completeOrthogonalDecomposition()
-                     .pseudoInverse() *
-                 (filter_noise_per);
+  filter_noise = (filter_noise_per + R_).completeOrthogonalDecomposition().pseudoInverse() * (filter_noise_per);
   estimation_now = estimation_now + filter_noise * (sigIn - estimation_now);
-  estimation_noise_std =
-      (Eigen::MatrixXd::Identity(numFilter, numFilter) - filter_noise) *
-      filter_noise_per;
+  estimation_noise_std = (Eigen::MatrixXd::Identity(numFilter, numFilter) - filter_noise) * filter_noise_per;
 
   // update the last filter value for the next estimation
   estimation_last = estimation_now;
@@ -66,4 +57,4 @@ Eigen::VectorXd AccKalmanFilter::mFilter(Eigen::VectorXd sigIn,
   // std::cout << "err: " << (sigIn- estimation_now).transpose()<< std::endl;
   return estimation_now;
 
-} // AccKalmanFilter
+}  // AccKalmanFilter

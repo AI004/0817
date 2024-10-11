@@ -32,6 +32,7 @@ public:
   static void asciiOrBinaryAsyncMessageReceived(void *userData, Packet &p,
                                                 size_t index);
   static Eigen::VectorXd imuData;
+  static bool use_IMU_correction;
 };
 
 #endif

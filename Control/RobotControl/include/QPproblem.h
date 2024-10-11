@@ -7,7 +7,7 @@
 const double INFINITY_QP = qpOASES::INFTY;
 
 class QPproblem {
-public:
+ public:
   QPproblem();
   ~QPproblem();
 
@@ -28,22 +28,22 @@ public:
   Eigen::Matrix<double, Eigen::Dynamic, 1> m_ubconstraint;
   Eigen::Matrix<double, Eigen::Dynamic, 1> m_optimal;
 
-public:
+ public:
   int qp_taskdim;
   int qp_constdim;
 
-  qpOASES::SQProblem *qp_problem;
-  qpOASES::real_t qp_cputime; // s
+  qpOASES::SQProblem* qp_problem;
+  qpOASES::real_t qp_cputime;  // s
   qpOASES::int_t qp_nWSR;
-  qpOASES::real_t *qp_hessian;
-  qpOASES::real_t *qp_constraint;
-  qpOASES::real_t *qp_gradient;
-  qpOASES::real_t *qp_lbound;
-  qpOASES::real_t *qp_ubound;
-  qpOASES::real_t *qp_lbconstraint;
-  qpOASES::real_t *qp_ubconstraint;
+  qpOASES::real_t* qp_hessian;
+  qpOASES::real_t* qp_constraint;
+  qpOASES::real_t* qp_gradient;
+  qpOASES::real_t* qp_lbound;
+  qpOASES::real_t* qp_ubound;
+  qpOASES::real_t* qp_lbconstraint;
+  qpOASES::real_t* qp_ubconstraint;
   // QP optimal result
-  qpOASES::real_t *qp_optimal;
+  qpOASES::real_t* qp_optimal;
   // QP returnValue
   qpOASES::returnValue QP_returnValue;
   // QP option
@@ -54,9 +54,9 @@ public:
   // qp solve flag
   bool solve_flag;
   // MatrixToArray
-  void MatrixToArray(qpOASES::real_t *arr, Eigen::MatrixXd input_matrix);
+  void MatrixToArray(qpOASES::real_t* arr, Eigen::MatrixXd input_matrix);
   // update qp array according to the qp matrix
   void updateQPArray();
 };
 
-#endif // QPPROBLEM_H
+#endif  // QPPROBLEM_H

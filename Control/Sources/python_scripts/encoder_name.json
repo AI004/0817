@@ -1,0 +1,94 @@
+{
+    "hipPitch_Left": {
+        "ip": "10.10.10.80",
+        "set_zero": 0
+    },
+    "hipRoll_Left": {
+        "ip": "10.10.10.81",
+        "set_zero": 0
+    },
+    "hipYaw_Left": {
+        "ip": "10.10.10.82",
+        "set_zero": 0
+    },
+    "kneePitch_Left": {
+        "ip": "10.10.10.83",
+        "set_zero": 0
+    },
+    "anklePitch_Left": {
+        "ip": "10.10.10.84",
+        "set_zero": 0
+    },
+    "ankleRoll_Left": {
+        "ip": "10.10.10.85",
+        "set_zero": 0
+    },
+    "hipPitch_Right": {
+        "ip": "10.10.10.60",
+        "set_zero": 0
+    },
+    "hipRoll_Right": {
+        "ip": "10.10.10.61",
+        "set_zero": 0
+    },
+    "hipYaw_Right": {
+        "ip": "10.10.10.62",
+        "set_zero": 0
+    },
+    "kneePitch_Right": {
+        "ip": "10.10.10.63",
+        "set_zero": 0
+    },
+    "anklePitch_Right": {
+        "ip": "10.10.10.64",
+        "set_zero": 0
+    },
+    "ankleRoll_Right": {
+        "ip": "10.10.10.65",
+        "set_zero": 0
+    },
+    "waistRoll": {
+        "ip": "10.10.10.100",
+        "set_zero": 0
+    },
+    "waistPitch": {
+        "ip": "10.10.10.101",
+        "set_zero": 0
+    },
+    "waistYaw": {
+        "ip": "10.10.10.102",
+        "set_zero": 0
+    },
+    "shoulderPitch_Left": {
+        "ip": "10.10.10.20",
+        "set_zero": 0
+    },
+    "shoulderRoll_Left": {
+        "ip": "10.10.10.21",
+        "set_zero": 0
+    },
+    "shoulderYaw_Left": {
+        "ip": "10.10.10.22",
+        "set_zero": 0
+    },
+    "elbow_Left": {
+        "ip": "10.10.10.23",
+        "set_zero": 0
+    },
+    "shoulderPitch_Right": {
+        "ip": "10.10.10.40",
+        "set_zero": 0
+    },
+    "shoulderRoll_Right": {
+        "ip": "10.10.10.41",
+        "set_zero": 0
+    },
+    "shoulderYaw_Right": {
+        "ip": "10.10.10.42",
+        "set_zero": 0
+    },
+    "elbow_Right": {
+        "ip": "10.10.10.43",
+        "set_zero": 0
+    } 
+}

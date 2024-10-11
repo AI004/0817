@@ -1,24 +1,23 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include "../../MotionPlan/include/gaitPlan.h"
-#include "../../MotionPlan/include/planTools.h"
-#include "../../MotionPlan/include/uniPlan.h"
-#include "../../RobotControl/include/LowPassFilter.h"
-#include "XFsmState.h"
 #include <Eigen/Dense>
-#include <fstream>
-#include <iostream>
-#include <QRegularExpression>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QJsonValue>
 #include <QRegularExpression>
+#include <fstream>
+#include <iostream>
+#include "../../MotionPlan/include/gaitPlan.h"
+#include "../../MotionPlan/include/planTools.h"
+#include "../../MotionPlan/include/uniPlan.h"
+#include "../../RobotControl/include/LowPassFilter.h"
+#include "XFsmState.h"
 class Start : public XFsmState {
-public:
-  Start(void *App) : XFsmState(App){};
+ public:
+  Start(void* App) : XFsmState(App) {};
   void onEnter();
   void run();
   void onExit();
@@ -27,8 +26,8 @@ public:
 };
 
 class Zero : public XFsmState {
-public:
-  Zero(void *App) : XFsmState(App){};
+ public:
+  Zero(void* App) : XFsmState(App) {};
   void onEnter();
   void run();
   void onExit();
@@ -52,8 +51,8 @@ public:
 };
 
 class Swing : public XFsmState {
-public:
-  Swing(void *App) : XFsmState(App){};
+ public:
+  Swing(void* App) : XFsmState(App) {};
   void onEnter();
   void run();
   void onExit();
@@ -103,8 +102,8 @@ public:
 };
 
 class Z2S : public XFsmState {
-public:
-  Z2S(void *App) : XFsmState(App){};
+ public:
+  Z2S(void* App) : XFsmState(App) {};
   void onEnter();
   void run();
   void onExit();
@@ -145,8 +144,8 @@ public:
 };
 
 class Stand : public XFsmState {
-public:
-  Stand(void *App) : XFsmState(App){};
+ public:
+  Stand(void* App) : XFsmState(App) {};
   void onEnter();
   void run();
   void onExit();
@@ -176,6 +175,7 @@ public:
 
   // total time
   double totaltime;
+  double transtime;
   // average speed
   double avr_v;
 
@@ -193,6 +193,7 @@ public:
   Eigen::VectorXd rTorso_tgt;
   Eigen::VectorXd rFootCmd;
 
+  Eigen::VectorXd upperJointsRefPos_with_hand;
   Eigen::VectorXd upperJointsRefPos;
   Eigen::VectorXd upperJointsRefPosFilter;
   Eigen::VectorXd upperJointsRefPosLast;
@@ -206,8 +207,8 @@ public:
 };
 
 class S2W : public XFsmState {
-public:
-  S2W(void *App) : XFsmState(App){};
+ public:
+  S2W(void* App) : XFsmState(App) {};
   void onEnter();
   void run();
   void onExit();
@@ -250,8 +251,8 @@ public:
 };
 
 class Walk : public XFsmState {
-public:
-  Walk(void *App) : XFsmState(App){};
+ public:
+  Walk(void* App) : XFsmState(App) {};
   void onEnter();
   void run();
   void onExit();
@@ -282,7 +283,7 @@ public:
   Eigen::VectorXd qCmd, qDotCmd;
   double vCmd;
   Eigen::VectorXd xStand;
-  gaitPlan *gait_plan;
+  gaitPlan* gait_plan;
   // wbc
   // body orientation task:
   Eigen::MatrixXd body_x_a;
@@ -309,8 +310,8 @@ public:
 };
 
 class UniGait : public XFsmState {
-public:
-  UniGait(void *App) : XFsmState(App){};
+ public:
+  UniGait(void* App) : XFsmState(App) {};
   void onEnter();
   void run();
   void onExit();
@@ -342,7 +343,7 @@ public:
   double vCmd;
   Eigen::VectorXd xStand;
   Eigen::VectorXd q_ini;
-  uniPlan *gait_plan;
+  uniPlan* gait_plan;
   // wbc
   // body orientation task:
   Eigen::MatrixXd body_x_a;
@@ -371,8 +372,8 @@ public:
 };
 
 class Stop : public XFsmState {
-public:
-  Stop(void *App) : XFsmState(App){};
+ public:
+  Stop(void* App) : XFsmState(App) {};
   void onEnter();
   void run();
   void onExit();
@@ -395,8 +396,8 @@ public:
 };
 
 class Dual2Single : public XFsmState {
-public:
-  Dual2Single(void *App) : XFsmState(App){};
+ public:
+  Dual2Single(void* App) : XFsmState(App) {};
   void onEnter();
   void run();
   void onExit();
@@ -446,8 +447,8 @@ public:
 };
 
 class SingleStand : public XFsmState {
-public:
-  SingleStand(void *App) : XFsmState(App){};
+ public:
+  SingleStand(void* App) : XFsmState(App) {};
   void onEnter();
   void run();
   void onExit();
@@ -493,8 +494,8 @@ public:
 };
 
 class Single2Dual : public XFsmState {
-public:
-  Single2Dual(void *App) : XFsmState(App){};
+ public:
+  Single2Dual(void* App) : XFsmState(App) {};
   void onEnter();
   void run();
   void onExit();
@@ -540,6 +541,15 @@ public:
 
   Eigen::VectorXd q_factor_init;
   Eigen::VectorXd q_dot_factor_init;
+};
+
+class W2S : public XFsmState {
+ public:
+  W2S(void* App) : XFsmState(App) {};
+  void onEnter();
+  void run();
+  void onExit();
+  void init();
 };
 
 #endif

@@ -7,7 +7,7 @@
 // #include "XFsmState.h"
 
 // XFsmState::XFsmState(void* robotData) : _robotData(robotData)
-XFsmState::XFsmState(void *app) : app(app) {
+XFsmState::XFsmState(void* app) : app(app) {
   duration = -1;
   elapse = -1;
 }

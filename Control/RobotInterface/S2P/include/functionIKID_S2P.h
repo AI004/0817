@@ -4,24 +4,24 @@
 #ifndef S2P_H_
 #define S2P_H_
 #ifndef PI
-#define PI 3.141592654
+#  define PI 3.141592654
 #endif
 
+#include <math.h>
+#include <time.h>
 #include <algorithm>
 #include <chrono>
 #include <fstream>
 #include <iostream>
-#include <math.h>
 #include <sstream>
 #include <string>
-#include <time.h>
 #include <vector>
 
 #include <Eigen/Dense>
 // #include <rbdl/rbdl.h>
 
 class functionIKID_S2P {
-public:
+ public:
   functionIKID_S2P();
   ~functionIKID_S2P();
 
@@ -38,27 +38,22 @@ public:
   bool calcAnkleEstRight();
   bool calcJointTorDes();
   bool calcJointTorDesPKMDynLeft();
-  bool setEst(const Eigen::VectorXd &qEst, const Eigen::VectorXd &qDotEst,
-              const Eigen::VectorXd &qTorEst);
+  bool setEst(const Eigen::VectorXd& qEst, const Eigen::VectorXd& qDotEst, const Eigen::VectorXd& qTorEst);
 
-  bool setDes(const Eigen::VectorXd &ankleOrienRef,
-              const Eigen::VectorXd &ankleOmegaRef);
-  bool setDesTorque(const Eigen::VectorXd &tauSDes);
-  bool getAnkleState(Eigen::VectorXd &ankleOrienEst,
-                     Eigen::VectorXd &ankleOmegaEst,
-                     Eigen::VectorXd &ankleTorEst);
-  bool getDes(Eigen::VectorXd &qDes, Eigen::VectorXd &qDotDes,
-              Eigen::VectorXd &tauDes);
+  bool setDes(const Eigen::VectorXd& ankleOrienRef, const Eigen::VectorXd& ankleOmegaRef);
+  bool setDesTorque(const Eigen::VectorXd& tauSDes);
+  bool getAnkleState(Eigen::VectorXd& ankleOrienEst, Eigen::VectorXd& ankleOmegaEst, Eigen::VectorXd& ankleTorEst);
+  bool getDes(Eigen::VectorXd& qDes, Eigen::VectorXd& qDotDes, Eigen::VectorXd& tauDes);
 
-  Eigen::Matrix3d Skew(const Eigen::Vector3d &omg);
+  Eigen::Matrix3d Skew(const Eigen::Vector3d& omg);
 
-  double leftAnkleALimb; // Length of
+  double leftAnkleALimb;  // Length of
   double leftAnkleZLimb1;
   double leftAnkleZLimb2;
   double leftAnklePLimb1;
   double leftAnklePLimb2;
   double leftAnkleBaseDis;
-  double rightAnkleALimb; // Length of
+  double rightAnkleALimb;  // Length of
   double rightAnkleZLimb1;
   double rightAnkleZLimb2;
   double rightAnklePLimb1;

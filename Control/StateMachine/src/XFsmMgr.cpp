@@ -7,9 +7,8 @@ XFsmMgr::XFsmMgr() {
   //  initialize();
 }
 
-XFsmState *XFsmMgr::getStateByName(string name) {
-
-  map<string, XFsmState *>::iterator it = XFsmStatesMap.find(name);
+XFsmState* XFsmMgr::getStateByName(string name) {
+  map<string, XFsmState*>::iterator it = XFsmStatesMap.find(name);
   if (it == XFsmStatesMap.end()) {
     return NULL;
   } else {
@@ -17,19 +16,17 @@ XFsmState *XFsmMgr::getStateByName(string name) {
   }
 }
 
-void XFsmMgr::addState(XFsmState *state) { addState(state, 0); }
+void XFsmMgr::addState(XFsmState* state) { addState(state, 0); }
 
-void XFsmMgr::addState(XFsmState *state, int firstflag) {
-  map<string, XFsmState *>::iterator it = XFsmStatesMap.find(state->stateName);
+void XFsmMgr::addState(XFsmState* state, int firstflag) {
+  map<string, XFsmState*>::iterator it = XFsmStatesMap.find(state->stateName);
   if (it == XFsmStatesMap.end()) {
-    XFsmStatesMap.insert(
-        std::pair<string, XFsmState *>(state->stateName, state));
+    XFsmStatesMap.insert(std::pair<string, XFsmState*>(state->stateName, state));
   } else {
     it->second = state;
   }
 
-  if (firstflag)
-    firstStateName = state->stateName;
+  if (firstflag) firstStateName = state->stateName;
   return;
 }
 
@@ -38,13 +35,13 @@ void XFsmMgr::initialize() {
   currentState = getStateByName(firstStateName);
 
   //	printf("%s %d %s\n", __func__, __LINE__,
-  //currentState->stateName.c_str());
+  // currentState->stateName.c_str());
   currentState->onEnter();
 
   nextState = currentState;
 }
 
-void XFsmMgr::runFSM(string &event) {
+void XFsmMgr::runFSM(string& event) {
   string state;
   /*
           static int count =0;
@@ -58,7 +55,6 @@ void XFsmMgr::runFSM(string &event) {
   event = "";
 
   if (state.size() == 0) {
-
     currentState->run();
     return;
   }
@@ -82,6 +78,4 @@ void XFsmMgr::runFSM(string &event) {
   return;
 }
 // return currentstate name
-void XFsmMgr::currentstatename(string &state) {
-  state = currentState->stateName;
-}
+void XFsmMgr::currentstatename(string& state) { state = currentState->stateName; }

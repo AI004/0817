@@ -18,7 +18,19 @@ SET(PROJECT_WEBOTS "mpc_controller")
 # option(webots_sim_def "compile webots sim" off)
 set(webots_sim_def FALSE CACHE BOOL "compile webots sim")
 set(realrobot TRUE CACHE BOOL "compile real robot control")
+set(rosopen FALSE CACHE BOOL "compile with ros")
 
+if (realrobot)
+	# for nokov get information
+	if (UNIX)
+		add_definitions(-D_LINUX)
+		SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+	endif()
+endif()
+
+if(rosopen)
+    add_definitions(-DROS_PUB)
+endif()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 add_definitions(-Wall -O2 -g)
@@ -33,6 +45,15 @@ if(webots_sim_def)
 	set (LIBRARIES ${CMAKE_SHARED_LIBRARY_PREFIX}Controller${CMAKE_SHARED_LIBRARY_SUFFIX} ${CMAKE_SHARED_LIBRARY_PREFIX}CppController${CMAKE_SHARED_LIBRARY_SUFFIX})
 	include_directories(${WEBOTS_HOME}/include/controller/c ${WEBOTS_HOME}/include/controller/cpp)
 	message(STATUS "webots:${WEBOTS_HOME}")
+
+	# add ros packages
+	if(rosopen)
+		find_package(catkin REQUIRED COMPONENTS roscpp rospy roslib rosconsole std_msgs)
+		find_package(roscpp REQUIRED)
+		find_package(std_msgs REQUIRED)
+		INCLUDE_DIRECTORIES(${roscpp_INCLUDE_DIRS} ${std_msgs_INCLUDE_DIRS})
+	endif()
+
 endif()
 
 # Search for the RBDL include directory and library
@@ -62,6 +83,10 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/nokov/include)
+aux_source_directory(${PROJECT_SOURCE_DIR}/nokov/src NokovClinet_DIR)
+link_directories(${PROJECT_SOURCE_DIR}/nokov/lib)
+
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/RobotControl/include)
 aux_source_directory(${PROJECT_SOURCE_DIR}/RobotControl/src RobotControl_DIR)
 
@@ -76,6 +101,8 @@ aux_source_directory(${PROJECT_SOURCE_DIR}/MotionPlan/src MotionPlan_DIR)
 
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/example/include/S2P)
 aux_source_directory(${PROJECT_SOURCE_DIR}/example/src/S2P S2P_DIR)
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/example/include/wrist_S2P)
+aux_source_directory(${PROJECT_SOURCE_DIR}/example/src/wrist_S2P wrist_S2P_DIR)
 if (realrobot)
 	INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/example/include/vnIMU)
 	INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/example/include/vnIMU/vn)
@@ -90,6 +117,8 @@ aux_source_directory(${PROJECT_SOURCE_DIR}/example/src main_DIR)
 if (webots_sim_def)
 	include_directories(${PROJECT_SOURCE_DIR}/Webots/controllers/mpc_controller/include)
 	aux_source_directory(${PROJECT_SOURCE_DIR}/Webots/controllers/mpc_controller/src WEBOTS_DIR)
+	include_directories(${PROJECT_SOURCE_DIR}/Webots/rospub/include)
+	aux_source_directory(${PROJECT_SOURCE_DIR}/Webots/rospub/src PUB_DIR)
 	# aux_source_directory(${PROJECT_SOURCE_DIR}/webotsim/controllers/webots_interface/src SIM_DIR)
 endif()
 
@@ -99,6 +128,7 @@ aux_source_directory(${PROJECT_SOURCE_DIR}/StateEstimation/src StateEstimation_D
 ##------real world----------------------------------------------------
 if (realrobot)
 	add_executable(	PndControl 
+					${NokovClinet_DIR} 
 					${RobotControl_DIR} 
 					${StateMachine_DIR} 
 					${MotionPlan_DIR} 
@@ -119,6 +149,7 @@ if (realrobot)
 	)
 	# target_link_libraries(PndControl PUBLIC proxsuite::proxsuite proxsuite::proxsuite-vectorized)
 	TARGET_LINK_LIBRARIES(PndControl  Qt${QT_VERSION_MAJOR}::Core RobotInterface)
+	TARGET_LINK_LIBRARIES(PndControl nokov_sdk)
 	# target_compile_options(PndControl PUBLIC "-march=native")
 endif()
 
@@ -131,8 +162,13 @@ if (webots_sim_def)
 					${MotionPlan_DIR} 
 					${S2P_DIR} 
 					${StateEstimation_DIR} 
-					${WEBOTS_DIR})
+					${WEBOTS_DIR}
+					)
 	target_link_libraries(${PROJECT_WEBOTS} ${LIBRARIES})
+    if(rosopen)
+		target_sources(${PROJECT_WEBOTS} PRIVATE ${PUB_DIR})
+		target_link_libraries(${PROJECT_WEBOTS} ${roscpp_LIBRARIES})
+	endif()
 	message(STATUS "RBDL_LIBRARY:${RBDL_LIBRARY}")
 	# And link the library against the executable
 	TARGET_LINK_LIBRARIES (${PROJECT_WEBOTS}
@@ -164,8 +200,9 @@ if (realrobot)
     INSTALL(FILES build/RobotInterface/pnd-cpp-sdk-release/libpndc++.so DESTINATION bin)
 	# INSTALL(FILES build/RobotInterface/pnd-cpp-sdk-release/libpndc++.so.0.6.1 DESTINATION bin)
 	INSTALL(FILES build/RobotInterface/pnd-cpp-sdk-release/libpndc++.so.1 DESTINATION bin)
-	INSTALL(FILES build/RobotInterface/pnd-cpp-sdk-release/libpndc++.so.1.4.4 DESTINATION bin)
+	INSTALL(FILES build/RobotInterface/pnd-cpp-sdk-release/libpndc++.so.1.5.1 DESTINATION bin)
     INSTALL(FILES build/RobotInterface/libRobotInterface.so DESTINATION bin)
+	INSTALL(FILES nokov/lib/libnokov_sdk.so DESTINATION bin)
 	INSTALL(FILES PndControl.sh DESTINATION bin)
 	INSTALL(FILES run.sh DESTINATION bin)
 endif()

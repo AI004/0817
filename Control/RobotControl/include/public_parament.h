@@ -22,12 +22,5 @@ extern int head_actor_num;
 extern int adam_upper_actor_num;
 extern int adam_upper_except_waist_actor_num;
 
-enum ADAM_TYPE {
-    AdamLite = 0,
-    AdamLiteSimple,
-    AdamStandard,
-    StandardPlus23,
-    StandardPlus29,
-    StandardPlus53
-};
+enum ADAM_TYPE { AdamLite = 0, AdamStandard, StandardPlus23, StandardPlus29, StandardPlus53, AdamLiteSimple, DuckDuck };
 #endif

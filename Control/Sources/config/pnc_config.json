@@ -1,8 +1,8 @@
-{   
+{
     "taskNum": 6,
     "wbcType": "WQP",
     "taskConfig": [
-        {   
+        {
             "TaskName": "left_foot",
             "TaskType": "contact",
             "TaskID": 1,
@@ -83,7 +83,7 @@
                 "Kp_5": 200.0,
                 "Kd_5": 15.0,
                 "Kp_6": 200.0,
-                "Kd_6": 15.0 
+                "Kd_6": 15.0
             },
             "WeightX": 1000.0,
             "WeightY": 1000.0,
@@ -92,7 +92,7 @@
             "WeightPitch": 1000.0,
             "WeightYaw": 1000.0
         },
-        {   
+        {
             "TaskName": "base",
             "TaskType": "general",
             "TaskID": 3,
@@ -128,7 +128,7 @@
                 "Kp_5": 150.0,
                 "Kd_5": 15.0,
                 "Kp_6": 300.0,
-                "Kd_6": 40.0    
+                "Kd_6": 40.0
             },
             "WeightX": 100.0,
             "WeightY": 100.0,
@@ -137,7 +137,7 @@
             "WeightPitch": 100.0,
             "WeightYaw": 100.0
         },
-        {   
+        {
             "TaskName": "CoM",
             "TaskType": "CoM",
             "TaskID": 4,
@@ -182,7 +182,7 @@
             "WeightPitch": 100.0,
             "WeightYaw": 100.0
         },
-        {   
+        {
             "TaskName": "torso",
             "TaskType": "general",
             "TaskID": 5,
@@ -218,7 +218,7 @@
                 "Kp_5": 150.0,
                 "Kd_5": 15.0,
                 "Kp_6": 150.0,
-                "Kd_6": 15.0  
+                "Kd_6": 15.0
             },
             "WeightX": 0.0,
             "WeightY": 0.0,
@@ -227,7 +227,7 @@
             "WeightPitch": 0.0,
             "WeightYaw": 0.0
         },
-        {   
+        {
             "TaskName": "arm_waist_joints",
             "TaskType": "joint",
             "TaskID": 6,
@@ -243,7 +243,7 @@
             }
         }
     ],
-    "weightForce":[
+    "weightForce": [
         0.1,
         0.1,
         0.1,
@@ -257,7 +257,7 @@
         0.1,
         0.001
     ],
-    "weightDeltaForce":[
+    "weightDeltaForce": [
         0.001,
         0.001,
         0.001,
@@ -271,12 +271,12 @@
         0.001,
         0.0001
     ],
-    "urdf": "./Sources/urdf/standard_plus29.urdf",
+    "urdf": "./Sources/urdf/adam_lite.urdf",
     "imu_x_offset": 0.0,
     "imu_y_offset": 0.0,
-    "imu_z_offset": 0.48,
+    "imu_z_offset": -0.28,
     "carrybox_com_x": 0.04,
-    "com_x": 0.02,
+    "com_x": 0.0216408,
     "com_y": 0.0,
     "com_z": 0.004,
     "rx_factor": 100.0,
@@ -298,5 +298,14 @@
     "vel_x_FFratio": 1.0,
     "vel_y_FFratio": 1.0,
     "vel_x_FBratio": 1.0,
-    "vel_y_FBratio": 1.0
+    "vel_y_FBratio": 1.0,
+    "use_AM_calcFootHold": 0,
+    "l_start_offset": 0.27,
+    "r_start_offset": 0.27,
+    "forward_offset": 0.16,
+    "impact_threshold": 2.5,
+    "impact_factor": 1.0,
+    "mocap_with_hand": 0.0,
+    "momentum_factor": 0.5,
+    "use_IMU_correction": 0.0
 }

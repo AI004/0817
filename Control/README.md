@@ -34,6 +34,49 @@ standard_plus53.urdf - adma_standard_plus_53dof_world.wbt
 
 `实机运行时更换` Sources/config/pnc_config_sim.json中`"urdf"`标签即可
 
+
+# 功能说明
+
+## dataPub
+添加dataPub模块，进行机器人状态数据发布。可在dataPub中添加自定义数据发布，实时监看更多机器人相关状态。具体话题发布于定义见`dataPub.cpp`。
+`main.cpp`中使用`#define ROS_PUB`打开机器人数据话题发布。
+
+## rqt_multiplot
+安装对应ubuntu版本`rqt_multiplot`，启动`roscore`后，另起终端输入：
+```
+rqt_multiplot
+```
+打开`plot`文件夹中的.xml文件即可查看对应机器人状态绘图。在`dataPub.cpp`修改想要使用的话题与发布的数据相关，自定义.xml文件实现自己需求的数据实时绘图监看。
+
+## example
+![multiplot](./assets/multiplot.png)
+
+## 基于角动量的落足点计算
+首先使用rbdl进行质心处角动量计算，详见函数`estCOMStateMomentum()`,然后使用`footholdPlan_AM()`计算落足点。打开`pnc_config_sim.json`的`use_AM_calcFootHold`启用基于接触点角动量的落足点规划。同时新加入两个相关的落足点调整参数，`l_start_offset`,`r_start_offset`,加大该偏置可以调整落足点选取，调节以达到期望的侧向落足宽度。
+
+## 角动量数据处理
+收到外部干扰时角动量可能存在脉冲突变，使用一个中值滤波器进行脉冲处理，详见`updateDataAndProcessPulse`及`calculateMedian`函数。
+真机上采集到的角动量数据噪音较大，故采用与`q_dot_a`同截止频率的低通滤波器进行滤波处理，打开`#define MOMENTUM_FILT`开关即可使用。
+
+### reference
+Gong, Yukai, and Jessy Grizzle. "Angular momentum about the contact point for control of bipedal locomotion: Validation in a lip-based controller." arXiv preprint arXiv:2008.10763 (2020).
+
+Gong, Yukai, and Jessy W. Grizzle. "Zero dynamics, pendulum models, and angular momentum in feedback control of bipedal locomotion." Journal of Dynamic Systems, Measurement, and Control 144.12 (2022): 121006.
+
+## push recovery
+`state.cpp`中打开`momentumTurnOn`开关，打开`pnc_config_sim.json`的`use_AM_calcFootHold`开关。当机器人位于`stand`状态时，监测外力冲击及扰动，实时可切换进入`uniGait`状态，随后再切回站立状态。
+
+### xbox
+更新到使用xbox手柄切换`momentumTurnOn`开关，按下右摇杆按键即可切换。
+
+#### xbox bug
+手柄摇杆按键键值映射错误，已修正。
+手柄键值存在抖动，状态切换时无影响，但是使用键值突变作为状态位切换时需注意锁存一个flag作为标志，防止抖动导致状态切换异常。
+
+### world
+新增一个添加有摆锤的仿真世界，世界名为`adma_standard_plus_23dof_withPendulum.wbt`，可从中复制摆锤添加到本地世界中使用。
+![multiplot](./assets/pendulum.png)
+
 ##
 ### 依赖环境
 Eigen - https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz
@@ -81,6 +124,8 @@ webots world: Webots/worlds/humanoid_test.wbt
 `JointInterface` 为关节控制接口
 
 `S2P` 为脚踝的串并联转换
+
+`wrist_S2P` 为手腕的串并联转换
 
 `RobotInterfaceImpl` 为机器人获取状态和发送指令的具体实现，以及读绝编等
 

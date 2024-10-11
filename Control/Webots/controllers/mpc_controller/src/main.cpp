@@ -1,17 +1,18 @@
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/time.h>
+#include <time.h>
+#include <unistd.h>
 #include <Eigen/Dense>
 #include <chrono>
 #include <fstream>
 #include <iostream>
-#include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string>
-#include <sys/time.h>
 #include <thread>
-#include <time.h>
-#include <unistd.h>
 #include <vector>
 #define JOYSTICK
+// #define ROS_PUB
 // #define DATALOG_MAIN
 
 // #define WEBOTS
@@ -25,18 +26,22 @@
 #include "spdlog/sinks/stdout_color_sinks.h"
 
 // include open source
-#include "../../MotionPlan/include/planTools.h"
-#include "../../StateMachine/include/StateGenerator.h"
+#include <math.h>
+#include <rbdl/rbdl.h>
+#include <sys/time.h>
 #include <Eigen/Dense>
 #include <fstream>
 #include <iostream>
-#include <math.h>
 #include <qpOASES.hpp>
-#include <rbdl/rbdl.h>
-#include <sys/time.h>
+#include "../../MotionPlan/include/planTools.h"
+#include "../../StateMachine/include/StateGenerator.h"
 
 #ifdef JOYSTICK
-#include "../../StateMachine/include/joystick.h"
+#  include "../../StateMachine/include/joystick.h"
+#endif
+
+#ifdef ROS_PUB
+#  include "dataPub.h"
 #endif
 
 #include "../include/webotsInterface.h"
@@ -53,18 +58,20 @@
 #include <QString>
 #include <QStringList>
 
-#include "version.h"
 #include "public_parament.h"
+#include "udp_hand_speed.h"
+#include "version.h"
 using namespace broccoli::core;
 
 // imu data
 // Eigen::VectorXd vnIMU::imuData=Eigen::VectorXd::Zero(9);
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
   // double dt = timeStep;
   double dt = 0.0025;
   // define data
-  DataPackage *data = new DataPackage();
+  DataPackage* data = new DataPackage();
   // construct robot controller
+
   GaitGenerator gait;
   QString path = "./Sources/config/pnc_config_sim.json";
   // std::cout<<"controller init is start!"<<std::endl;
@@ -72,6 +79,17 @@ int main(int argc, char **argv) {
   gait.init(path, dt, data);
   // std::cout<<"data init!"<<std::endl;
   data->addlog("data init complete, program is starting!");
+  // initial hand position
+  std::vector<int> hands_position(12, 1000);
+  HandController controller(hands_position);
+
+#ifdef ROS_PUB
+  // add ros
+  DataPub Data_pub;
+  ros::init(argc, argv, "robotdata_node");
+  ros::NodeHandle nh;
+  Data_pub.init(nh);
+#endif
 
 #ifdef JOYSTICK
   Joystick_humanoid joy;
@@ -143,17 +161,14 @@ int main(int argc, char **argv) {
   spdlog::init_thread_pool(8190, 1);
   time_t currentTime = time(nullptr);
   char chCurrentTime[256];
-  strftime(chCurrentTime, sizeof(chCurrentTime), "%Y%m%d_%H%M%S",
-           localtime(&currentTime));
+  strftime(chCurrentTime, sizeof(chCurrentTime), "%Y%m%d_%H%M%S", localtime(&currentTime));
   std::string stCurrentTime = chCurrentTime;
   std::string filename = stCurrentTime + "log.txt";
-  auto rotating_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-      filename, 1024 * 1024 * 100, 3);
+  auto rotating_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(filename, 1024 * 1024 * 100, 3);
   rotating_sink->set_pattern("%v");
   std::vector<spdlog::sink_ptr> sinks{rotating_sink};
-  auto logger = std::make_shared<spdlog::async_logger>(
-      "loggername", sinks.begin(), sinks.end(), spdlog::thread_pool(),
-      spdlog::async_overflow_policy::block);
+  auto logger = std::make_shared<spdlog::async_logger>("loggername", sinks.begin(), sinks.end(), spdlog::thread_pool(),
+                                                       spdlog::async_overflow_policy::block);
 #endif
   // -----------------------------------------------robot controller software
   // -----------------------------------------------------------------
@@ -166,8 +181,7 @@ int main(int argc, char **argv) {
   Time time6;
 
   // print version
-  std::cout << "version: " << PROJECT_VERSION_MAJOR << "."
-            << PROJECT_VERSION_MINOR << "." << PROJECT_VERSION_PATCH
+  std::cout << "version: " << PROJECT_VERSION_MAJOR << "." << PROJECT_VERSION_MINOR << "." << PROJECT_VERSION_PATCH
             << std::endl;
 
   while (humanoid.robot->step(TIME_STEP) != -1) {
@@ -202,8 +216,7 @@ int main(int argc, char **argv) {
     // // gait.setevent("gotoMotorMotion");
     // // //
 #ifdef JOYSTICK
-    if (gait.fsmstatename == "S2W" || gait.fsmstatename == "Z2S" ||
-        gait.fsmstatename == "Dual2Single" ||
+    if (gait.fsmstatename == "S2W" || gait.fsmstatename == "Z2S" || gait.fsmstatename == "Dual2Single" ||
         gait.fsmstatename == "Single2Dual") {
       if (joy.get_state_change() == "gotoStop") {
         gait.setevent(joy.get_state_change());
@@ -213,34 +226,32 @@ int main(int argc, char **argv) {
       gait.setevent(joy.get_state_change());
       gait.set_current_fsm_command(joy.get_current_state_command());
     }
-    if (gait.fsmstatename == "Walk" || gait.fsmstatename == "UniGait" ||
-        gait.fsmstatename == "Swing") {
-      gait.setvelocity(joy.get_walk_x_direction_speed(),
-                       joy.get_walk_y_direction_speed(),
+    if (gait.fsmstatename == "Walk" || gait.fsmstatename == "UniGait" || gait.fsmstatename == "Swing") {
+      gait.setvelocity(joy.get_walk_x_direction_speed(), joy.get_walk_y_direction_speed(),
                        joy.get_walk_yaw_direction_speed());
-      gait.setvelocity_offset(joy.get_walk_x_direction_speed_offset(),
-                              joy.get_walk_y_direction_speed_offset());
+      gait.setvelocity_offset(joy.get_walk_x_direction_speed_offset(), joy.get_walk_y_direction_speed_offset());
       // gait.setFootRotateState(joy.get_foot_rotate());
       gait.setGaitMode(joy.get_gait_mode());
       gait.step_calibration(joy.get_calibration_flag());
-    } else if (gait.fsmstatename == "Stand" ||
-               gait.fsmstatename == "SingleStand") {
-      gait.setxyz(joy.get_stand_x_direction_position(),
-                  joy.get_stand_y_direction_posiiton(),
+    } else if (gait.fsmstatename == "Stand" || gait.fsmstatename == "SingleStand") {
+      gait.setxyz(joy.get_stand_x_direction_position(), joy.get_stand_y_direction_posiiton(),
                   joy.get_stand_z_direction_posiiton());
-      gait.setrollpitch(joy.get_stand_roll_direction_position(),
-                        joy.get_stand_pitch_direction_posiiton(),
+      gait.setMomtumController(joy.get_momentumController_on());
+      gait.setrollpitch(joy.get_stand_roll_direction_position(), joy.get_stand_pitch_direction_posiiton(),
                         joy.get_stand_yaw_direction_posiiton());
-      gait.setCarryBoxState(joy.get_carry_box_state(),
-                            joy.get_if_stand_carry());
-      if (gait.fsmstatename == "Stand")
-        gait.setMotionState(joy.get_motion_state());
+      gait.setCarryBoxState(joy.get_carry_box_state(), joy.get_if_stand_carry());
+      if (gait.fsmstatename == "Stand") gait.setMotionState(joy.get_motion_state());
     } else {
     }
 
 #endif
     // std::cout<<"event: "<<gait.event<<std::endl;
     gait.gait_run(data);
+    const Robot_Data& robot_data = gait.getRobotData();
+#ifdef ROS_PUB
+    Data_pub.update(simTime, robot_data);
+    ros::spinOnce();
+#endif
 
     // //
     qCmd = data->q_c.block(6, 0, motorNum, 1);
@@ -253,86 +264,58 @@ int main(int argc, char **argv) {
     time4 = timer.currentTime() - start_time - time3 - time2 - time1;
 
     // --------------------friction compensation-------------------
-    if(adam_type==ADAM_TYPE::AdamLite){
-      jointP << 450.0, 120.0, 60.0, 400.0, 50.0, 2.0,
-                450.0, 120.0, 60.0, 400.0, 50.0, 2.0,
-                60.0, 60.0, 60.0, 
-                12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0,
-                12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0;
-      jointD << 10.0, 6.0, 1.0, 10.0, 2.0, 0.25,
-                10.0, 6.0, 1.0, 10.0, 2.0, 0.25,
-                1.0, 1.0, 1.0, 
-                0.4, 0.4, 0.4, 0.4,
-                0.4, 0.4, 0.4, 0.4;
-    }else if(adam_type==ADAM_TYPE::AdamLiteSimple){
-      jointP << 450.0, 120.0, 60.0, 400.0, 50.0, 2.0,
-                450.0, 120.0, 60.0, 400.0, 50.0, 2.0;
-      jointD << 10.0, 6.0, 1.0, 10.0, 2.0, 0.25,
-                10.0, 6.0, 1.0, 10.0, 2.0, 0.25;
-    }else if(adam_type==ADAM_TYPE::AdamStandard){
-      jointP << 450.0, 120.0, 60.0, 400.0, 50.0, 2.0,
-                450.0, 120.0, 60.0, 400.0, 50.0, 2.0,
-                60.0, 60.0, 60.0,
-                12.0, 12.0, 12.0, 12.0, 1.0, 1.0, 1.0, 1.0,
-                12.0, 12.0, 12.0, 12.0, 1.0, 1.0, 1.0, 1.0;
-      jointD << 10.0, 6.0, 1.0, 10.0, 2.0, 0.25,
-                10.0, 6.0, 1.0, 10.0, 2.0, 0.25,
-                1.0, 1.0, 1.0, 
-                0.4, 0.4, 0.4, 0.4, 0.1, 0.1, 0.1, 0.1,
-                0.4, 0.4, 0.4, 0.4, 0.1, 0.1, 0.1, 0.1;
-    }else if(adam_type==ADAM_TYPE::StandardPlus23){
-      jointP << 450.0, 120.0, 60.0, 400.0, 50.0, 2.0,
-                450.0, 120.0, 60.0, 400.0, 50.0, 2.0,
-                60.0, 60.0, 60.0, 
-                12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0,
-                12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0;
-      jointD << 10.0, 6.0, 1.0, 10.0, 2.0, 0.25,
-                10.0, 6.0, 1.0, 10.0, 2.0, 0.25,
-                1.0, 1.0, 1.0, 
-                0.4, 0.4, 0.4, 0.4,
-                0.4, 0.4, 0.4, 0.4;
-    }else if(adam_type==ADAM_TYPE::StandardPlus29){
-      jointP << 450.0, 120.0, 60.0, 400.0, 50.0, 2.0,
-                450.0, 120.0, 60.0, 400.0, 50.0, 2.0,
-                60.0, 60.0, 60.0, 
-                12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0,
-                12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0;
-      jointD << 10.0, 6.0, 1.0, 10.0, 2.0, 0.25,
-                10.0, 6.0, 1.0, 10.0, 2.0, 0.25,
-                1.0, 1.0, 1.0, 
-                0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4,
-                0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4;
-    }else if(adam_type==ADAM_TYPE::StandardPlus53){
-      jointP << 450.0, 120.0, 60.0, 400.0, 50.0, 2.0,
-                450.0, 120.0, 60.0, 400.0, 50.0, 2.0,
-                60.0, 60.0, 60.0, 
-                12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0,
-                1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
-                12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0,
-                1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0;
-      jointD << 10.0, 6.0, 1.0, 10.0, 2.0, 0.25,
-                10.0, 6.0, 1.0, 10.0, 2.0, 0.25,
-                1.0, 1.0, 1.0, 
-                0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4,
-                0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2,
-                0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4,
-                0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2;
+    if (adam_type == ADAM_TYPE::AdamLite) {
+      jointP << 450.0, 120.0, 60.0, 400.0, 50.0, 2.0, 450.0, 120.0, 60.0, 400.0, 50.0, 2.0, 60.0, 60.0, 60.0, 12.0,
+          12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0;
+      jointD << 10.0, 6.0, 1.0, 10.0, 2.0, 0.25, 10.0, 6.0, 1.0, 10.0, 2.0, 0.25, 1.0, 1.0, 1.0, 0.4, 0.4, 0.4, 0.4,
+          0.4, 0.4, 0.4, 0.4;
+    } else if (adam_type == ADAM_TYPE::AdamStandard) {
+      jointP << 450.0, 120.0, 60.0, 400.0, 50.0, 2.0, 450.0, 120.0, 60.0, 400.0, 50.0, 2.0, 60.0, 60.0, 60.0, 12.0,
+          12.0, 12.0, 12.0, 1.0, 1.0, 1.0, 1.0, 12.0, 12.0, 12.0, 12.0, 1.0, 1.0, 1.0, 1.0;
+      jointD << 10.0, 6.0, 1.0, 10.0, 2.0, 0.25, 10.0, 6.0, 1.0, 10.0, 2.0, 0.25, 1.0, 1.0, 1.0, 0.4, 0.4, 0.4, 0.4,
+          0.1, 0.1, 0.1, 0.1, 0.4, 0.4, 0.4, 0.4, 0.1, 0.1, 0.1, 0.1;
+    } else if (adam_type == ADAM_TYPE::StandardPlus23) {
+      jointP << 450.0, 120.0, 60.0, 400.0, 50.0, 2.0, 450.0, 120.0, 60.0, 400.0, 50.0, 2.0, 60.0, 60.0, 60.0, 12.0,
+          12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0;
+      jointD << 10.0, 6.0, 1.0, 10.0, 2.0, 0.25, 10.0, 6.0, 1.0, 10.0, 2.0, 0.25, 1.0, 1.0, 1.0, 0.4, 0.4, 0.4, 0.4,
+          0.4, 0.4, 0.4, 0.4;
+    } else if (adam_type == ADAM_TYPE::StandardPlus29) {
+      jointP << 450.0, 120.0, 60.0, 400.0, 50.0, 2.0, 450.0, 120.0, 60.0, 400.0, 50.0, 2.0, 60.0, 60.0, 60.0, 12.0,
+          12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0;
+      jointD << 10.0, 6.0, 1.0, 10.0, 2.0, 0.25, 10.0, 6.0, 1.0, 10.0, 2.0, 0.25, 1.0, 1.0, 1.0, 0.4, 0.4, 0.4, 0.4,
+          0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4;
+    } else if (adam_type == ADAM_TYPE::StandardPlus53) {
+      jointP << 450.0, 120.0, 60.0, 400.0, 50.0, 2.0, 450.0, 120.0, 60.0, 400.0, 50.0, 2.0, 60.0, 60.0, 60.0, 12.0,
+          12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 12.0, 12.0,
+          12.0, 12.0, 12.0, 12.0, 12.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0;
+      jointD << 10.0, 6.0, 1.0, 10.0, 2.0, 0.25, 10.0, 6.0, 1.0, 10.0, 2.0, 0.25, 1.0, 1.0, 1.0, 0.4, 0.4, 0.4, 0.4,
+          0.4, 0.4, 0.4, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4,
+          0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2;
+    } else if (adam_type == ADAM_TYPE::AdamLiteSimple) {
+      jointP << 450.0, 120.0, 60.0, 400.0, 50.0, 2.0, 450.0, 120.0, 60.0, 400.0, 50.0, 2.0;
+      jointD << 10.0, 6.0, 1.0, 10.0, 2.0, 0.25, 10.0, 6.0, 1.0, 10.0, 2.0, 0.25;
+    } else if (adam_type == ADAM_TYPE::DuckDuck) {
+      jointP << 450.0, 120.0, 60.0, 400.0, 50.0, 2.0, 450.0, 120.0, 60.0, 400.0, 50.0, 2.0, 60.0, 60.0, 60.0;
+      jointD << 10.0, 6.0, 1.0, 10.0, 2.0, 0.25, 10.0, 6.0, 1.0, 10.0, 2.0, 0.25, 1.0, 1.0, 1.0;
     }
-    
+    for (int i = 0; i < motorNum; i++) {
+      jointP(i) = jointP(i) / jointD(i);
+    }
+
     for (int i = 0; i < motorNum; i++) {
       // KP * q_factor * (qCmd - qEst) + KD * q_dot_factor * (qDotCmd - qDotEst) + qTorCmd
       jointTorCmd(i) = jointP(i) * q_factor(i) * (qCmd(i) - qEst(i)) +
                        jointD(i) * qdot_factor(i) * (qDotCmd(i) - qDotEst(i)) + qTorCmd(i);
       standPosCmd(i) = (1.0 - q_factor(i)) * qEst(i) + q_factor(i) * qCmd(i);
       // if(i==19){
-      //   std::cout << jointTorCmd(i) << "\t" 
-      //   << jointP(i) << "\t" 
-      //   << q_factor(i) << "\t" 
-      //   << qCmd(i) << "\t" 
-      //   << qEst(i) << "\t" 
-      //   << jointD(i) << "\t" 
-      //   << qdot_factor(i) << "\t" 
-      //   << qDotCmd(i) << "\t" 
+      //   std::cout << jointTorCmd(i) << "\t"
+      //   << jointP(i) << "\t"
+      //   << q_factor(i) << "\t"
+      //   << qCmd(i) << "\t"
+      //   << qEst(i) << "\t"
+      //   << jointD(i) << "\t"
+      //   << qdot_factor(i) << "\t"
+      //   << qDotCmd(i) << "\t"
       //   << qDotEst(i) << "\t"
       //   << qTorCmd(i) << "\t" << std::endl;
       // }
@@ -345,11 +328,11 @@ int main(int argc, char **argv) {
     //   jointTorCmd(i) = 0;
     //   standPosCmd(i) = 0;
     // }
-    // jointTorCmd(19) = 0;jointTorCmd(20) = 0;jointTorCmd(21) = 0;standPosCmd(19) = 0;standPosCmd(20) = 0;standPosCmd(21) = 0;
-    // jointTorCmd(26) = 0;jointTorCmd(27) = 0;jointTorCmd(28) = 0;standPosCmd(26) = 0;standPosCmd(27) = 0;standPosCmd(28) = 0;
+    // jointTorCmd(19) = 0;jointTorCmd(20) = 0;jointTorCmd(21) = 0;standPosCmd(19) = 0;standPosCmd(20) =
+    // 0;standPosCmd(21) = 0; jointTorCmd(26) = 0;jointTorCmd(27) = 0;jointTorCmd(28) = 0;standPosCmd(26) =
+    // 0;standPosCmd(27) = 0;standPosCmd(28) = 0;
 
-    if (timeSim < 1.0 || gait.fsmstatename == "Start" ||
-        gait.fsmstatename == "Zero" || gait.fsmstatename == "Swing") {
+    if (timeSim < 1.0 || gait.fsmstatename == "Start" || gait.fsmstatename == "Zero" || gait.fsmstatename == "Swing") {
       humanoid.setMotorPos(standPosCmd);
     } else {
       // std::cout << "jointTorCmd: " << jointTorCmd.tail(8).transpose() << std::endl;
@@ -364,7 +347,28 @@ int main(int argc, char **argv) {
       //   }
       // }
     }
-    // std::cout<<"hehe: 4"<< std::endl;
+    if (adam_type == ADAM_TYPE::AdamLite) {
+    } else if (adam_type == ADAM_TYPE::AdamStandard) {
+    } else if (adam_type == ADAM_TYPE::StandardPlus23) {
+    } else if (adam_type == ADAM_TYPE::StandardPlus29) {
+      static int delay_ = 0;
+      if (data->hands_motion_flag) {
+        if (delay_ % 4 == 0) {
+          for (int i = 0; i < data->q_d_hands.size(); i++) {
+            hands_position[i] = static_cast<int>(data->q_d_hands(i));
+          }
+          controller.updateHandControlValues(hands_position);
+          controller.getHandsState();
+          for (int i = 0; i < 12; i++) {
+            data->dataL(282 + i) = controller.val_act_buff[i];
+          }
+        }
+        delay_++;
+      }
+    } else if (adam_type == ADAM_TYPE::StandardPlus53) {
+    } else if (adam_type == ADAM_TYPE::AdamLiteSimple) {
+    } else if (adam_type == ADAM_TYPE::DuckDuck) {
+    }
     simCnt += 1;
     timeSim = simCnt * timeStep;
     time5 = timer.currentTime() - start_time - time4 - time3 - time2 - time1;
@@ -381,15 +385,14 @@ int main(int argc, char **argv) {
     data->dataL(8) = time6.m_nanoSeconds;
     data->dataL(9) = (timer.currentTime() - start_time).m_nanoSeconds;
     data->dataL.segment(10, 9) = data->imu_sensor.block(0, 0, 9, 1);
-    for (const auto &i : data->dataL) {
+    for (const auto& i : data->dataL) {
       oss << i << " ";
     }
     logger->info(oss.str());
     oss.str("");
 #endif
     //
-    time6 = timer.currentTime() - start_time - time5 - time4 - time3 - time2 -
-            time1;
+    time6 = timer.currentTime() - start_time - time5 - time4 - time3 - time2 - time1;
 
     if (joy.disableJoints()) {
       break;

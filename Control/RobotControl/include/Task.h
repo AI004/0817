@@ -1,8 +1,8 @@
 #ifndef TASK_H
 #define TASK_H
-#include "controller_lib.h"
 #include <Eigen/StdVector>
 #include <vector>
+#include "controller_lib.h"
 /**
  * @brief The task_type enum
  */
@@ -10,19 +10,12 @@ enum task_type { general_task = 1, com_task, contact_task, joint_task };
 /**
  * @brief The task_direction enum
  */
-enum task_direction {
-  task_x_theta = 0,
-  task_y_theta,
-  task_z_theta,
-  task_x,
-  task_y,
-  task_z
-};
+enum task_direction { task_x_theta = 0, task_y_theta, task_z_theta, task_x, task_y, task_z };
 /**
  * @brief The Task class
  */
 class Task {
-public:
+ public:
   // construct function
   Task();
   ~Task();
@@ -81,7 +74,7 @@ public:
   Eigen::MatrixXd A_ineq_F;
   Eigen::VectorXd b_ineq_F;
   // task controller
-  Controller_Lib *controller;
+  Controller_Lib* controller;
   // sensor id: 0 for none sensor
   int sensor_id;
   // joint id for rbdl
@@ -100,4 +93,4 @@ public:
   Eigen::MatrixXd IG;
 };
 
-#endif // TASK_H
+#endif  // TASK_H

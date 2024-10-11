@@ -8,8 +8,8 @@ WorldInfo {
   basicTimeStep 1.25
 }
 Viewpoint {
-  orientation -0.1695671512360215 0.010255173964090687 0.9854652772313526 3.0225511598010835
-  position 9.691608158433665 -1.507280249063116 3.3374265396465415
+  orientation -0.03081494499087807 -0.9873310437668676 0.15565297677666398 5.88750073759761
+  position -2.2167375468830173 -0.017293578092151013 1.9306982379040458
 }
 TexturedBackground {
 }
@@ -88,7 +88,7 @@ DEF Adam Robot {
       ]
       endPoint Solid {
         translation 0 0.096192 -0.033241
-        rotation -1 0 0 0.61087
+        rotation -1 0 0 0.6108700000000002
         children [
           Shape {
             appearance DEF hipPitchLeft_material PBRAppearance {
@@ -119,7 +119,7 @@ DEF Adam Robot {
             ]
             endPoint Solid {
               translation -0.0255 0.069 0
-              rotation 1 0 0 0.61087
+              rotation 1 0 0 0.6108700000000002
               children [
                 Shape {
                   appearance DEF hipRollLeft_material PBRAppearance {
@@ -182,6 +182,7 @@ DEF Adam Robot {
                         ]
                         endPoint Solid {
                           translation 0 -0.0355 -0.369
+                          rotation 0 1 0 0
                           children [
                             Shape {
                               appearance DEF shinLeft_material PBRAppearance {
@@ -213,6 +214,7 @@ DEF Adam Robot {
                               ]
                               endPoint Solid {
                                 translation 0 0 -0.37
+                                rotation 0 1 0 0
                                 children [
                                   Shape {
                                     appearance DEF anklePitchLeft_material PBRAppearance {
@@ -241,6 +243,7 @@ DEF Adam Robot {
                                       }
                                     ]
                                     endPoint Solid {
+                                      rotation 1 0 0 0
                                       children [
                                         Shape {
                                           appearance DEF toeLeft_material PBRAppearance {
@@ -395,7 +398,7 @@ DEF Adam Robot {
       ]
       endPoint Solid {
         translation 0 -0.096192 -0.033241
-        rotation 1 0 0 0.61087
+        rotation 1 0 0 0.6108700000000002
         children [
           Shape {
             appearance DEF hipPitchRight_material PBRAppearance {
@@ -426,7 +429,7 @@ DEF Adam Robot {
             ]
             endPoint Solid {
               translation -0.0255 -0.069 0
-              rotation -1 0 0 0.61087
+              rotation -1 0 0 0.6108700000000002
               children [
                 Shape {
                   appearance DEF hipRollRight_material PBRAppearance {
@@ -489,6 +492,7 @@ DEF Adam Robot {
                         ]
                         endPoint Solid {
                           translation 0 0.0355 -0.369
+                          rotation 0 1 0 0
                           children [
                             Shape {
                               appearance DEF shinRight_material PBRAppearance {
@@ -520,6 +524,7 @@ DEF Adam Robot {
                               ]
                               endPoint Solid {
                                 translation 0 0 -0.37
+                                rotation 0 1 0 0
                                 children [
                                   Shape {
                                     appearance DEF anklePitchRight_material PBRAppearance {
@@ -549,6 +554,7 @@ DEF Adam Robot {
                                       }
                                     ]
                                     endPoint Solid {
+                                      rotation 1 0 0 0
                                       children [
                                         Shape {
                                           appearance DEF toeRight_material PBRAppearance {
@@ -702,6 +708,7 @@ DEF Adam Robot {
       ]
       endPoint Solid {
         translation 0 0 0.044
+        rotation 1 0 0 0
         children [
           Shape {
             appearance DEF waistRoll_material PBRAppearance {
@@ -733,6 +740,7 @@ DEF Adam Robot {
             ]
             endPoint Solid {
               translation 0 0 0.08
+              rotation 0 1 0 0
               children [
                 Shape {
                   appearance DEF waistPitch_material PBRAppearance {
@@ -796,7 +804,7 @@ DEF Adam Robot {
                         ]
                         endPoint Solid {
                           translation 0 0.16011 0.25742
-                          rotation 1 0 0 0.34907
+                          rotation 1 0 0 0.3490700000000006
                           children [
                             Shape {
                               appearance DEF shoulderPitchLeft_material PBRAppearance {
@@ -827,7 +835,7 @@ DEF Adam Robot {
                               ]
                               endPoint Solid {
                                 translation 0.0335 0.0435 0
-                                rotation -1 0 0 0.34907
+                                rotation -1 0 0 0.3490700000000006
                                 children [
                                   Shape {
                                     appearance DEF shoulderRollLeft_material PBRAppearance {
@@ -889,6 +897,7 @@ DEF Adam Robot {
                                           ]
                                           endPoint Solid {
                                             translation 0 -0.0285 -0.20415
+                                            rotation 0 1 0 0
                                             children [
                                               Shape {
                                                 appearance DEF elbowLeft_material PBRAppearance {
@@ -951,6 +960,7 @@ DEF Adam Robot {
                                                       ]
                                                       endPoint Solid {
                                                         translation 0 0 -0.2017
+                                                        rotation 0 1 0 0
                                                         children [
                                                           Shape {
                                                             appearance DEF wristPitchLeft_material PBRAppearance {
@@ -979,6 +989,7 @@ DEF Adam Robot {
                                                               }
                                                             ]
                                                             endPoint Solid {
+                                                              rotation 1 0 0 0
                                                               children [
                                                                 Shape {
                                                                   appearance DEF onlyhandLeft_material PBRAppearance {
@@ -1138,7 +1149,7 @@ DEF Adam Robot {
                         ]
                         endPoint Solid {
                           translation 0 -0.16011 0.25742
-                          rotation -1 0 0 0.34907
+                          rotation -1 0 0 0.3490700000000006
                           children [
                             Shape {
                               appearance DEF shoulderPitchRight_material PBRAppearance {
@@ -1169,7 +1180,7 @@ DEF Adam Robot {
                               ]
                               endPoint Solid {
                                 translation 0.0335 -0.0435 0
-                                rotation 1 0 0 0.34907
+                                rotation 1 0 0 0.3490700000000006
                                 children [
                                   Shape {
                                     appearance DEF shoulderRollRight_material PBRAppearance {
@@ -1231,6 +1242,7 @@ DEF Adam Robot {
                                           ]
                                           endPoint Solid {
                                             translation 0 0.0285 -0.20415
+                                            rotation 0 1 0 0
                                             children [
                                               Shape {
                                                 appearance DEF elbowRight_material PBRAppearance {
@@ -1293,6 +1305,7 @@ DEF Adam Robot {
                                                       ]
                                                       endPoint Solid {
                                                         translation 0 0 -0.2017
+                                                        rotation 0 1 0 0
                                                         children [
                                                           Shape {
                                                             appearance DEF wristPitchRight_material PBRAppearance {
@@ -1321,6 +1334,7 @@ DEF Adam Robot {
                                                               }
                                                             ]
                                                             endPoint Solid {
+                                                              rotation 1 0 0 0
                                                               children [
                                                                 Shape {
                                                                   appearance DEF onlyhandRight_material PBRAppearance {

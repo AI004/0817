@@ -1,6 +1,6 @@
 #include "planTools.h"
-#include <iostream>
 #include <stdlib.h>
+#include <iostream>
 
 Eigen::Vector3d matrixtoeulerxyz_(Eigen::Matrix3d R) {
   Eigen::Vector3d euler;
@@ -18,14 +18,10 @@ Eigen::Vector3d matrixtoeulerxyz_(Eigen::Matrix3d R) {
   return euler;
 }
 
-void quaternionInterp(Eigen::Matrix3d R_start, Eigen::Matrix3d R_end,
-                      double totaltime, double currenttime,
-                      Eigen::Matrix3d &R_d, Eigen::Vector3d &omiga_d,
-                      Eigen::Vector3d &acc_d) {
-  RigidBodyDynamics::Math::Quaternion Q_start =
-      Q_start.fromMatrix(R_start).conjugate();
-  RigidBodyDynamics::Math::Quaternion Q_end =
-      Q_end.fromMatrix(R_end).conjugate();
+void quaternionInterp(Eigen::Matrix3d R_start, Eigen::Matrix3d R_end, double totaltime, double currenttime,
+                      Eigen::Matrix3d& R_d, Eigen::Vector3d& omiga_d, Eigen::Vector3d& acc_d) {
+  RigidBodyDynamics::Math::Quaternion Q_start = Q_start.fromMatrix(R_start).conjugate();
+  RigidBodyDynamics::Math::Quaternion Q_end = Q_end.fromMatrix(R_end).conjugate();
   RigidBodyDynamics::Math::Quaternion Q_d;
 
   RigidBodyDynamics::Math::Quaternion deltQ = Q_start.conjugate() * Q_end;
@@ -37,8 +33,7 @@ void quaternionInterp(Eigen::Matrix3d R_start, Eigen::Matrix3d R_end,
 
   double delttheta = 2 * acos(deltQ(3));
 
-  Eigen::VectorXd p0 =
-      Eigen::VectorXd::Zero(1); // p0 = p0 p0_dot p0_ddot p1_dot p1_ddot
+  Eigen::VectorXd p0 = Eigen::VectorXd::Zero(1);  // p0 = p0 p0_dot p0_ddot p1_dot p1_ddot
 
   Eigen::VectorXd p1 = Eigen::VectorXd::Zero(1);
   p1[0] = delttheta;
@@ -47,8 +42,7 @@ void quaternionInterp(Eigen::Matrix3d R_start, Eigen::Matrix3d R_end,
   Eigen::VectorXd pd_dot = Eigen::VectorXd::Zero(1);
   Eigen::VectorXd pd_ddot = Eigen::VectorXd::Zero(1);
 
-  FifthPoly(p0, p0, p0, p1, p0, p0, totaltime, currenttime, pd, pd_dot,
-            pd_ddot);
+  FifthPoly(p0, p0, p0, p1, p0, p0, totaltime, currenttime, pd, pd_dot, pd_ddot);
   deltQ.block<3, 1>(0, 0) = p * sin(pd[0] / 2.0);
   deltQ[3] = cos(pd[0] / 2.0);
   Q_d = Q_start * deltQ;
@@ -79,35 +73,28 @@ Eigen::Matrix3d QuanteiniontoMatrix(RigidBodyDynamics::Math::Quaternion Q) {
 }
 
 void FifthPoly(Eigen::VectorXd p0, Eigen::VectorXd p0_dot,
-               Eigen::VectorXd p0_dotdot, // start point states
+               Eigen::VectorXd p0_dotdot,  // start point states
                Eigen::VectorXd p1, Eigen::VectorXd p1_dot,
-               Eigen::VectorXd p1_dotdot, // end point states
-               double totalTime,          // total permating time
-               double currenttime,        // current time,from 0 to total time
-               Eigen::VectorXd &pd, Eigen::VectorXd &pd_dot,
-               Eigen::VectorXd &pd_dotdot) {
+               Eigen::VectorXd p1_dotdot,  // end point states
+               double totalTime,           // total permating time
+               double currenttime,         // current time,from 0 to total time
+               Eigen::VectorXd& pd, Eigen::VectorXd& pd_dot, Eigen::VectorXd& pd_dotdot) {
   double t = currenttime;
   double time = totalTime;
   if (t < totalTime) {
     Eigen::MatrixXd A = Eigen::MatrixXd::Zero(6, 6);
-    A << 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1 / 2, 0, 0, 0,
-        -10 / pow(time, 3), -6 / pow(time, 2), -3 / (2 * time),
-        10 / pow(time, 3), -4 / pow(time, 2), 1 / (2 * time), 15 / pow(time, 4),
-        8 / pow(time, 3), 3 / (2 * pow(time, 2)), -15 / pow(time, 4),
-        7 / pow(time, 3), -1 / pow(time, 2), -6 / pow(time, 5),
-        -3 / pow(time, 4), -1 / (2 * pow(time, 3)), 6 / pow(time, 5),
-        -3 / pow(time, 4), 1 / (2 * pow(time, 3));
+    A << 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1 / 2, 0, 0, 0, -10 / pow(time, 3), -6 / pow(time, 2),
+        -3 / (2 * time), 10 / pow(time, 3), -4 / pow(time, 2), 1 / (2 * time), 15 / pow(time, 4), 8 / pow(time, 3),
+        3 / (2 * pow(time, 2)), -15 / pow(time, 4), 7 / pow(time, 3), -1 / pow(time, 2), -6 / pow(time, 5),
+        -3 / pow(time, 4), -1 / (2 * pow(time, 3)), 6 / pow(time, 5), -3 / pow(time, 4), 1 / (2 * pow(time, 3));
     Eigen::MatrixXd x0 = Eigen::MatrixXd::Zero(6, 1);
     Eigen::MatrixXd a = Eigen::MatrixXd::Zero(6, 1);
     for (int i = 0; i < p0.size(); i++) {
       x0 << p0(i), p0_dot(i), p0_dotdot(i), p1(i), p1_dot(i), p1_dotdot(i);
       a = A * x0;
-      pd(i) = a(0) + a(1) * t + a(2) * t * t + a(3) * t * t * t +
-              a(4) * t * t * t * t + a(5) * t * t * t * t * t;
-      pd_dot(i) = a(1) + 2 * a(2) * t + 3 * a(3) * t * t +
-                  4 * a(4) * t * t * t + 5 * a(5) * t * t * t * t;
-      pd_dotdot(i) =
-          2 * a(2) + 6 * a(3) * t + 12 * a(4) * t * t + 20 * a(5) * t * t * t;
+      pd(i) = a(0) + a(1) * t + a(2) * t * t + a(3) * t * t * t + a(4) * t * t * t * t + a(5) * t * t * t * t * t;
+      pd_dot(i) = a(1) + 2 * a(2) * t + 3 * a(3) * t * t + 4 * a(4) * t * t * t + 5 * a(5) * t * t * t * t;
+      pd_dotdot(i) = 2 * a(2) + 6 * a(3) * t + 12 * a(4) * t * t + 20 * a(5) * t * t * t;
     }
   } else {
     pd = p1;
@@ -116,9 +103,8 @@ void FifthPoly(Eigen::VectorXd p0, Eigen::VectorXd p0_dot,
   }
 }
 
-bool quintic(double x1, double x2, double y1, double y2, double dy1, double dy2,
-             double ddy1, double ddy2, double x, double dx, double &y,
-             double &dy, double &ddy) {
+bool quintic(double x1, double x2, double y1, double y2, double dy1, double dy2, double ddy1, double ddy2, double x,
+             double dx, double& y, double& dy, double& ddy) {
   // Limit range since curve fit is only valid within range
   x = clamp(x, x1, x2);
 
@@ -136,24 +122,20 @@ bool quintic(double x1, double x2, double y1, double y2, double dy1, double dy2,
   a1 = dy1;
   a2 = 1.0 / 2. * ddy1;
   a3 = 1.0 / (2. * deltaT * deltaT * deltaT) *
-       (20. * deltaY - (8. * dy2 + 12. * dy1) * deltaT +
-        (ddy2 - 3. * ddy1) * (deltaT * deltaT));
+       (20. * deltaY - (8. * dy2 + 12. * dy1) * deltaT + (ddy2 - 3. * ddy1) * (deltaT * deltaT));
   a4 = 1.0 / (2. * deltaT * deltaT * deltaT * deltaT) *
-       (-30. * deltaY + (14. * dy2 + 16. * dy1) * deltaT +
-        (3. * ddy1 - 2. * ddy2) * (deltaT * deltaT));
+       (-30. * deltaY + (14. * dy2 + 16. * dy1) * deltaT + (3. * ddy1 - 2. * ddy2) * (deltaT * deltaT));
   a5 = 1.0 / (2. * deltaT * deltaT * deltaT * deltaT * deltaT) *
-       (12. * deltaY - 6. * (dy2 + dy1) * deltaT +
-        (ddy2 - ddy1) * (deltaT * deltaT));
+       (12. * deltaY - 6. * (dy2 + dy1) * deltaT + (ddy2 - ddy1) * (deltaT * deltaT));
 
   // position
-  y = a0 + a1 * myPow((t - t1), 1) + a2 * myPow((t - t1), 2) +
-      a3 * myPow((t - t1), 3) + a4 * myPow(t - t1, 4) + a5 * myPow(t - t1, 5);
+  y = a0 + a1 * myPow((t - t1), 1) + a2 * myPow((t - t1), 2) + a3 * myPow((t - t1), 3) + a4 * myPow(t - t1, 4) +
+      a5 * myPow(t - t1, 5);
   // velocity
-  dy = a1 + 2. * a2 * myPow((t - t1), 1) + 3. * a3 * myPow((t - t1), 2) +
-       4. * a4 * myPow(t - t1, 3) + 5. * a5 * myPow(t - t1, 4);
+  dy = a1 + 2. * a2 * myPow((t - t1), 1) + 3. * a3 * myPow((t - t1), 2) + 4. * a4 * myPow(t - t1, 3) +
+       5. * a5 * myPow(t - t1, 4);
   // acceleration
-  ddy = 2. * a2 + 6. * a3 * myPow((t - t1), 1) + 12. * a4 * myPow(t - t1, 2) +
-        20. * a5 * myPow(t - t1, 3);
+  ddy = 2. * a2 + 6. * a3 * myPow((t - t1), 1) + 12. * a4 * myPow(t - t1, 2) + 20. * a5 * myPow(t - t1, 3);
 
   return true;
 }
@@ -161,19 +143,15 @@ double clamp(double num, double lim1, double lim2) {
   auto min = std::min(lim1, lim2);
   auto max = std::max(lim1, lim2);
 
-  if (num < min)
-    return min;
+  if (num < min) return min;
 
-  if (max < num)
-    return max;
+  if (max < num) return max;
 
   return num;
 }
 double myPow(double x, int n) {
-  if (n == 0)
-    return 1.0;
-  if (n < 0)
-    return 1.0 / myPow(x, -n);
+  if (n == 0) return 1.0;
+  if (n < 0) return 1.0 / myPow(x, -n);
   double half = myPow(x, n >> 1);
 
   if (n % 2 == 0)
@@ -184,19 +162,17 @@ double myPow(double x, int n) {
 }
 
 void Thirdpoly(double p0, double p0_dot, double p1, double p1_dot,
-               double totalTime,   // total permating time
-               double currenttime, // current time,from 0 to total time
-               double &pd, double &pd_dot) {
+               double totalTime,    // total permating time
+               double currenttime,  // current time,from 0 to total time
+               double& pd, double& pd_dot) {
   if (currenttime < totalTime) {
     double a0 = p0;
     double a1 = p0_dot;
     double m = p1 - p0 - p0_dot * totalTime;
     double n = p1_dot - p0_dot;
     double a2 = 3 * m / (totalTime * totalTime) - n / totalTime;
-    double a3 = -2 * m / (totalTime * totalTime * totalTime) +
-                n / (totalTime * totalTime);
-    pd = a3 * currenttime * currenttime * currenttime +
-         a2 * currenttime * currenttime + a1 * currenttime + a0;
+    double a3 = -2 * m / (totalTime * totalTime * totalTime) + n / (totalTime * totalTime);
+    pd = a3 * currenttime * currenttime * currenttime + a2 * currenttime * currenttime + a1 * currenttime + a0;
     pd_dot = 3 * a3 * currenttime * currenttime + 2 * a2 * currenttime + a1;
   } else {
     pd = p1;
@@ -208,49 +184,32 @@ double fact(int n) {
   if (n == 0)
     result = 1;
   else
-    for (int i = 1; i <= n; result *= i, i++)
-      ;
+    for (int i = 1; i <= n; result *= i, i++);
   return result;
 }
-bool TriPointsQuintic(double T, double t, double x1, double v1, double x2,
-                      double v2, double x3, double v3, double &y, double &dy,
-                      double &ddy) {
+bool TriPointsQuintic(double T, double t, double x1, double v1, double x2, double v2, double x3, double v3, double& y,
+                      double& dy, double& ddy) {
   double a0, a1, a2, a3, a4, a5;
   a0 = x1;
   a1 = v1;
-  a2 = -(23. * x1 - 16. * x2 - 7. * x3 + 6. * T * v1 + 8 * T * v2 + T * v3) /
-       myPow(T, 2);
-  a3 = (66. * x1 - 32. * x2 - 34. * x3 + 13. * T * v1 + 32. * T * v2 +
-        5. * T * v3) /
-       myPow(T, 3);
-  a4 = -4. *
-       (17. * x1 - 4. * x2 - 13. * x3 + 3. * T * v1 + 10. * T * v2 +
-        2. * T * v3) /
-       myPow(T, 4);
+  a2 = -(23. * x1 - 16. * x2 - 7. * x3 + 6. * T * v1 + 8 * T * v2 + T * v3) / myPow(T, 2);
+  a3 = (66. * x1 - 32. * x2 - 34. * x3 + 13. * T * v1 + 32. * T * v2 + 5. * T * v3) / myPow(T, 3);
+  a4 = -4. * (17. * x1 - 4. * x2 - 13. * x3 + 3. * T * v1 + 10. * T * v2 + 2. * T * v3) / myPow(T, 4);
   a5 = 4. * (6. * x1 - 6. * x3 + T * v1 + 4. * T * v2 + T * v3) / myPow(T, 5);
 
-  y = a0 + a1 * myPow(t, 1) + a2 * myPow(t, 2) + a3 * myPow(t, 3) +
-      a4 * myPow(t, 4) + a5 * myPow(t, 5);
-  dy = a1 + 2. * a2 * myPow(t, 1) + 3. * a3 * myPow(t, 2) +
-       4. * a4 * myPow(t, 3) + 5. * a5 * myPow(t, 4);
+  y = a0 + a1 * myPow(t, 1) + a2 * myPow(t, 2) + a3 * myPow(t, 3) + a4 * myPow(t, 4) + a5 * myPow(t, 5);
+  dy = a1 + 2. * a2 * myPow(t, 1) + 3. * a3 * myPow(t, 2) + 4. * a4 * myPow(t, 3) + 5. * a5 * myPow(t, 4);
   ddy = 2. * a2 + 6. * a3 * t + 12. * a4 * myPow(t, 2) + 20. * a5 * myPow(t, 3);
   return true;
 }
-bool TriPointsQuintic(double T, double t, double t_mid, double x1, double v1,
-                      double x2, double v2, double x3, double v3, double &y,
-                      double &dy, double &ddy) {
+bool TriPointsQuintic(double T, double t, double t_mid, double x1, double v1, double x2, double v2, double x3,
+                      double v3, double& y, double& dy, double& ddy) {
   double a0, a1, a2, a3, a4, a5;
   a0 = x1;
   a1 = v1;
-  a2 = -(23. * x1 - 16. * x2 - 7. * x3 + 6. * T * v1 + 8 * T * v2 + T * v3) /
-       myPow(T, 2);
-  a3 = (66. * x1 - 32. * x2 - 34. * x3 + 13. * T * v1 + 32. * T * v2 +
-        5. * T * v3) /
-       myPow(T, 3);
-  a4 = -4. *
-       (17. * x1 - 4. * x2 - 13. * x3 + 3. * T * v1 + 10. * T * v2 +
-        2. * T * v3) /
-       myPow(T, 4);
+  a2 = -(23. * x1 - 16. * x2 - 7. * x3 + 6. * T * v1 + 8 * T * v2 + T * v3) / myPow(T, 2);
+  a3 = (66. * x1 - 32. * x2 - 34. * x3 + 13. * T * v1 + 32. * T * v2 + 5. * T * v3) / myPow(T, 3);
+  a4 = -4. * (17. * x1 - 4. * x2 - 13. * x3 + 3. * T * v1 + 10. * T * v2 + 2. * T * v3) / myPow(T, 4);
   a5 = 4. * (6. * x1 - 6. * x3 + T * v1 + 4. * T * v2 + T * v3) / myPow(T, 5);
 
   double ratio1 = 0.5 * T / t_mid;
@@ -263,45 +222,36 @@ bool TriPointsQuintic(double T, double t, double t_mid, double x1, double v1,
     t1 = 0.5 * T + (t - t_mid) * ratio2;
     ratio = ratio2;
   }
-  y = a0 + a1 * myPow(t1, 1) + a2 * myPow(t1, 2) + a3 * myPow(t1, 3) +
-      a4 * myPow(t1, 4) + a5 * myPow(t1, 5);
-  dy = (a1 + 2. * a2 * myPow(t1, 1) + 3. * a3 * myPow(t1, 2) +
-        4. * a4 * myPow(t1, 3) + 5. * a5 * myPow(t1, 4)) *
-       ratio;
-  ddy = (2. * a2 + 6. * a3 * t1 + 12. * a4 * myPow(t1, 2) +
-         20. * a5 * myPow(t1, 3)) *
-        ratio * ratio;
+  y = a0 + a1 * myPow(t1, 1) + a2 * myPow(t1, 2) + a3 * myPow(t1, 3) + a4 * myPow(t1, 4) + a5 * myPow(t1, 5);
+  dy = (a1 + 2. * a2 * myPow(t1, 1) + 3. * a3 * myPow(t1, 2) + 4. * a4 * myPow(t1, 3) + 5. * a5 * myPow(t1, 4)) * ratio;
+  ddy = (2. * a2 + 6. * a3 * t1 + 12. * a4 * myPow(t1, 2) + 20. * a5 * myPow(t1, 3)) * ratio * ratio;
   return true;
 };
 void TwoPointsCubic(double p0, double p0_dot, double p1, double p1_dot,
-                    double totalTime,   // total permating time
-                    double currenttime, // current time,from 0 to total time
-                    double &pd, double &pd_dot, double &pd_ddot) {
+                    double totalTime,    // total permating time
+                    double currenttime,  // current time,from 0 to total time
+                    double& pd, double& pd_dot, double& pd_ddot) {
   double a0 = p0;
   double a1 = p0_dot;
   double m = p1 - p0 - p0_dot * totalTime;
   double n = p1_dot - p0_dot;
   double a2 = 3. * m / (totalTime * totalTime) - n / totalTime;
-  double a3 = -2. * m / (totalTime * totalTime * totalTime) +
-              n / (totalTime * totalTime);
+  double a3 = -2. * m / (totalTime * totalTime * totalTime) + n / (totalTime * totalTime);
 
   if (currenttime < totalTime) {
-    pd = a3 * currenttime * currenttime * currenttime +
-         a2 * currenttime * currenttime + a1 * currenttime + a0;
+    pd = a3 * currenttime * currenttime * currenttime + a2 * currenttime * currenttime + a1 * currenttime + a0;
     pd_dot = 3. * a3 * currenttime * currenttime + 2. * a2 * currenttime + a1;
     pd_ddot = 6. * a3 * currenttime + 2. * a2;
   } else {
     pd = p1;
     pd_dot = p1_dot;
-    pd_ddot = 0.0; // 6.*a3*totalTime + 2.*a2;
+    pd_ddot = 0.0;  // 6.*a3*totalTime + 2.*a2;
   }
 }
-void airWalk(double t, double vCmd0, double &vCmd, double &tStepPre,
-             int &stIndex, Eigen::VectorXd xStand, Eigen::VectorXd &xInit,
-             Eigen::VectorXd &xDotInit, Eigen::VectorXd &xDDotInit,
-             Eigen::VectorXd &xEnd, Eigen::VectorXd &xDotEnd,
-             Eigen::VectorXd &xCmd, Eigen::VectorXd &xDotCmd,
-             Eigen::VectorXd &xDDotCmd, Eigen::VectorXd &fCmd) {
+void airWalk(double t, double vCmd0, double& vCmd, double& tStepPre, int& stIndex, Eigen::VectorXd xStand,
+             Eigen::VectorXd& xInit, Eigen::VectorXd& xDotInit, Eigen::VectorXd& xDDotInit, Eigen::VectorXd& xEnd,
+             Eigen::VectorXd& xDotEnd, Eigen::VectorXd& xCmd, Eigen::VectorXd& xDotCmd, Eigen::VectorXd& xDDotCmd,
+             Eigen::VectorXd& fCmd) {
   double timeStep = 0.0025;
   double tStep, s;
   double T = 0.4;
@@ -365,38 +315,33 @@ void airWalk(double t, double vCmd0, double &vCmd, double &tStepPre,
   for (int i = 0; i < N; ++i) {
     // Thirdpoly(xInit(i), xDotInit(i), xEnd(i), xDotEnd(i), T, tStep+timeStep,
     // xTrans , xDotTrans);
-    TwoPointsCubic(xInit(i), xDotInit(i), xEnd(i), xDotEnd(i), T,
-                   tStep + timeStep, xTrans, xDotTrans, xDDotTrans);
+    TwoPointsCubic(xInit(i), xDotInit(i), xEnd(i), xDotEnd(i), T, tStep + timeStep, xTrans, xDotTrans, xDDotTrans);
     xCmd(i) = xTrans;
     xDotCmd(i) = xDotTrans;
     xDDotCmd(i) = xDDotTrans;
     fCmd(i) = 0.0;
   }
   if (stIndex == 0) {
-    TriPointsQuintic(T, tStep + timeStep, xInit(5), xDotInit(5),
-                     zMid + xStand(5), 0., xStand(5), vZEnd, xTrans, xDotTrans,
-                     xDDotTrans);
+    TriPointsQuintic(T, tStep + timeStep, xInit(5), xDotInit(5), zMid + xStand(5), 0., xStand(5), vZEnd, xTrans,
+                     xDotTrans, xDDotTrans);
     xCmd(5) = xTrans;
     xDotCmd(5) = xDotTrans;
     xDDotCmd(5) = xDDotTrans;
     // Thirdpoly(xInit(2), xDotInit(2), xEnd(2), 0.0, 0.1*T, tStep+timeStep,
     // xTrans , xDotTrans);
-    TwoPointsCubic(xInit(2), xDotInit(2), xEnd(2), 0.0, 0.1 * T,
-                   tStep + timeStep, xTrans, xDotTrans, xDDotTrans);
+    TwoPointsCubic(xInit(2), xDotInit(2), xEnd(2), 0.0, 0.1 * T, tStep + timeStep, xTrans, xDotTrans, xDDotTrans);
     xCmd(2) = xTrans;
     xDotCmd(2) = xDotTrans;
     xDDotCmd(2) = xDDotTrans;
   } else {
-    TriPointsQuintic(T, tStep + timeStep, xInit(2), xDotInit(2),
-                     zMid + xStand(2), 0., xStand(2), vZEnd, xTrans, xDotTrans,
-                     xDDotTrans);
+    TriPointsQuintic(T, tStep + timeStep, xInit(2), xDotInit(2), zMid + xStand(2), 0., xStand(2), vZEnd, xTrans,
+                     xDotTrans, xDDotTrans);
     xCmd(2) = xTrans;
     xDotCmd(2) = xDotTrans;
     xDDotCmd(2) = xDDotTrans;
     // Thirdpoly(xInit(5), xDotInit(5), xEnd(5), 0.0, 0.1*T, tStep+timeStep,
     // xTrans , xDotTrans);
-    TwoPointsCubic(xInit(5), xDotInit(5), xEnd(5), 0.0, 0.1 * T,
-                   tStep + timeStep, xTrans, xDotTrans, xDDotTrans);
+    TwoPointsCubic(xInit(5), xDotInit(5), xEnd(5), 0.0, 0.1 * T, tStep + timeStep, xTrans, xDotTrans, xDDotTrans);
     xCmd(5) = xTrans;
     xDotCmd(5) = xDotTrans;
     xDDotCmd(5) = xDDotTrans;
@@ -443,7 +388,7 @@ Eigen::Matrix3d rotn(double n1, double n2, double n3, double q) {
   R(2, 2) = (1.0 - c) * n3 * n3 + c;
   return R;
 }
-void oneLegIK(Eigen::VectorXd Pos, Eigen::VectorXd RPY, Eigen::VectorXd &qIK) {
+void oneLegIK(Eigen::VectorXd Pos, Eigen::VectorXd RPY, Eigen::VectorXd& qIK) {
   double l2 = 0.1305, l3 = 0.36, l4 = 0.34, l6 = 0.039;
 
   double px = Pos(0), py = Pos(1), pz = Pos(2);
@@ -456,8 +401,7 @@ void oneLegIK(Eigen::VectorXd Pos, Eigen::VectorXd RPY, Eigen::VectorXd &qIK) {
   double s1, s2, s3, s4, s5, s6;
   double c1, c2, c3, c4, c5, c6;
 
-  q6 = atan((py * r22 + px * r12 + pz * r32) /
-            (py * r23 + px * r13 + pz * r33 + l6));
+  q6 = atan((py * r22 + px * r12 + pz * r32) / (py * r23 + px * r13 + pz * r33 + l6));
   s6 = sin(q6);
   c6 = cos(q6);
 
@@ -482,16 +426,15 @@ void oneLegIK(Eigen::VectorXd Pos, Eigen::VectorXd RPY, Eigen::VectorXd &qIK) {
   c4 = cos(q4);
 
   double A = l4 * r11 + l3 * r11 * c4 + l3 * r13 * c6 * s4 + l3 * r12 * s4 * s6;
-  double B = l3 * r11 * s4 - l4 * r13 * c6 - l4 * r12 * s6 -
-             l3 * r13 * c4 * c6 - l3 * r12 * c4 * s6;
+  double B = l3 * r11 * s4 - l4 * r13 * c6 - l4 * r12 * s6 - l3 * r13 * c4 * c6 - l3 * r12 * c4 * s6;
   double C = px + l6 * r13;
   double D = sqrt(A * A + B * B - C * C);
   q5 = 2.0 * atan2((A - D), (B + C));
   s5 = sin(q5);
   c5 = cos(q5);
 
-  q3 = asin((r13 * c4 * c5 * c6 - r11 * c5 * s4 - r11 * c4 * s5 +
-             r12 * c4 * c5 * s6 - r13 * c6 * s4 * s5 - r12 * s4 * s5 * s6) /
+  q3 = asin((r13 * c4 * c5 * c6 - r11 * c5 * s4 - r11 * c4 * s5 + r12 * c4 * c5 * s6 - r13 * c6 * s4 * s5 -
+             r12 * s4 * s5 * s6) /
             (c2));
 
   qIK(0) = q1;
@@ -507,7 +450,7 @@ void oneLegIK(Eigen::VectorXd Pos, Eigen::VectorXd RPY, Eigen::VectorXd &qIK) {
     qIK(4) = qIK(4) + 2 * M_PI;
   }
 }
-void oneLegIK2(Eigen::VectorXd Pos, Eigen::Matrix3d R, Eigen::VectorXd &qIK) {
+void oneLegIK2(Eigen::VectorXd Pos, Eigen::Matrix3d R, Eigen::VectorXd& qIK) {
   double l2 = 0.1305, l3 = 0.36, l4 = 0.34, l6 = 0.039;
 
   double px = Pos(0), py = Pos(1), pz = Pos(2);
@@ -520,8 +463,7 @@ void oneLegIK2(Eigen::VectorXd Pos, Eigen::Matrix3d R, Eigen::VectorXd &qIK) {
   double s1, s2, s3, s4, s5, s6;
   double c1, c2, c3, c4, c5, c6;
 
-  q6 = atan((py * r22 + px * r12 + pz * r32) /
-            (py * r23 + px * r13 + pz * r33 + l6));
+  q6 = atan((py * r22 + px * r12 + pz * r32) / (py * r23 + px * r13 + pz * r33 + l6));
   s6 = sin(q6);
   c6 = cos(q6);
 
@@ -546,16 +488,15 @@ void oneLegIK2(Eigen::VectorXd Pos, Eigen::Matrix3d R, Eigen::VectorXd &qIK) {
   c4 = cos(q4);
 
   double A = l4 * r11 + l3 * r11 * c4 + l3 * r13 * c6 * s4 + l3 * r12 * s4 * s6;
-  double B = l3 * r11 * s4 - l4 * r13 * c6 - l4 * r12 * s6 -
-             l3 * r13 * c4 * c6 - l3 * r12 * c4 * s6;
+  double B = l3 * r11 * s4 - l4 * r13 * c6 - l4 * r12 * s6 - l3 * r13 * c4 * c6 - l3 * r12 * c4 * s6;
   double C = px + l6 * r13;
   double D = sqrt(A * A + B * B - C * C);
   q5 = 2.0 * atan2((A - D), (B + C));
   s5 = sin(q5);
   c5 = cos(q5);
 
-  q3 = asin((r13 * c4 * c5 * c6 - r11 * c5 * s4 - r11 * c4 * s5 +
-             r12 * c4 * c5 * s6 - r13 * c6 * s4 * s5 - r12 * s4 * s5 * s6) /
+  q3 = asin((r13 * c4 * c5 * c6 - r11 * c5 * s4 - r11 * c4 * s5 + r12 * c4 * c5 * s6 - r13 * c6 * s4 * s5 -
+             r12 * s4 * s5 * s6) /
             (c2));
 
   qIK(0) = q1;
@@ -571,11 +512,9 @@ void oneLegIK2(Eigen::VectorXd Pos, Eigen::Matrix3d R, Eigen::VectorXd &qIK) {
     qIK(4) = qIK(4) + 2 * M_PI;
   }
 }
-void oneLegIK_new(double leg, Eigen::VectorXd Pos, Eigen::Matrix3d R,
-                  Eigen::VectorXd &qIK) {
-  double L2 = 0.0185, L31 = 0.0355, L3 = -0.369 - 0.0525, L4 = -0.37,
-         L6 = -0.05;
-  double max = 0.79; // std::sqrt(L2*L2 + L3*L3) + fabs(L4)
+void oneLegIK_new(double leg, Eigen::VectorXd Pos, Eigen::Matrix3d R, Eigen::VectorXd& qIK) {
+  double L2 = 0.0185, L31 = 0.0355, L3 = -0.369 - 0.0525, L4 = -0.37, L6 = -0.05;
+  double max = 0.79;  // std::sqrt(L2*L2 + L3*L3) + fabs(L4)
   double q1, q2, q3, q4, q5, q6;
 
   double sign = 2.0 * (leg - 0.5);
@@ -599,23 +538,18 @@ void oneLegIK_new(double leg, Eigen::VectorXd Pos, Eigen::Matrix3d R,
   Eigen::Vector3d z0(n1, n2, n3);
   double norm_e = std::sqrt(L2 * L2 + L3 * L3);
   double norm_l2 = std::sqrt(norm_l * norm_l - L31 * L31);
-  double alpha = std::acos((norm_e * norm_e + norm_l2 * norm_l2 - L4 * L4) /
-                           (2.0 * norm_e * norm_l2));
+  double alpha = std::acos((norm_e * norm_e + norm_l2 * norm_l2 - L4 * L4) / (2.0 * norm_e * norm_l2));
   double beta = std::asin(-L3 / norm_e);
   double gamma = alpha + beta;
-  Eigen::Vector3d p_l0(norm_l2 * std::cos(gamma), L31,
-                       -norm_l2 * std::sin(gamma));
+  Eigen::Vector3d p_l0(norm_l2 * std::cos(gamma), L31, -norm_l2 * std::sin(gamma));
   double a = p_l0(2) / p_l0(1);
   double b = p_l(1) / p_l0(1);
-  double q2_0 =
-      std::asin((-a * b + std::sqrt(a * a + 1.0 - b * b)) / (a * a + 1.0));
+  double q2_0 = std::asin((-a * b + std::sqrt(a * a + 1.0 - b * b)) / (a * a + 1.0));
   if (fabs(a * std::sin(q2_0) + b - std::cos(q2_0)) > 1e-5) {
     q2_0 = std::asin((-a * b - std::sqrt(a * a + 1.0 - b * b)) / (a * a + 1.0));
   }
-  double a00 = p_l0(0),
-         a01 = p_l0(2) * std::cos(q2_0) + p_l0(1) * std::sin(q2_0), b0 = p_l(0);
-  double a10 = p_l0(2) * std::cos(q2_0) + p_l0(1) * std::sin(q2_0),
-         a11 = -p_l0(0), b1 = p_l(2);
+  double a00 = p_l0(0), a01 = p_l0(2) * std::cos(q2_0) + p_l0(1) * std::sin(q2_0), b0 = p_l(0);
+  double a10 = p_l0(2) * std::cos(q2_0) + p_l0(1) * std::sin(q2_0), a11 = -p_l0(0), b1 = p_l(2);
   double q1_0 = std::asin((a00 * b1 - a10 * b0) / (a00 * a11 - a01 * a10));
   // q1_0 = -M_PI -q1_0;
   Eigen::Vector3d p_e0(L2, 0.0, L3);
@@ -632,8 +566,7 @@ void oneLegIK_new(double leg, Eigen::VectorXd Pos, Eigen::Matrix3d R,
   double q_l = std::atan2(R_lw(1, 0), R_lw(0, 0));
   Eigen::Vector3d p_e = rotn(n1, n2, n3, q_l) * p_e0;
   q2 = std::asin(-p_e(1) / L3);
-  q1 = std::asin((L3 * p_e(0) * std::cos(q2) - L2 * p_e(2)) /
-                 (L3 * L3 * std::cos(q2) * std::cos(q2) + L2 * L2));
+  q1 = std::asin((L3 * p_e(0) * std::cos(q2) - L2 * p_e(2)) / (L3 * L3 * std::cos(q2) * std::cos(q2) + L2 * L2));
   // q1 = -M_PI -q1;
   Eigen::Vector3d p_2b(L2, 0.0, 0.0);
   Eigen::Vector3d p_2 = rotY(q1) * p_2b;
@@ -644,18 +577,14 @@ void oneLegIK_new(double leg, Eigen::VectorXd Pos, Eigen::Matrix3d R,
   Eigen::Vector3d w_proj = (p_l - p_e).dot(ve_x) * ve_x;
   Eigen::Vector3d v_ez = (p_2 - p_e) / (p_2 - p_e).norm();
   double theta = 2 * std::asin(L31 / w_proj.norm());
-  Eigen::Vector3d p_k =
-      p_e + 0.5 * w_proj +
-      rotn(v_ez(0), v_ez(1), v_ez(2), theta) * (-0.5 * w_proj);
+  Eigen::Vector3d p_k = p_e + 0.5 * w_proj + rotn(v_ez(0), v_ez(1), v_ez(2), theta) * (-0.5 * w_proj);
 
   Eigen::Vector3d l2e = p_e - p_2;
   Eigen::Vector3d lew = p_l - p_k;
   q4 = std::acos(l2e.dot(lew) / l2e.norm() / lew.norm());
-  q3 = std::asin((lew(1) + L4 * std::cos(q4) * std::sin(q2)) /
-                 (L4 * std::cos(q2) * std::sin(q4)));
+  q3 = std::asin((lew(1) + L4 * std::cos(q4) * std::sin(q2)) / (L4 * std::cos(q2) * std::sin(q4)));
 
-  Eigen::Matrix3d R_56 =
-      (rotY(q1) * rotX(q2) * rotZ(q3) * rotY(q4)).transpose() * R;
+  Eigen::Matrix3d R_56 = (rotY(q1) * rotX(q2) * rotZ(q3) * rotY(q4)).transpose() * R;
   double yaw_v = std::atan2(R_56(1, 0), R_56(0, 0));
 
   int i = 0;
@@ -665,8 +594,7 @@ void oneLegIK_new(double leg, Eigen::VectorXd Pos, Eigen::Matrix3d R,
     q_lg = q_l + dq;
     p_e = rotn(n1, n2, n3, q_lg) * p_e0;
     q2 = std::asin(-p_e(1) / L3);
-    q1 = std::asin((L3 * p_e(0) * std::cos(q2) - L2 * p_e(2)) /
-                   (L3 * L3 * std::cos(q2) * std::cos(q2) + L2 * L2));
+    q1 = std::asin((L3 * p_e(0) * std::cos(q2) - L2 * p_e(2)) / (L3 * L3 * std::cos(q2) * std::cos(q2) + L2 * L2));
     // q1 = -M_PI -q1;
     p_2 = rotY(q1) * p_2b;
     ve_y = (p_2 - p_e).cross(p_l - p_e);
@@ -675,13 +603,11 @@ void oneLegIK_new(double leg, Eigen::VectorXd Pos, Eigen::Matrix3d R,
     w_proj = (p_l - p_e).dot(ve_x) * ve_x;
     v_ez = (p_2 - p_e) / (p_2 - p_e).norm();
     theta = 2 * std::asin(L31 / w_proj.norm());
-    p_k = p_e + 0.5 * w_proj +
-          rotn(v_ez(0), v_ez(1), v_ez(2), theta) * (-0.5 * w_proj);
+    p_k = p_e + 0.5 * w_proj + rotn(v_ez(0), v_ez(1), v_ez(2), theta) * (-0.5 * w_proj);
     l2e = p_e - p_2;
     lew = p_l - p_k;
     q4 = std::acos(l2e.dot(lew) / l2e.norm() / lew.norm());
-    q3 = std::asin((lew(1) + L4 * std::cos(q4) * std::sin(q2)) /
-                   (L4 * std::cos(q2) * std::sin(q4)));
+    q3 = std::asin((lew(1) + L4 * std::cos(q4) * std::sin(q2)) / (L4 * std::cos(q2) * std::sin(q4)));
     R_56 = (rotY(q1) * rotX(q2) * rotZ(q3) * rotY(q4)).transpose() * R;
     yaw_vg = std::atan2(R_56(1, 0), R_56(0, 0));
     gradient = (yaw_vg - yaw_v) / dq;
@@ -689,8 +615,7 @@ void oneLegIK_new(double leg, Eigen::VectorXd Pos, Eigen::Matrix3d R,
     q_l = q_l - yaw_v / gradient;
     p_e = rotn(n1, n2, n3, q_l) * p_e0;
     q2 = std::asin(-p_e(1) / L3);
-    q1 = std::asin((L3 * p_e(0) * std::cos(q2) - L2 * p_e(2)) /
-                   (L3 * L3 * std::cos(q2) * std::cos(q2) + L2 * L2));
+    q1 = std::asin((L3 * p_e(0) * std::cos(q2) - L2 * p_e(2)) / (L3 * L3 * std::cos(q2) * std::cos(q2) + L2 * L2));
     // q1 = -M_PI -q1;
     p_2 = rotY(q1) * p_2b;
     ve_y = (p_2 - p_e).cross(p_l - p_e);
@@ -699,13 +624,11 @@ void oneLegIK_new(double leg, Eigen::VectorXd Pos, Eigen::Matrix3d R,
     w_proj = (p_l - p_e).dot(ve_x) * ve_x;
     v_ez = (p_2 - p_e) / (p_2 - p_e).norm();
     theta = 2 * std::asin(L31 / w_proj.norm());
-    p_k = p_e + 0.5 * w_proj +
-          rotn(v_ez(0), v_ez(1), v_ez(2), theta) * (-0.5 * w_proj);
+    p_k = p_e + 0.5 * w_proj + rotn(v_ez(0), v_ez(1), v_ez(2), theta) * (-0.5 * w_proj);
     l2e = p_e - p_2;
     lew = p_l - p_k;
     q4 = std::acos(l2e.dot(lew) / l2e.norm() / lew.norm());
-    q3 = std::asin((lew(1) + L4 * std::cos(q4) * std::sin(q2)) /
-                   (L4 * std::cos(q2) * std::sin(q4)));
+    q3 = std::asin((lew(1) + L4 * std::cos(q4) * std::sin(q2)) / (L4 * std::cos(q2) * std::sin(q4)));
     R_56 = (rotY(q1) * rotX(q2) * rotZ(q3) * rotY(q4)).transpose() * R;
     yaw_v = std::atan2(R_56(1, 0), R_56(0, 0));
     // std::cout << "yaw_v:" << yaw_v << std::endl;
@@ -718,14 +641,11 @@ void oneLegIK_new(double leg, Eigen::VectorXd Pos, Eigen::Matrix3d R,
   q6 = std::asin(-R_56(1, 2));
   qIK << q1, q2 + rotate, q3, q4, q5, q6;
 }
-void wkSpace2Joint(Eigen::VectorXd xCmd, Eigen::VectorXd &qCmd,
-                   Eigen::VectorXd &qDotCmd, bool &firstFlag) {
+void wkSpace2Joint(Eigen::VectorXd xCmd, Eigen::VectorXd& qCmd, Eigen::VectorXd& qDotCmd, bool& firstFlag) {
   double timeStep = 0.0025;
-  Eigen::Vector3d offSetL(0.0, 0.15285, -0.06658),
-      offSetR(0.0, -0.15285, -0.06658);
+  Eigen::Vector3d offSetL(0.0, 0.15285, -0.06658), offSetR(0.0, -0.15285, -0.06658);
   Eigen::Vector3d PosL = xCmd.head(3) - offSetL, PosR = xCmd.tail(3) - offSetR;
-  Eigen::VectorXd qIKL = Eigen::VectorXd::Zero(6),
-                  qIKR = Eigen::VectorXd::Zero(6);
+  Eigen::VectorXd qIKL = Eigen::VectorXd::Zero(6), qIKR = Eigen::VectorXd::Zero(6);
   Eigen::Vector3d RPY(0.0, 0.0, 0.0);
   Eigen::Matrix3d rotI = Eigen::Matrix3d::Identity();
   Eigen::VectorXd qCmd_pre = qCmd;
@@ -733,19 +653,15 @@ void wkSpace2Joint(Eigen::VectorXd xCmd, Eigen::VectorXd &qCmd,
   oneLegIK_new(1.0, PosR, rotI, qIKR);
   qCmd.head(6) = qIKL;
   qCmd.tail(6) = qIKR;
-  if (!firstFlag)
-    qDotCmd = (qCmd - qCmd_pre) / timeStep;
+  if (!firstFlag) qDotCmd = (qCmd - qCmd_pre) / timeStep;
   firstFlag = false;
 }
-void wkSpace2Joint(Eigen::VectorXd xCmd, Eigen::VectorXd rpyCmd,
-                   Eigen::VectorXd &qCmd, Eigen::VectorXd &qDotCmd,
-                   bool &firstFlag) {
+void wkSpace2Joint(Eigen::VectorXd xCmd, Eigen::VectorXd rpyCmd, Eigen::VectorXd& qCmd, Eigen::VectorXd& qDotCmd,
+                   bool& firstFlag) {
   double timeStep = 0.0025;
-  Eigen::Vector3d offSetL(0.0, 0.15285, -0.06658),
-      offSetR(0.0, -0.15285, -0.06658);
+  Eigen::Vector3d offSetL(0.0, 0.15285, -0.06658), offSetR(0.0, -0.15285, -0.06658);
   Eigen::Vector3d PosL, PosR;
-  Eigen::VectorXd qIKL = Eigen::VectorXd::Zero(6),
-                  qIKR = Eigen::VectorXd::Zero(6);
+  Eigen::VectorXd qIKL = Eigen::VectorXd::Zero(6), qIKR = Eigen::VectorXd::Zero(6);
   Eigen::VectorXd qCmd_pre = qCmd;
   Eigen::Matrix3d rotR, rotL;
   rotL = (rotX(rpyCmd(0)) * rotY(rpyCmd(1)) * rotZ(rpyCmd(2))).transpose();
@@ -756,55 +672,45 @@ void wkSpace2Joint(Eigen::VectorXd xCmd, Eigen::VectorXd rpyCmd,
   oneLegIK_new(1.0, PosR, rotR, qIKR);
   qCmd.head(6) = qIKL;
   qCmd.tail(6) = qIKR;
-  if (!firstFlag)
-    qDotCmd = (qCmd - qCmd_pre) / timeStep;
+  if (!firstFlag) qDotCmd = (qCmd - qCmd_pre) / timeStep;
   firstFlag = false;
 }
-void wkSpace2Joint(Eigen::VectorXd xCmd, Eigen::VectorXd rpyCmd,
-                   Eigen::VectorXd rFootCmd, Eigen::VectorXd &qCmd,
-                   Eigen::VectorXd &qDotCmd, bool &firstFlag) {
+void wkSpace2Joint(Eigen::VectorXd xCmd, Eigen::VectorXd rpyCmd, Eigen::VectorXd rFootCmd, Eigen::VectorXd& qCmd,
+                   Eigen::VectorXd& qDotCmd, bool& firstFlag) {
   double timeStep = 0.0025;
-  Eigen::Vector3d offSetL(0.0, 0.15285, -0.06658),
-      offSetR(0.0, -0.15285, -0.06658);
+  Eigen::Vector3d offSetL(0.0, 0.15285, -0.06658), offSetR(0.0, -0.15285, -0.06658);
   Eigen::Vector3d PosL, PosR;
-  Eigen::VectorXd qIKL = Eigen::VectorXd::Zero(6),
-                  qIKR = Eigen::VectorXd::Zero(6);
+  Eigen::VectorXd qIKL = Eigen::VectorXd::Zero(6), qIKR = Eigen::VectorXd::Zero(6);
   Eigen::VectorXd qCmd_pre = qCmd;
   Eigen::Matrix3d rotR, rotL, rotR_foot, rotL_foot;
   rotL = (rotX(rpyCmd(0)) * rotY(rpyCmd(1)) * rotZ(rpyCmd(2))).transpose();
   rotR = (rotX(rpyCmd(3)) * rotY(rpyCmd(4)) * rotZ(rpyCmd(5))).transpose();
   PosL = rotL * xCmd.head(3) - offSetL;
   PosR = rotR * xCmd.tail(3) - offSetR;
-  rotL_foot =
-      rotL * (rotX(rFootCmd(0)) * rotY(rFootCmd(1)) * rotZ(rFootCmd(2)));
-  rotR_foot =
-      rotR * (rotX(rFootCmd(3)) * rotY(rFootCmd(4)) * rotZ(rFootCmd(5)));
+  rotL_foot = rotL * (rotX(rFootCmd(0)) * rotY(rFootCmd(1)) * rotZ(rFootCmd(2)));
+  rotR_foot = rotR * (rotX(rFootCmd(3)) * rotY(rFootCmd(4)) * rotZ(rFootCmd(5)));
   oneLegIK_new(0.0, PosL, rotL_foot, qIKL);
   oneLegIK_new(1.0, PosR, rotR_foot, qIKR);
   qCmd.head(6) = qIKL;
   qCmd.tail(6) = qIKR;
-  if (!firstFlag)
-    qDotCmd = (qCmd - qCmd_pre) / timeStep;
+  if (!firstFlag) qDotCmd = (qCmd - qCmd_pre) / timeStep;
   firstFlag = false;
 }
 
 // arm swing polynominal trajectory
-void armPolyJoint(Eigen::VectorXd swingPhase, Eigen::VectorXd &qCmd) {
+void armPolyJoint(Eigen::VectorXd swingPhase, Eigen::VectorXd& qCmd) {
   Eigen::Matrix<double, 4, 6> swingArmParas;
-  swingArmParas << 12.56, -37.76, 43.19, -21.44, 2.107, 0.7214, 2.929, -9.473,
-      10.91, -5.094, 0.778, -1.897, -47.5, 145.7, -160.8, 71.49, -6.84, -1.267,
-      -13.84, 37.61, -34.5, 11.37, -1.05, -0.1551;
+  swingArmParas << 12.56, -37.76, 43.19, -21.44, 2.107, 0.7214, 2.929, -9.473, 10.91, -5.094, 0.778, -1.897, -47.5,
+      145.7, -160.8, 71.49, -6.84, -1.267, -13.84, 37.61, -34.5, 11.37, -1.05, -0.1551;
   Eigen::VectorXd initPos = Eigen::VectorXd::Zero(8);
   initPos << 0.0, -2.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0;
   Eigen::VectorXd leftPhasePow = Eigen::VectorXd::Zero(6);
-  leftPhasePow << myPow(swingPhase(0), 5), myPow(swingPhase(0), 4),
-      myPow(swingPhase(0), 3), myPow(swingPhase(0), 2), myPow(swingPhase(0), 1),
-      myPow(swingPhase(0), 0);
+  leftPhasePow << myPow(swingPhase(0), 5), myPow(swingPhase(0), 4), myPow(swingPhase(0), 3), myPow(swingPhase(0), 2),
+      myPow(swingPhase(0), 1), myPow(swingPhase(0), 0);
 
   Eigen::VectorXd rightPhasePow = Eigen::VectorXd::Zero(6);
-  rightPhasePow << myPow(swingPhase(1), 5), myPow(swingPhase(1), 4),
-      myPow(swingPhase(1), 3), myPow(swingPhase(1), 2), myPow(swingPhase(1), 1),
-      myPow(swingPhase(1), 0);
+  rightPhasePow << myPow(swingPhase(1), 5), myPow(swingPhase(1), 4), myPow(swingPhase(1), 3), myPow(swingPhase(1), 2),
+      myPow(swingPhase(1), 1), myPow(swingPhase(1), 0);
 
   qCmd.head(4) = swingArmParas * leftPhasePow;
   qCmd.tail(4) = -swingArmParas * rightPhasePow;
@@ -817,7 +723,7 @@ void armPolyJoint(Eigen::VectorXd swingPhase, Eigen::VectorXd &qCmd) {
 }
 
 // logData
-bool dataLog(Eigen::VectorXd &v, std::ofstream &f) {
+bool dataLog(Eigen::VectorXd& v, std::ofstream& f) {
   for (int i = 0; i < v.size(); i++) {
     f << v[i] << " ";
   }

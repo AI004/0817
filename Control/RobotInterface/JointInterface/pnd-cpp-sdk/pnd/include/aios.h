@@ -75,6 +75,7 @@ typedef enum PndCommandEnum {
   PndCommandReboot,
   PndCommandGetError,
   PndCommandClearError,
+  PndCommandGetMotorRotorAbsPos,
 
   PndCommandResetLinearCount,        // Reset Linear Count
   PndCommandMotionControllerConfig,  // Motion Controller Config
@@ -181,7 +182,7 @@ typedef struct NetworkSetting_ {
   bool dhcp_enable;
   char SSID[16];
   char password[32];
-  char name[16];
+  char name[32];
   char staticIP[20];
   char gateway[20];
   char subnet[20];
@@ -216,6 +217,7 @@ typedef struct Feedback_ {
 
   NetworkSetting network_setting;
   float encoder_angle;  // Current encoder angle unit: degree
+  float motor_rotor_abs_pos; // Current motor rotor absolute position; range: 0~16384
 } Feedback;
 
 typedef struct Feedback_ *PndFeedbackPtr;

@@ -1,7 +1,7 @@
 #include "../include/controller_lib.h"
 // #include "controller_lib.h"
-#include "../include/basicfunction.h"
 #include <iostream>
+#include "../include/basicfunction.h"
 // #include "basicfunction.h"
 #include "rbdl/rbdl.h"
 // #define DEBUG
@@ -10,74 +10,71 @@ Controller_Lib::~Controller_Lib() {}
 
 void Controller_Lib::controller_run() {
   switch (controller_type) {
-  case PositionController: {
-    positioncontroller();
-    break;
-  }
-  case PID: {
-    pid();
-    break;
-  }
-  case PID_force: {
-    pid_force();
-    break;
-  }
-  case PID_position: {
-    pid_position();
-    break;
-  }
-  case PID_orient: {
-    pid_orient();
-    break;
-  }
-  case PID_joint: {
-    pid_joint();
-    break;
-  }
-  case Admittance_force_feeedback: {
-    admittance_force_feedback();
-    break;
-  }
-  case Impedance_force_feedback: {
-    impedance_force_feedback();
-    break;
-  }
-  case Admittance: {
-    admittance();
-    break;
-  }
-  case Impedance: {
-    impedance();
-    break;
-  }
-  case None: {
-    none();
-    break;
-  }
-  case Userdefined: {
-    user_defined();
-    break;
-  }
-  default: {
-    std::cout << "no task controller can be used!" << std::endl;
-    break;
-  }
+    case PositionController: {
+      positioncontroller();
+      break;
+    }
+    case PID: {
+      pid();
+      break;
+    }
+    case PID_force: {
+      pid_force();
+      break;
+    }
+    case PID_position: {
+      pid_position();
+      break;
+    }
+    case PID_orient: {
+      pid_orient();
+      break;
+    }
+    case PID_joint: {
+      pid_joint();
+      break;
+    }
+    case Admittance_force_feeedback: {
+      admittance_force_feedback();
+      break;
+    }
+    case Impedance_force_feedback: {
+      impedance_force_feedback();
+      break;
+    }
+    case Admittance: {
+      admittance();
+      break;
+    }
+    case Impedance: {
+      impedance();
+      break;
+    }
+    case None: {
+      none();
+      break;
+    }
+    case Userdefined: {
+      user_defined();
+      break;
+    }
+    default: {
+      std::cout << "no task controller can be used!" << std::endl;
+      break;
+    }
   }
 }
 
 void Controller_Lib::positioncontroller() {
   output_data = input_data_d;
   // X_dot_c
-  output_data.row(1) = input_data_d.row(1) +
-                       para(0) * (input_data_d.row(0) - input_data_a.row(0));
+  output_data.row(1) = input_data_d.row(1) + para(0) * (input_data_d.row(0) - input_data_a.row(0));
   // X_ddot_c
-  output_data.row(2) = input_data_d.row(2) +
-                       para(2) * (input_data_d.row(1) - input_data_a.row(1)) +
+  output_data.row(2) = input_data_d.row(2) + para(2) * (input_data_d.row(1) - input_data_a.row(1)) +
                        para(0) * (input_data_d.row(0) - input_data_a.row(0));
 }
 
 void Controller_Lib::pid_force() {
-
   // F
   // alter_v.row(3) +=  para(1) * (input_data_d.row(3) - input_data_a.row(3));
   // output_data.row(3) = input_data_d.row(3) + para(0)*(input_data_d.row(3) -
@@ -89,31 +86,18 @@ void Controller_Lib::pid_position() {}
 void Controller_Lib::pid() {
   output_data = input_data_d;
   // X_dot_c
-  output_data.row(1)(0) =
-      input_data_d.row(1)(0) +
-      para(3) * (input_data_d.row(0)(0) - input_data_a.row(0)(0));
-  output_data.row(1)(1) =
-      input_data_d.row(1)(1) +
-      para(4) * (input_data_d.row(0)(1) - input_data_a.row(0)(1));
-  output_data.row(1)(2) =
-      input_data_d.row(1)(2) +
-      para(5) * (input_data_d.row(0)(2) - input_data_a.row(0)(2));
+  output_data.row(1)(0) = input_data_d.row(1)(0) + para(3) * (input_data_d.row(0)(0) - input_data_a.row(0)(0));
+  output_data.row(1)(1) = input_data_d.row(1)(1) + para(4) * (input_data_d.row(0)(1) - input_data_a.row(0)(1));
+  output_data.row(1)(2) = input_data_d.row(1)(2) + para(5) * (input_data_d.row(0)(2) - input_data_a.row(0)(2));
   // X_ddot_c
-  output_data.row(2)(0) =
-      input_data_d.row(2)(0) +
-      para(9) * (input_data_d.row(1)(0) - input_data_a.row(1)(0)) +
-      para(3) * (input_data_d.row(0)(0) - input_data_a.row(0)(0));
-  output_data.row(2)(1) =
-      input_data_d.row(2)(1) +
-      para(10) * (input_data_d.row(1)(1) - input_data_a.row(1)(1)) +
-      para(4) * (input_data_d.row(0)(1) - input_data_a.row(0)(1));
-  output_data.row(2)(2) =
-      input_data_d.row(2)(2) +
-      para(11) * (input_data_d.row(1)(2) - input_data_a.row(1)(2)) +
-      para(5) * (input_data_d.row(0)(2) - input_data_a.row(0)(2));
+  output_data.row(2)(0) = input_data_d.row(2)(0) + para(9) * (input_data_d.row(1)(0) - input_data_a.row(1)(0)) +
+                          para(3) * (input_data_d.row(0)(0) - input_data_a.row(0)(0));
+  output_data.row(2)(1) = input_data_d.row(2)(1) + para(10) * (input_data_d.row(1)(1) - input_data_a.row(1)(1)) +
+                          para(4) * (input_data_d.row(0)(1) - input_data_a.row(0)(1));
+  output_data.row(2)(2) = input_data_d.row(2)(2) + para(11) * (input_data_d.row(1)(2) - input_data_a.row(1)(2)) +
+                          para(5) * (input_data_d.row(0)(2) - input_data_a.row(0)(2));
   // F
-  output_data.row(3) = input_data_d.row(
-      3); // + para(0)*(input_data_d.row(3) - input_data_a.row(3));
+  output_data.row(3) = input_data_d.row(3);  // + para(0)*(input_data_d.row(3) - input_data_a.row(3));
 #ifdef DEBUG
   std::cout << "output_data: " << std::endl << output_data << std::endl;
 #endif
@@ -131,20 +115,12 @@ void Controller_Lib::pid_orient() {
     // orientation error(euler - xyz)
     Eigen::Vector3d euler_a = input_data_a.row(0).block(0, 0, 1, 3).transpose();
     Eigen::Vector3d euler_d = input_data_d.row(0).block(0, 0, 1, 3).transpose();
-    Eigen::Matrix3d R_a =
-        Eigen::AngleAxisd(euler_a[0], Eigen::Vector3d::UnitX())
-            .toRotationMatrix() *
-        Eigen::AngleAxisd(euler_a[1], Eigen::Vector3d::UnitY())
-            .toRotationMatrix() *
-        Eigen::AngleAxisd(euler_a[2], Eigen::Vector3d::UnitZ())
-            .toRotationMatrix();
-    Eigen::Matrix3d R_d =
-        Eigen::AngleAxisd(euler_d[0], Eigen::Vector3d::UnitX())
-            .toRotationMatrix() *
-        Eigen::AngleAxisd(euler_d[1], Eigen::Vector3d::UnitY())
-            .toRotationMatrix() *
-        Eigen::AngleAxisd(euler_d[2], Eigen::Vector3d::UnitZ())
-            .toRotationMatrix();
+    Eigen::Matrix3d R_a = Eigen::AngleAxisd(euler_a[0], Eigen::Vector3d::UnitX()).toRotationMatrix() *
+                          Eigen::AngleAxisd(euler_a[1], Eigen::Vector3d::UnitY()).toRotationMatrix() *
+                          Eigen::AngleAxisd(euler_a[2], Eigen::Vector3d::UnitZ()).toRotationMatrix();
+    Eigen::Matrix3d R_d = Eigen::AngleAxisd(euler_d[0], Eigen::Vector3d::UnitX()).toRotationMatrix() *
+                          Eigen::AngleAxisd(euler_d[1], Eigen::Vector3d::UnitY()).toRotationMatrix() *
+                          Eigen::AngleAxisd(euler_d[2], Eigen::Vector3d::UnitZ()).toRotationMatrix();
 
     // Eigen::Vector3d euler_err = (R_a.transpose() *R_d).eulerAngles(0,1,2);
     // Eigen::MatrixXd pose_err = (input_data_d.row(0) - input_data_a.row(0));
@@ -153,12 +129,9 @@ void Controller_Lib::pid_orient() {
     // euler_err).transpose();
 
     // orientation error
-    RigidBodyDynamics::Math::Quaternion Quat_d =
-        RigidBodyDynamics::Math::Quaternion::fromMatrix(R_d).conjugate();
-    RigidBodyDynamics::Math::Quaternion Quat_a =
-        RigidBodyDynamics::Math::Quaternion::fromMatrix(R_a).conjugate();
-    Eigen::Vector3d Quat_err =
-        R_a * (Quat_a.conjugate() * Quat_d).block<3, 1>(0, 0);
+    RigidBodyDynamics::Math::Quaternion Quat_d = RigidBodyDynamics::Math::Quaternion::fromMatrix(R_d).conjugate();
+    RigidBodyDynamics::Math::Quaternion Quat_a = RigidBodyDynamics::Math::Quaternion::fromMatrix(R_a).conjugate();
+    Eigen::Vector3d Quat_err = R_a * (Quat_a.conjugate() * Quat_d).block<3, 1>(0, 0);
 
     Eigen::MatrixXd pose_err = (input_data_d.row(0) - input_data_a.row(0));
     pose_err.block(0, 0, 1, 3) = Quat_err.transpose();
@@ -178,49 +151,31 @@ void Controller_Lib::pid_orient() {
     output_data.row(0)(5) = pose_err(5);
     // std::cout<<"pose_err: "<<std::endl<<pose_err<<std::endl;
     // X_dot_c
-    output_data.row(1)(0) = input_data_d.row(1)(
-        0); // + para(0)*pose_err(0) ;//+ para(6)*(input_data_d.row(1)(0) -
-            // input_data_a.row(1)(0));
-    output_data.row(1)(1) = input_data_d.row(1)(
-        1); // + para(1)*pose_err(1) ;//+ para(7)*(input_data_d.row(1)(1) -
-            // input_data_a.row(1)(1));
-    output_data.row(1)(2) = input_data_d.row(1)(
-        2); // + para(2)*pose_err(2) ;//+ para(8)*(input_data_d.row(1)(2) -
-            // input_data_a.row(1)(2));
-    output_data.row(1)(3) = input_data_d.row(1)(
-        3); // + para(3)*pose_err(3) ;//+ para(9)*(input_data_d.row(1)(3) -
-            // input_data_a.row(1)(3));
-    output_data.row(1)(4) = input_data_d.row(1)(
-        4); // + para(4)*pose_err(4) ;//+ para(10)*(input_data_d.row(1)(4) -
-            // input_data_a.row(1)(4));
-    output_data.row(1)(5) = input_data_d.row(1)(
-        5); // + para(5)*pose_err(5) ;//+ para(11)*(input_data_d.row(1)(5) -
-            // input_data_a.row(1)(5));
+    output_data.row(1)(0) = input_data_d.row(1)(0);  // + para(0)*pose_err(0) ;//+ para(6)*(input_data_d.row(1)(0) -
+                                                     // input_data_a.row(1)(0));
+    output_data.row(1)(1) = input_data_d.row(1)(1);  // + para(1)*pose_err(1) ;//+ para(7)*(input_data_d.row(1)(1) -
+                                                     // input_data_a.row(1)(1));
+    output_data.row(1)(2) = input_data_d.row(1)(2);  // + para(2)*pose_err(2) ;//+ para(8)*(input_data_d.row(1)(2) -
+                                                     // input_data_a.row(1)(2));
+    output_data.row(1)(3) = input_data_d.row(1)(3);  // + para(3)*pose_err(3) ;//+ para(9)*(input_data_d.row(1)(3) -
+                                                     // input_data_a.row(1)(3));
+    output_data.row(1)(4) = input_data_d.row(1)(4);  // + para(4)*pose_err(4) ;//+ para(10)*(input_data_d.row(1)(4) -
+                                                     // input_data_a.row(1)(4));
+    output_data.row(1)(5) = input_data_d.row(1)(5);  // + para(5)*pose_err(5) ;//+ para(11)*(input_data_d.row(1)(5) -
+                                                     // input_data_a.row(1)(5));
     // X_ddot_c
     output_data.row(2)(0) =
-        input_data_d.row(2)(0) +
-        para(6) * (input_data_d.row(1)(0) - input_data_a.row(1)(0)) +
-        para(0) * pose_err(0);
+        input_data_d.row(2)(0) + para(6) * (input_data_d.row(1)(0) - input_data_a.row(1)(0)) + para(0) * pose_err(0);
     output_data.row(2)(1) =
-        input_data_d.row(2)(1) +
-        para(7) * (input_data_d.row(1)(1) - input_data_a.row(1)(1)) +
-        para(1) * pose_err(1);
+        input_data_d.row(2)(1) + para(7) * (input_data_d.row(1)(1) - input_data_a.row(1)(1)) + para(1) * pose_err(1);
     output_data.row(2)(2) =
-        input_data_d.row(2)(2) +
-        para(8) * (input_data_d.row(1)(2) - input_data_a.row(1)(2)) +
-        para(2) * pose_err(2);
+        input_data_d.row(2)(2) + para(8) * (input_data_d.row(1)(2) - input_data_a.row(1)(2)) + para(2) * pose_err(2);
     output_data.row(2)(3) =
-        input_data_d.row(2)(3) +
-        para(9) * (input_data_d.row(1)(3) - input_data_a.row(1)(3)) +
-        para(3) * pose_err(3);
+        input_data_d.row(2)(3) + para(9) * (input_data_d.row(1)(3) - input_data_a.row(1)(3)) + para(3) * pose_err(3);
     output_data.row(2)(4) =
-        input_data_d.row(2)(4) +
-        para(10) * (input_data_d.row(1)(4) - input_data_a.row(1)(4)) +
-        para(4) * pose_err(4);
+        input_data_d.row(2)(4) + para(10) * (input_data_d.row(1)(4) - input_data_a.row(1)(4)) + para(4) * pose_err(4);
     output_data.row(2)(5) =
-        input_data_d.row(2)(5) +
-        para(11) * (input_data_d.row(1)(5) - input_data_a.row(1)(5)) +
-        para(5) * pose_err(5);
+        input_data_d.row(2)(5) + para(11) * (input_data_d.row(1)(5) - input_data_a.row(1)(5)) + para(5) * pose_err(5);
     // std::cout<<"para:
     // "<<para(9)<<para(10)<<para(11)<<para(3)<<para(4)<<para(5)<<std::endl;
   } else if (size_ == 3) {
@@ -230,20 +185,12 @@ void Controller_Lib::pid_orient() {
     // orientation error(euler - xyz)
     Eigen::Vector3d euler_a = input_data_a.row(0).block(0, 0, 1, 3).transpose();
     Eigen::Vector3d euler_d = input_data_d.row(0).block(0, 0, 1, 3).transpose();
-    Eigen::Matrix3d R_a =
-        Eigen::AngleAxisd(euler_a[0], Eigen::Vector3d::UnitX())
-            .toRotationMatrix() *
-        Eigen::AngleAxisd(euler_a[1], Eigen::Vector3d::UnitY())
-            .toRotationMatrix() *
-        Eigen::AngleAxisd(euler_a[2], Eigen::Vector3d::UnitZ())
-            .toRotationMatrix();
-    Eigen::Matrix3d R_d =
-        Eigen::AngleAxisd(euler_d[0], Eigen::Vector3d::UnitX())
-            .toRotationMatrix() *
-        Eigen::AngleAxisd(euler_d[1], Eigen::Vector3d::UnitY())
-            .toRotationMatrix() *
-        Eigen::AngleAxisd(euler_d[2], Eigen::Vector3d::UnitZ())
-            .toRotationMatrix();
+    Eigen::Matrix3d R_a = Eigen::AngleAxisd(euler_a[0], Eigen::Vector3d::UnitX()).toRotationMatrix() *
+                          Eigen::AngleAxisd(euler_a[1], Eigen::Vector3d::UnitY()).toRotationMatrix() *
+                          Eigen::AngleAxisd(euler_a[2], Eigen::Vector3d::UnitZ()).toRotationMatrix();
+    Eigen::Matrix3d R_d = Eigen::AngleAxisd(euler_d[0], Eigen::Vector3d::UnitX()).toRotationMatrix() *
+                          Eigen::AngleAxisd(euler_d[1], Eigen::Vector3d::UnitY()).toRotationMatrix() *
+                          Eigen::AngleAxisd(euler_d[2], Eigen::Vector3d::UnitZ()).toRotationMatrix();
 
     // Eigen::Vector3d euler_err = (R_a.transpose() *R_d).eulerAngles(0,1,2);
     // Eigen::MatrixXd pose_err = (input_data_d.row(0) - input_data_a.row(0));
@@ -252,12 +199,9 @@ void Controller_Lib::pid_orient() {
     // euler_err).transpose();
 
     // orientation error
-    RigidBodyDynamics::Math::Quaternion Quat_d =
-        RigidBodyDynamics::Math::Quaternion::fromMatrix(R_d).conjugate();
-    RigidBodyDynamics::Math::Quaternion Quat_a =
-        RigidBodyDynamics::Math::Quaternion::fromMatrix(R_a).conjugate();
-    Eigen::Vector3d Quat_err =
-        R_a * (Quat_a.conjugate() * Quat_d).block<3, 1>(0, 0);
+    RigidBodyDynamics::Math::Quaternion Quat_d = RigidBodyDynamics::Math::Quaternion::fromMatrix(R_d).conjugate();
+    RigidBodyDynamics::Math::Quaternion Quat_a = RigidBodyDynamics::Math::Quaternion::fromMatrix(R_a).conjugate();
+    Eigen::Vector3d Quat_err = R_a * (Quat_a.conjugate() * Quat_d).block<3, 1>(0, 0);
 
     Eigen::MatrixXd pose_err = (input_data_d.row(0) - input_data_a.row(0));
     pose_err.block(0, 0, 1, 3) = Quat_err.transpose();
@@ -271,33 +215,24 @@ void Controller_Lib::pid_orient() {
     output_data.row(0)(2) = pose_err(2);
     // std::cout<<"pose_err: "<<std::endl<<pose_err<<std::endl;
     // X_dot_c
-    output_data.row(1)(0) = input_data_d.row(1)(
-        0); // + para(0)*pose_err(0) ;//+ para(6)*(input_data_d.row(1)(0) -
-            // input_data_a.row(1)(0));
-    output_data.row(1)(1) = input_data_d.row(1)(
-        1); // + para(1)*pose_err(1) ;//+ para(7)*(input_data_d.row(1)(1) -
-            // input_data_a.row(1)(1));
-    output_data.row(1)(2) = input_data_d.row(1)(
-        2); // + para(2)*pose_err(2) ;//+ para(8)*(input_data_d.row(1)(2) -
-            // input_data_a.row(1)(2));
-            //        output_data.row(1)(3) = input_data_d.row(1)(3) ;//+
+    output_data.row(1)(0) = input_data_d.row(1)(0);  // + para(0)*pose_err(0) ;//+ para(6)*(input_data_d.row(1)(0) -
+                                                     // input_data_a.row(1)(0));
+    output_data.row(1)(1) = input_data_d.row(1)(1);  // + para(1)*pose_err(1) ;//+ para(7)*(input_data_d.row(1)(1) -
+                                                     // input_data_a.row(1)(1));
+    output_data.row(1)(2) = input_data_d.row(1)(2);  // + para(2)*pose_err(2) ;//+ para(8)*(input_data_d.row(1)(2) -
+                                                     // input_data_a.row(1)(2));
+                                                     //        output_data.row(1)(3) = input_data_d.row(1)(3) ;//+
     //        para(3)*pose_err(3); output_data.row(1)(4) =
     //        input_data_d.row(1)(4) ;//+ para(4)*pose_err(4);
     //        output_data.row(1)(5) = input_data_d.row(1)(5) ;//+
     //        para(5)*pose_err(5);
     // X_ddot_c
     output_data.row(2)(0) =
-        input_data_d.row(2)(0) +
-        para(6) * (input_data_d.row(1)(0) - input_data_a.row(1)(0)) +
-        para(0) * pose_err(0);
+        input_data_d.row(2)(0) + para(6) * (input_data_d.row(1)(0) - input_data_a.row(1)(0)) + para(0) * pose_err(0);
     output_data.row(2)(1) =
-        input_data_d.row(2)(1) +
-        para(7) * (input_data_d.row(1)(1) - input_data_a.row(1)(1)) +
-        para(1) * pose_err(1);
+        input_data_d.row(2)(1) + para(7) * (input_data_d.row(1)(1) - input_data_a.row(1)(1)) + para(1) * pose_err(1);
     output_data.row(2)(2) =
-        input_data_d.row(2)(2) +
-        para(8) * (input_data_d.row(1)(2) - input_data_a.row(1)(2)) +
-        para(2) * pose_err(2);
+        input_data_d.row(2)(2) + para(8) * (input_data_d.row(1)(2) - input_data_a.row(1)(2)) + para(2) * pose_err(2);
     //        output_data.row(2)(3) = input_data_d.row(2)(3) +
     //        para(9)*(input_data_d.row(1)(3) - input_data_a.row(1)(3)) +
     //        para(3)*pose_err(3); output_data.row(2)(4) =
@@ -314,20 +249,12 @@ void Controller_Lib::pid_orient() {
     // orientation error(euler - xyz)
     Eigen::Vector3d euler_a = input_data_a.row(0).block(0, 0, 1, 3).transpose();
     Eigen::Vector3d euler_d = input_data_d.row(0).block(0, 0, 1, 3).transpose();
-    Eigen::Matrix3d R_a =
-        Eigen::AngleAxisd(euler_a[0], Eigen::Vector3d::UnitX())
-            .toRotationMatrix() *
-        Eigen::AngleAxisd(euler_a[1], Eigen::Vector3d::UnitY())
-            .toRotationMatrix() *
-        Eigen::AngleAxisd(euler_a[2], Eigen::Vector3d::UnitZ())
-            .toRotationMatrix();
-    Eigen::Matrix3d R_d =
-        Eigen::AngleAxisd(euler_d[0], Eigen::Vector3d::UnitX())
-            .toRotationMatrix() *
-        Eigen::AngleAxisd(euler_d[1], Eigen::Vector3d::UnitY())
-            .toRotationMatrix() *
-        Eigen::AngleAxisd(euler_d[2], Eigen::Vector3d::UnitZ())
-            .toRotationMatrix();
+    Eigen::Matrix3d R_a = Eigen::AngleAxisd(euler_a[0], Eigen::Vector3d::UnitX()).toRotationMatrix() *
+                          Eigen::AngleAxisd(euler_a[1], Eigen::Vector3d::UnitY()).toRotationMatrix() *
+                          Eigen::AngleAxisd(euler_a[2], Eigen::Vector3d::UnitZ()).toRotationMatrix();
+    Eigen::Matrix3d R_d = Eigen::AngleAxisd(euler_d[0], Eigen::Vector3d::UnitX()).toRotationMatrix() *
+                          Eigen::AngleAxisd(euler_d[1], Eigen::Vector3d::UnitY()).toRotationMatrix() *
+                          Eigen::AngleAxisd(euler_d[2], Eigen::Vector3d::UnitZ()).toRotationMatrix();
 
     // Eigen::Vector3d euler_err = (R_a.transpose() *R_d).eulerAngles(0,1,2);
     // Eigen::MatrixXd pose_err = (input_data_d.row(0) - input_data_a.row(0));
@@ -336,12 +263,9 @@ void Controller_Lib::pid_orient() {
     // euler_err).transpose();
 
     // orientation error
-    RigidBodyDynamics::Math::Quaternion Quat_d =
-        RigidBodyDynamics::Math::Quaternion::fromMatrix(R_d).conjugate();
-    RigidBodyDynamics::Math::Quaternion Quat_a =
-        RigidBodyDynamics::Math::Quaternion::fromMatrix(R_a).conjugate();
-    Eigen::Vector3d Quat_err =
-        R_a * (Quat_a.conjugate() * Quat_d).block<3, 1>(0, 0);
+    RigidBodyDynamics::Math::Quaternion Quat_d = RigidBodyDynamics::Math::Quaternion::fromMatrix(R_d).conjugate();
+    RigidBodyDynamics::Math::Quaternion Quat_a = RigidBodyDynamics::Math::Quaternion::fromMatrix(R_a).conjugate();
+    Eigen::Vector3d Quat_err = R_a * (Quat_a.conjugate() * Quat_d).block<3, 1>(0, 0);
 
     Eigen::MatrixXd pose_err = (input_data_d.row(0) - input_data_a.row(0));
     pose_err.block(0, 0, 1, 3) = Quat_err.transpose();
@@ -356,36 +280,25 @@ void Controller_Lib::pid_orient() {
     output_data.row(0)(3) = pose_err(3);
     // std::cout<<"pose_err: "<<std::endl<<pose_err<<std::endl;
     // X_dot_c
-    output_data.row(1)(0) = input_data_d.row(1)(
-        0); // + para(0)*pose_err(0) ;//+ para(6)*(input_data_d.row(1)(0) -
-            // input_data_a.row(1)(0));
-    output_data.row(1)(1) = input_data_d.row(1)(
-        1); // + para(1)*pose_err(1) ;//+ para(7)*(input_data_d.row(1)(1) -
-            // input_data_a.row(1)(1));
-    output_data.row(1)(2) = input_data_d.row(1)(
-        2); // + para(2)*pose_err(2) ;//+ para(8)*(input_data_d.row(1)(2) -
-            // input_data_a.row(1)(2));
-    output_data.row(1)(3) = input_data_d.row(1)(3); //+ para(3)*pose_err(3);
+    output_data.row(1)(0) = input_data_d.row(1)(0);  // + para(0)*pose_err(0) ;//+ para(6)*(input_data_d.row(1)(0) -
+                                                     // input_data_a.row(1)(0));
+    output_data.row(1)(1) = input_data_d.row(1)(1);  // + para(1)*pose_err(1) ;//+ para(7)*(input_data_d.row(1)(1) -
+                                                     // input_data_a.row(1)(1));
+    output_data.row(1)(2) = input_data_d.row(1)(2);  // + para(2)*pose_err(2) ;//+ para(8)*(input_data_d.row(1)(2) -
+                                                     // input_data_a.row(1)(2));
+    output_data.row(1)(3) = input_data_d.row(1)(3);  //+ para(3)*pose_err(3);
     //        output_data.row(1)(4) = input_data_d.row(1)(4) ;//+
     //        para(4)*pose_err(4); output_data.row(1)(5) =
     //        input_data_d.row(1)(5) ;//+ para(5)*pose_err(5);
     // X_ddot_c
     output_data.row(2)(0) =
-        input_data_d.row(2)(0) +
-        para(6) * (input_data_d.row(1)(0) - input_data_a.row(1)(0)) +
-        para(0) * pose_err(0);
+        input_data_d.row(2)(0) + para(6) * (input_data_d.row(1)(0) - input_data_a.row(1)(0)) + para(0) * pose_err(0);
     output_data.row(2)(1) =
-        input_data_d.row(2)(1) +
-        para(7) * (input_data_d.row(1)(1) - input_data_a.row(1)(1)) +
-        para(1) * pose_err(1);
+        input_data_d.row(2)(1) + para(7) * (input_data_d.row(1)(1) - input_data_a.row(1)(1)) + para(1) * pose_err(1);
     output_data.row(2)(2) =
-        input_data_d.row(2)(2) +
-        para(8) * (input_data_d.row(1)(2) - input_data_a.row(1)(2)) +
-        para(2) * pose_err(2);
+        input_data_d.row(2)(2) + para(8) * (input_data_d.row(1)(2) - input_data_a.row(1)(2)) + para(2) * pose_err(2);
     output_data.row(2)(3) =
-        input_data_d.row(2)(3) +
-        para(11) * (input_data_d.row(1)(3) - input_data_a.row(1)(3)) +
-        para(5) * pose_err(3);
+        input_data_d.row(2)(3) + para(11) * (input_data_d.row(1)(3) - input_data_a.row(1)(3)) + para(5) * pose_err(3);
     //        output_data.row(2)(4) = input_data_d.row(2)(4) +
     //        para(10)*(input_data_d.row(1)(4) - input_data_a.row(1)(4)) +
     //        para(4)*pose_err(4); output_data.row(2)(5) =
@@ -409,16 +322,12 @@ void Controller_Lib::pid_orient() {
 
 void Controller_Lib::pid_joint() {
   output_data = input_data_d;
-  output_data.row(2).head(3) =
-      input_data_d.row(2).head(3) +
-      para(0) * (input_data_d.row(0).head(3) - input_data_a.row(0).head(3)) +
-      para(6) * (input_data_d.row(1).head(3) - input_data_a.row(1).head(3));
-  output_data.row(2).tail(dim - 3) =
-      input_data_d.row(2).tail(dim - 3) +
-      para(1) * (input_data_d.row(0).tail(dim - 3) -
-                 input_data_a.row(0).tail(dim - 3)) +
-      para(7) * (input_data_d.row(1).tail(dim - 3) -
-                 input_data_a.row(1).tail(dim - 3));
+  output_data.row(2).head(3) = input_data_d.row(2).head(3) +
+                               para(0) * (input_data_d.row(0).head(3) - input_data_a.row(0).head(3)) +
+                               para(6) * (input_data_d.row(1).head(3) - input_data_a.row(1).head(3));
+  output_data.row(2).tail(dim - 3) = input_data_d.row(2).tail(dim - 3) +
+                                     para(1) * (input_data_d.row(0).tail(dim - 3) - input_data_a.row(0).tail(dim - 3)) +
+                                     para(7) * (input_data_d.row(1).tail(dim - 3) - input_data_a.row(1).tail(dim - 3));
 }
 
 void Controller_Lib::none() { output_data = input_data_d; }
@@ -485,15 +394,12 @@ void Controller_Lib::admittance() {
   U_c_left = input_data_a.row(3).transpose();
   Eigen::MatrixXd I;
   I.setIdentity(2 * num, 2 * num);
-  X_c_left =
-      (I + A_c_left * steptime) * X_c_left + B_c_left * steptime * U_c_left;
+  X_c_left = (I + A_c_left * steptime) * X_c_left + B_c_left * steptime * U_c_left;
   // Y_c_left.noalias() = C_c_left * X_c_left;
   alter_v.row(0) = X_c_left.block(0, 0, num, 1).transpose();
   alter_v.row(1) = X_c_left.block(num, 0, num, 1).transpose();
-  output_data.row(0) =
-      input_data_d.row(0) + X_c_left.block(0, 0, num, 1).transpose();
-  output_data.row(1) =
-      input_data_d.row(1) + X_c_left.block(num, 0, num, 1).transpose();
+  output_data.row(0) = input_data_d.row(0) + X_c_left.block(0, 0, num, 1).transpose();
+  output_data.row(1) = input_data_d.row(1) + X_c_left.block(num, 0, num, 1).transpose();
   output_data.row(2) = A_c_left * X_c_left + B_c_left * U_c_left;
 }
 
@@ -503,9 +409,7 @@ void Controller_Lib::impedance() {}
 
 void Controller_Lib::impedance_force_feedback() {}
 
-void Controller_Lib::setinput_data(Eigen::MatrixXd input_a,
-                                   Eigen::MatrixXd input_d, int input_dim,
-                                   double input_dt) {
+void Controller_Lib::setinput_data(Eigen::MatrixXd input_a, Eigen::MatrixXd input_d, int input_dim, double input_dt) {
   input_data_a = input_a;
   input_data_d = input_d;
   dim = input_dim;
@@ -519,11 +423,9 @@ void Controller_Lib::setinput_data(Eigen::MatrixXd input_a,
 #endif
 }
 
-void Controller_Lib::setcontrol_para(Eigen::VectorXd control_para) {
-  para = control_para;
-}
+void Controller_Lib::setcontrol_para(Eigen::VectorXd control_para) { para = control_para; }
 
-void Controller_Lib::getoutput_data(Eigen::MatrixXd &output) {
+void Controller_Lib::getoutput_data(Eigen::MatrixXd& output) {
   output = output_data;
 #ifdef DEBUG
   std::cout << "output_data: " << std::endl << output_data << std::endl;

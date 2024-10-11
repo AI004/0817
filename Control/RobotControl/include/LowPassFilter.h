@@ -1,8 +1,8 @@
 #ifndef LOWPASSFILTER_H
 #define LOWPASSFILTER_H
 
-#include <Eigen/Dense>
 #include <math.h>
+#include <Eigen/Dense>
 
 /**
  * This digital low pass filter is developed via the bilinear method, which
@@ -13,11 +13,11 @@
  * vector needed to be filtered
  */
 class LowPassFilter {
-public:
+ public:
   LowPassFilter(double cutOffFreq, double dampRatio, double dTime, int nFilter);
   Eigen::VectorXd mFilter(Eigen::VectorXd sigIn);
 
-private:
+ private:
   double dT;
   Eigen::VectorXd sigIn_1;
   Eigen::VectorXd sigIn_2;
