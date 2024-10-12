@@ -137,7 +137,7 @@ void Zero::init() {
   //
   avr_v = 0.1;
   totaltime = 0;
-  qCmd = Eigen::VectorXd::Ones(12);
+  qCmd = Eigen::VectorXd::Zero(12);
   qDotCmd = Eigen::VectorXd::Zero(12);
   xStand = Eigen::VectorXd::Zero(6);
 
@@ -241,10 +241,10 @@ void Zero::run() {
     gait->FifthPoly(qa, qa_dot, O, qd, qd_dot, O, totaltime, timer, robotdata->q_c, robotdata->q_dot_c,
                     robotdata->q_ddot_c);
     robotdata->tau_c.setZero();
-    // robotdata->q_c(6+12+3+7-2) = 3.1415926/10;//*sin(2*3.1415926*timer);//left wrist pitch
-    // robotdata->q_c(6+12+3+7-1) = 3.1415926/10;//*cos(2*3.1415926*timer);//left wrist roll
-    // robotdata->q_c(6+12+3+7+7-2) = 3.1415926/10;//*sin(2*3.1415926*timer);//right wrist pitch
-    // robotdata->q_c(6+12+3+7+7-1) = 3.1415926/10;//*cos(2*3.1415926*timer);//right wrist roll
+    robotdata->q_c(6 + 6 - 1) = 3.1415926 / 10 * cos(2 * 3.1415926 * timer);  // left ankle roll
+    // robotdata->q_c(6 + 6 - 2) = 3.1415926 / 10 * sin(2 * 3.1415926 * timer);  // left ankle pitch
+    robotdata->q_c(6 + 12 - 1) = 3.1415926 / 10 * cos(2 * 3.1415926 * timer);  // right ankle roll
+    // robotdata->q_c(6 + 12 - 2) = 3.1415926 / 10 * sin(2 * 3.1415926 * timer);  // right ankle pitch
   } else {
     // when zero complete tell gui zero
     gait->robot_controller_._robot_data->fsmname = stateName;
@@ -658,12 +658,12 @@ void Z2S::onEnter() {
   xStand_tgt(2) += delth;
   xStand_tgt(5) += delth;
 
-  Eigen::VectorXd qArmCmd_temp = Eigen::VectorXd::Zero(8);
-  armPolyJoint(Eigen::Vector2d(0.42, 0.42), qArmCmd_temp);
-  qArmCmd.setZero();
-  qArmCmd.head(4) = qArmCmd_temp.head(4);
-  qArmCmd.segment(arm_l_actor_num + hand_l_actor_num, 4) = qArmCmd_temp.tail(4);
-  gait->setevent("");
+  // Eigen::VectorXd qArmCmd_temp = Eigen::VectorXd::Zero(8);
+  // armPolyJoint(Eigen::Vector2d(0.42, 0.42), qArmCmd_temp);
+  // qArmCmd.setZero();
+  // qArmCmd.head(4) = qArmCmd_temp.head(4);
+  // qArmCmd.segment(arm_l_actor_num + hand_l_actor_num, 4) = qArmCmd_temp.tail(4);
+  // gait->setevent("");
 }
 
 void Z2S::run() {
@@ -905,7 +905,7 @@ void Stand::init() {
 
   avr_v = 0.1;
   totaltime = 0;
-  qCmd = Eigen::VectorXd::Zero(12);
+  qCmd = Eigen::VectorXd::Ones(12) * 0.05;
   qDotCmd = Eigen::VectorXd::Zero(12);
   com_tgt = Eigen::VectorXd::Zero(6);
   xStand = Eigen::VectorXd::Zero(6);
@@ -1005,7 +1005,7 @@ void Stand::onEnter() {
   xStand_Zero = xStand_tgt;
   // rFootCmd(2) = robotdata->q_c(8);
   // rFootCmd(5) = robotdata->q_c(14);
-  wkSpace2Joint(xStand, rTorsoInit, rFootCmd, qCmd, qDotCmd, first_flag);
+  // wkSpace2Joint(xStand, rTorsoInit, rFootCmd, qCmd, qDotCmd, first_flag);
   // wkSpace2Joint(xStand,qCmd,qDotCmd,first_flag);
 
   com_tgt = com_x_a.row(0).transpose();
@@ -1080,7 +1080,7 @@ void Stand::run() {
     rTorsoCmd = rTorsoInit + delt_rpy * (1 - cos(omega * timer)) / 2.0;
 
     // wkSpace2Joint(xStand_cmd, qCmd, qDotCmd, first_flag);
-    wkSpace2Joint(xStand_cmd, rTorsoCmd, rFootCmd, qCmd, qDotCmd, first_flag);
+    // wkSpace2Joint(xStand_cmd, rTorsoCmd, rFootCmd, qCmd, qDotCmd, first_flag);
     robotdata->q_c.block(6, 0, 12, 1) = qCmd;
     robotdata->q_dot_c.block(6, 0, 12, 1) = qDotCmd;
 
@@ -1210,7 +1210,7 @@ void Stand::run() {
     robotdata->q_c(20) = robotdata->rCmd_joystick_last(2);
 
     // wkSpace2Joint(xStand_tgt, qCmd, qDotCmd, first_flag);
-    wkSpace2Joint(xStand_tgt, rTorsoCmd, rFootCmd, qCmd, qDotCmd, first_flag);
+    // wkSpace2Joint(xStand_tgt, rTorsoCmd, rFootCmd, qCmd, qDotCmd, first_flag);
 
     // robotdata->q_c.block(6, 0, 12, 1) = qCmd;
     // robotdata->q_dot_c.block(6, 0, 12, 1) = qDotCmd;
@@ -1231,41 +1231,43 @@ void Stand::run() {
   }
 
   // arm plan
-  if (timer < 2.0) {
-    robotdata->pArm_tgt(0) = (1.0 - timer / 2.0) * robotdata->pArm_tgt(0) + (timer / 2.0) * 0.42;
-    robotdata->pArm_tgt(1) = (1.0 - timer / 2.0) * robotdata->pArm_tgt(1) + (timer / 2.0) * 0.42;
-  } else {
-    robotdata->pArm_tgt(0) = 0.42;
-    robotdata->pArm_tgt(1) = 0.42;
-  }
+  // if (timer < 2.0) {
+  //   robotdata->pArm_tgt(0) = (1.0 - timer / 2.0) * robotdata->pArm_tgt(0) + (timer / 2.0) * 0.42;
+  //   robotdata->pArm_tgt(1) = (1.0 - timer / 2.0) * robotdata->pArm_tgt(1) + (timer / 2.0) * 0.42;
+  // } else {
+  //   robotdata->pArm_tgt(0) = 0.42;
+  //   robotdata->pArm_tgt(1) = 0.42;
+  // }
 
   Eigen::VectorXd qArmCmd = Eigen::VectorXd::Zero(adam_upper_except_waist_actor_num);
-  robotdata->arm_style = 0.005 * robotdata->arm_style_d + 0.995 * robotdata->arm_style;
-  Eigen::VectorXd arm_run = Eigen::VectorXd::Zero(adam_upper_except_waist_actor_num);
-  if (adam_type == ADAM_TYPE::AdamLite) {
-    arm_run << M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0, M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0;
-  } else if (adam_type == ADAM_TYPE::AdamStandard) {
-    arm_run << M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0, 0.0, 0.0, 0.0, 0.0, M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0, 0.0, 0.0,
-        0.0, 0.0;
-  } else if (adam_type == ADAM_TYPE::StandardPlus23) {
-    arm_run << M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0, M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0;
-  } else if (adam_type == ADAM_TYPE::StandardPlus29) {
-    arm_run << M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0, 0.0, 0.0, 0.0, M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0, 0.0, 0.0, 0.0;
-  } else if (adam_type == ADAM_TYPE::StandardPlus53) {
-    arm_run << M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-        0.0, M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-        0.0;
-  }
-  Eigen::VectorXd qArmCmd_temp = Eigen::VectorXd::Zero(8);
-  armPolyJoint(robotdata->pArm_tgt, qArmCmd_temp);
-  qArmCmd.setZero();
-  qArmCmd.head(4) = qArmCmd_temp.head(4);
-  qArmCmd.segment(arm_l_actor_num + hand_l_actor_num, 4) = qArmCmd_temp.tail(4);
-  robotdata->q_c.tail(adam_upper_except_waist_actor_num) = qArmCmd + robotdata->arm_style * arm_run;
+  // robotdata->arm_style = 0.005 * robotdata->arm_style_d + 0.995 * robotdata->arm_style;
+  // Eigen::VectorXd arm_run = Eigen::VectorXd::Zero(adam_upper_except_waist_actor_num);
+  // if (adam_type == ADAM_TYPE::AdamLite) {
+  //   arm_run << M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0, M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0;
+  // } else if (adam_type == ADAM_TYPE::AdamStandard) {
+  //   arm_run << M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0, 0.0, 0.0, 0.0, 0.0, M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0, 0.0, 0.0,
+  //       0.0, 0.0;
+  // } else if (adam_type == ADAM_TYPE::StandardPlus23) {
+  //   arm_run << M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0, M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0;
+  // } else if (adam_type == ADAM_TYPE::StandardPlus29) {
+  //   arm_run << M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0, 0.0, 0.0, 0.0, M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0, 0.0, 0.0, 0.0;
+  // } else if (adam_type == ADAM_TYPE::StandardPlus53) {
+  //   arm_run << M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+  //   0.0,
+  //       0.0, M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+  //       0.0, 0.0;
+  // }
+  // Eigen::VectorXd qArmCmd_temp = Eigen::VectorXd::Zero(8);
+  // armPolyJoint(robotdata->pArm_tgt, qArmCmd_temp);
+  // qArmCmd.setZero();
+  // qArmCmd.head(4) = qArmCmd_temp.head(4);
+  // qArmCmd.segment(arm_l_actor_num + hand_l_actor_num, 4) = qArmCmd_temp.tail(4);
+  // robotdata->q_c.tail(adam_upper_except_waist_actor_num) = qArmCmd + robotdata->arm_style * arm_run;
 
   upper_joints_x_d.row(0) = robotdata->q_c.tail(adam_upper_actor_num).transpose();
   Eigen::VectorXd upperJointsCmd = Eigen::VectorXd::Zero(adam_upper_actor_num);
-  upperJointsCmd << 0., 0., 0., qArmCmd;
+  // upperJointsCmd << 0., 0., 0., qArmCmd;
+  upperJointsCmd << 0., 0., 0.;
 
   static bool hand_hello_running = false;
   static bool hand_gentle_running = false;
@@ -3080,12 +3082,12 @@ void UniGait::run() {
         0.0, M_PI / 20.0, 0.0, 0.0, -M_PI / 3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
         0.0;
   }
-  Eigen::VectorXd qArmCmd_temp = Eigen::VectorXd::Zero(8);
-  armPolyJoint(robotdata->pArm_tgt, qArmCmd_temp);
-  qArmCmd.setZero();
-  qArmCmd.head(4) = qArmCmd_temp.head(4);
-  qArmCmd.segment(arm_l_actor_num + hand_l_actor_num, 4) = qArmCmd_temp.tail(4);
-  robotdata->q_c.tail(adam_upper_except_waist_actor_num) = qArmCmd + robotdata->arm_style * arm_run;
+  // Eigen::VectorXd qArmCmd_temp = Eigen::VectorXd::Zero(8);
+  // armPolyJoint(robotdata->pArm_tgt, qArmCmd_temp);
+  // qArmCmd.setZero();
+  // qArmCmd.head(4) = qArmCmd_temp.head(4);
+  // qArmCmd.segment(arm_l_actor_num + hand_l_actor_num, 4) = qArmCmd_temp.tail(4);
+  // robotdata->q_c.tail(adam_upper_except_waist_actor_num) = qArmCmd + robotdata->arm_style * arm_run;
 
   robotdata->q_c.segment(18, 3).setZero();
   if (robotdata->time < 0.5 * robotdata->T_leg) {
