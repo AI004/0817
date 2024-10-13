@@ -1,0 +1,73 @@
+-- Found RBDL: /usr/local/lib/librbdl.so
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/g/Documents/0817/Control/bug record/rbdl_test/build
+Scanning dependencies of target read_urdf
+[ 25%] Building CXX object CMakeFiles/read_urdf.dir/read_urdf.cpp.o
+[ 75%] Built target example
+[100%] Linking CXX executable read_urdf
+[100%] Built target read_urdf
+model->dof_count: 21
+model->mBodies.size(): 18
+model->gravity:     0     0 -9.81
+Joints:
+  ROOT
+  base_Translate
+  base
+  left_hip_yaw
+  left_hip_roll
+  left_hip_pitch
+  left_knee_pitch
+  left_ankle_pitch
+  left_ankle_roll
+  neck_pitch
+  neck_roll
+  neck_yaw
+  right_hip_yaw
+  right_hip_roll
+  right_hip_pitch
+  right_knee_pitch
+  right_ankle_pitch
+  right_ankle_roll
+Bodies:
+  Body ID: 0, Name: ROOT
+  Body ID: 1, Name: base_Translate
+  Body ID: 2, Name: base
+  Body ID: 3, Name: left_hip_yaw
+  Body ID: 4, Name: left_hip_roll
+  Body ID: 5, Name: left_hip_pitch
+  Body ID: 6, Name: left_knee_pitch
+  Body ID: 7, Name: left_ankle_pitch
+  Body ID: 8, Name: left_ankle_roll
+  Body ID: 9, Name: neck_pitch
+  Body ID: 10, Name: neck_roll
+  Body ID: 11, Name: neck_yaw
+  Body ID: 12, Name: right_hip_yaw
+  Body ID: 13, Name: right_hip_roll
+  Body ID: 14, Name: right_hip_pitch
+  Body ID: 15, Name: right_knee_pitch
+  Body ID: 16, Name: right_ankle_pitch
+  Body ID: 17, Name: right_ankle_roll
+Q: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+QDot: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+Tau: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+QDDot:  2.22045e-16 -1.38778e-17        -9.81 -7.07298e-17  -6.6653e-16 -1.08278e-17  1.99807e-15   9.5483e-17  1.06981e-15 -4.55485e-16 -9.72608e-17 -2.47532e-17 -1.76993e-16 -5.64579e-17  1.03078e-17 -2.01833e-15  1.51671e-16 -1.03713e-15  4.20304e-16  1.29301e-16 -8.09414e-17
+Q: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+QDot: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+Tau:  4.95859e-16 -3.44709e-17  5.25285e-17 -5.29631e-34  4.10464e-33 -5.00742e-33 -1.92593e-33 -2.94908e-34 -1.46175e-33  4.81482e-35  2.25695e-36 -2.18328e-39  7.02964e-33 -7.89932e-35 -6.77085e-36 -4.81482e-34 -7.46298e-34 -1.32144e-33           -0 -5.64237e-36  1.26091e-38
+QDDot:  2.22045e-16 -1.38778e-17        -9.81 -7.07298e-17  -6.6653e-16 -1.08278e-17  1.99807e-15   9.5483e-17  1.06981e-15 -4.55485e-16 -9.72608e-17 -2.47532e-17 -1.76993e-16 -5.64579e-17  1.03078e-17 -2.01833e-15  1.51671e-16 -1.03713e-15  4.20304e-16  1.29301e-16 -8.09414e-17
+Body Transform (Base to Body 11):
+       1        0        0   0.0775
+       0        1        0  -0.0025
+       0        0        1 0.247375
+       0        0        0        1
+Jacobian Matrix (Body 11):
+        1         0         0         0  0.247375    0.0025         0         0         0         0         0         0    0.1385         0         0         0         0         0         0         0         0
+        0         1         0 -0.247375         0    0.0775         0         0         0         0         0         0         0     0.061         0         0         0         0         0         0         0
+        0         0         1   -0.0025   -0.0775         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0
+        0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0
+        0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0
+        0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0         0
+read_urdf: /usr/local/include/eigen3/Eigen/src/Core/SolverBase.h:151: void Eigen::SolverBase<Derived>::_check_solve_assertion(const Rhs&) const [with bool Transpose_ = false; Rhs = Eigen::MatrixBase<Eigen::Matrix<double, 3, 1> >; Derived = Eigen::ColPivHouseholderQR<Eigen::Matrix<double, -1, -1, 1, -1, -1> >]: Assertion `(Transpose_?derived().cols():derived().rows())==b.rows() && "SolverBase::solve(): invalid number of rows of the right hand side matrix b"' failed.
+Aborted (core dumped)
+g@g:~/Documents/0817/Control/bug record/rbdl_test$
