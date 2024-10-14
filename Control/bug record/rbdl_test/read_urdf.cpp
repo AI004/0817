@@ -145,7 +145,7 @@ int main(int argc, char* argv[]) {
     error.head(3) = target_position - current_position;
     error.tail(3) = target_orientation - current_orientation;
 
-    std::cout << "error: " << error.norm()<< "\t" << error.transpose() << std::endl;
+    std::cout << "error: " << error.norm() << "\t" << error.transpose() << std::endl;
 
     if (error.norm() < 1e-6) {
       std::cout << "Inverse Kinematics Converged in " << i << " iterations." << std::endl;
@@ -156,15 +156,15 @@ int main(int argc, char* argv[]) {
     CalcPointJacobian(*model, Q_current, body_id, Vector3d(0., 0., 0.), J);
 
     // 计算关节速度
-    double alpha = 0.3;    // 学习率
-    double lambda = 0.02;  // 阻尼因子
-    VectorNd weights = VectorNd::Zero(6);// 定义权重向量
+    double alpha = 0.3;                    // 学习率
+    double lambda = 0.02;                  // 阻尼因子
+    VectorNd weights = VectorNd::Zero(6);  // 定义权重向量
     weights << 1, 1, 1, 1, 1, 1;
-    Eigen::DiagonalMatrix<double, Eigen::Dynamic> W = weights.asDiagonal();// 构建权重矩阵
-    std::random_device rd;// 随机数生成器
+    Eigen::DiagonalMatrix<double, Eigen::Dynamic> W = weights.asDiagonal();  // 构建权重矩阵
+    std::random_device rd;                                                   // 随机数生成器
     std::mt19937 gen(rd());
-    std::normal_distribution<> d(0, 0.001);  // 均值为0，标准差为0.1的正态分布
-    Eigen::VectorXd noise = Eigen::VectorXd::Zero(6); // 随机扰动
+    std::normal_distribution<> d(0, 0.001);            // 均值为0，标准差为0.1的正态分布
+    Eigen::VectorXd noise = Eigen::VectorXd::Zero(6);  // 随机扰动
     MatrixNd I66 = MatrixNd::Identity(6, 6);
     MatrixNd J_left_foot = MatrixNd::Zero(6, 6);
     J_left_foot = J.block(0, 6, 6, 6);
@@ -187,7 +187,7 @@ int main(int argc, char* argv[]) {
         break;
       case 4:
         for (int i = 0; i < 3; ++i) {
-            noise(i) = d(gen);
+          noise(i) = d(gen);
         }
         error += noise;
         q_dot = (J_left_foot.transpose() * W * J_left_foot + lambda * lambda * I66)
