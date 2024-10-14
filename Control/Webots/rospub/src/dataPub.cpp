@@ -5,17 +5,17 @@ DataPub::DataPub() {
   joint_measured_.name = joint_names_;
   joint_command_.name = joint_names_;
 
-  joint_desired_.position.resize(23);
-  joint_desired_.velocity.resize(23);
-  joint_desired_.effort.resize(23);
+  joint_desired_.position.resize(DuckDuck_joints_num);
+  joint_desired_.velocity.resize(DuckDuck_joints_num);
+  joint_desired_.effort.resize(DuckDuck_joints_num);
 
-  joint_measured_.position.resize(23);
-  joint_measured_.velocity.resize(23);
-  joint_measured_.effort.resize(23);
+  joint_measured_.position.resize(DuckDuck_joints_num);
+  joint_measured_.velocity.resize(DuckDuck_joints_num);
+  joint_measured_.effort.resize(DuckDuck_joints_num);
 
-  joint_command_.position.resize(23);
-  joint_command_.velocity.resize(23);
-  joint_command_.effort.resize(23);
+  joint_command_.position.resize(DuckDuck_joints_num);
+  joint_command_.velocity.resize(DuckDuck_joints_num);
+  joint_command_.effort.resize(DuckDuck_joints_num);
 
   floatingBase_c = Eigen::VectorXd::Zero(7);
   floatingBase_a = Eigen::VectorXd::Zero(7);
@@ -35,25 +35,25 @@ DataPub::DataPub() {
 DataPub::~DataPub() {};
 void DataPub::init(ros::NodeHandle& nh) {
   // 初始化发布者
-  joint_desired_pub_ = nh.advertise<sensor_msgs::JointState>("/Adam/joint_desired", 10);
-  joint_measured_pub_ = nh.advertise<sensor_msgs::JointState>("/Adam/joint_measured", 10);
+  joint_desired_pub_ = nh.advertise<sensor_msgs::JointState>("/DuckDuck/joint_desired", 10);
+  joint_measured_pub_ = nh.advertise<sensor_msgs::JointState>("/DuckDuck/joint_measured", 10);
 
-  floatingBase_desired_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/Adam/floatingBase_desired", 10);
-  floatingBase_measured_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/Adam/floatingBase_measured", 10);
-  floatingBaseDot_measured_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/Adam/floatingBaseDot_measured", 10);
+  floatingBase_desired_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/DuckDuck/floatingBase_desired", 10);
+  floatingBase_measured_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/DuckDuck/floatingBase_measured", 10);
+  floatingBaseDot_measured_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/DuckDuck/floatingBaseDot_measured", 10);
 
-  body_desired_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/Adam/body_desired", 10);
-  body_measured_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/Adam/body_measured", 10);
-  com_measured_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/Adam/com_measured", 10);
-  chest_measured_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/Adam/chest_measured", 10);
-  lfoot_desired_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/Adam/lfoot_desired", 10);
-  lfoot_measured_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/Adam/lfoot_measured", 10);
-  rfoot_desired_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/Adam/rfoot_desired", 10);
-  rfoot_measured_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/Adam/rfoot_measured", 10);
+  body_desired_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/DuckDuck/body_desired", 10);
+  body_measured_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/DuckDuck/body_measured", 10);
+  com_measured_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/DuckDuck/com_measured", 10);
+  chest_measured_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/DuckDuck/chest_measured", 10);
+  lfoot_desired_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/DuckDuck/lfoot_desired", 10);
+  lfoot_measured_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/DuckDuck/lfoot_measured", 10);
+  rfoot_desired_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/DuckDuck/rfoot_desired", 10);
+  rfoot_measured_pub_ = nh.advertise<geometry_msgs::PoseStamped>("/DuckDuck/rfoot_measured", 10);
 
-  imu_pub_ = nh.advertise<sensor_msgs::Imu>("/Adam/imu_data", 10);
+  imu_pub_ = nh.advertise<sensor_msgs::Imu>("/DuckDuck/imu_data", 10);
 
-  observe_data_pub_ = nh.advertise<sensor_msgs::JointState>("/Adam/observeData", 10);
+  observe_data_pub_ = nh.advertise<sensor_msgs::JointState>("/DuckDuck/observeData", 10);
 }
 
 // lhj:msg发布
@@ -69,13 +69,13 @@ int DataPub::update(const double time, const Robot_Data& robot_data) {
 }
 // 对于robot_data_中的q_a、q_d、q_c，只有_a即为measured，_c即为desired
 void DataPub::jointStatesPub() {
-  Eigen::Map<Eigen::VectorXd> jointPosCmd(joint_desired_.position.data(), 23);
-  Eigen::Map<Eigen::VectorXd> jointVelCmd(joint_desired_.velocity.data(), 23);
-  Eigen::Map<Eigen::VectorXd> jointTorCmd(joint_desired_.effort.data(), 23);
+  Eigen::Map<Eigen::VectorXd> jointPosCmd(joint_desired_.position.data(), DuckDuck_joints_num);
+  Eigen::Map<Eigen::VectorXd> jointVelCmd(joint_desired_.velocity.data(), DuckDuck_joints_num);
+  Eigen::Map<Eigen::VectorXd> jointTorCmd(joint_desired_.effort.data(), DuckDuck_joints_num);
 
-  Eigen::Map<Eigen::VectorXd> jointPosMea(joint_measured_.position.data(), 23);
-  Eigen::Map<Eigen::VectorXd> jointVelMea(joint_measured_.velocity.data(), 23);
-  Eigen::Map<Eigen::VectorXd> jointTorMea(joint_measured_.effort.data(), 23);
+  Eigen::Map<Eigen::VectorXd> jointPosMea(joint_measured_.position.data(), DuckDuck_joints_num);
+  Eigen::Map<Eigen::VectorXd> jointVelMea(joint_measured_.velocity.data(), DuckDuck_joints_num);
+  Eigen::Map<Eigen::VectorXd> jointTorMea(joint_measured_.effort.data(), DuckDuck_joints_num);
 
   Eigen::Map<Eigen::Vector3d>(&floatingBase_desired_.pose.position.x) = robot_data_.q_c.head(3);
   Eigen::Map<Eigen::Vector3d>(&floatingBase_measured_.pose.position.x) = robot_data_.q_a.head(3);
@@ -85,13 +85,13 @@ void DataPub::jointStatesPub() {
   Eigen::Map<Eigen::Vector4d>(&floatingBase_measured_.pose.orientation.x) = robot_data_.q_a.segment(3, 4);
   Eigen::Map<Eigen::Vector4d>(&floatingBaseDot_measured_.pose.orientation.x) = robot_data_.q_dot_a.segment(3, 4);
 
-  jointPosMea = robot_data_.q_a.segment(6, 23);
-  jointVelMea = robot_data_.q_dot_a.segment(6, 23);
-  jointTorMea = robot_data_.tau_a.segment(6, 23);
+  jointPosMea = robot_data_.q_a.segment(6, DuckDuck_joints_num);
+  jointVelMea = robot_data_.q_dot_a.segment(6, DuckDuck_joints_num);
+  jointTorMea = robot_data_.tau_a.segment(6, DuckDuck_joints_num);
 
-  jointPosCmd = robot_data_.q_c.segment(6, 23);
-  jointVelCmd = robot_data_.q_dot_c.segment(6, 23);
-  jointTorCmd = robot_data_.tau_c.segment(6, 23);
+  jointPosCmd = robot_data_.q_c.segment(6, DuckDuck_joints_num);
+  jointVelCmd = robot_data_.q_dot_c.segment(6, DuckDuck_joints_num);
+  jointTorCmd = robot_data_.tau_c.segment(6, DuckDuck_joints_num);
 
   floatingBase_a = robot_data_.q_a.head(7);
   floatingBase_c = robot_data_.q_c.head(7);

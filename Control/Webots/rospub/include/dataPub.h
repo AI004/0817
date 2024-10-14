@@ -23,12 +23,19 @@ class DataPub {
   void imuMsgPub();
   void observeDataPub();
 
+  double adam_joints_num = 23;
+  double DuckDuck_joints_num = 15;
   std::vector<std::string> joint_names_{
       "hipPitch_Left",      "hipRoll_Left",      "hipYaw_Left",      "kneePitch_Left", "anklePitch_Left",
       "ankleRoll_Left",     "hipPitch_Right",    "hipRoll_Right",    "hipYaw_Right",   "kneePitch_Right",
       "anklePitch_Right",   "ankleRoll_Right",   "waistRoll",        "waistPitch",     "waistYaw",
       "shoulderPitch_Left", "shoulderRoll_Left", "shoulderYaw_Left", "elbow_Left",     "shouldPitch_Right",
       "shoulderRoll_Right", "shoulderYaw_Right", "elbow_Right"};
+  std::vector<std::string> DuckDuck_joint_names_{
+      "left_hip_yaw_joint",     "left_hip_roll_joint",    "left_hip_pitch_joint",    "left_knee_pitch_joint",
+      "left_ankle_pitch_joint", "left_ankle_roll_joint",  "right_hip_yaw_joint",     "right_hip_roll_joint",
+      "right_hip_pitch_joint",  "right_knee_pitch_joint", "right_ankle_pitch_joint", "right_ankle_roll_joint",
+      "neck_pitch_joint",       "neck_roll_joint",        "neck_yaw_joint"};
   // joint states
   ros::Publisher joint_desired_pub_, joint_measured_pub_, joint_command_pub_;
   sensor_msgs::JointState joint_desired_, joint_measured_, joint_command_;
