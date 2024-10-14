@@ -1,0 +1,84 @@
+ 
+T15_11 =
+ 
+cos(theta5)*(cos(theta2)*sin(theta4) - cos(theta3)*cos(theta4)*sin(theta2)) + sin(theta5)*(cos(theta2)*cos(theta4) + cos(theta3)*sin(theta2)*sin(theta4))
+ 
+ 
+T15_12 =
+ 
+cos(theta5)*(cos(theta2)*cos(theta4) + cos(theta3)*sin(theta2)*sin(theta4)) - sin(theta5)*(cos(theta2)*sin(theta4) - cos(theta3)*cos(theta4)*sin(theta2))
+ 
+ 
+T15_13 =
+ 
+-sin(theta2)*sin(theta3)
+ 
+ 
+T15_14 =
+ 
+cos(theta2)*sin(theta4) - sin(theta2)*sin(theta3) + cos(theta5)*(cos(theta2)*sin(theta4) - cos(theta3)*cos(theta4)*sin(theta2)) + sin(theta5)*(cos(theta2)*cos(theta4) + cos(theta3)*sin(theta2)*sin(theta4)) - cos(theta3)*cos(theta4)*sin(theta2)
+ 
+ 
+T15_21 =
+ 
+cos(theta5)*(sin(theta2)*sin(theta4) + cos(theta2)*cos(theta3)*cos(theta4)) + sin(theta5)*(cos(theta4)*sin(theta2) - cos(theta2)*cos(theta3)*sin(theta4))
+ 
+ 
+T15_22 =
+ 
+cos(theta5)*(cos(theta4)*sin(theta2) - cos(theta2)*cos(theta3)*sin(theta4)) - sin(theta5)*(sin(theta2)*sin(theta4) + cos(theta2)*cos(theta3)*cos(theta4))
+ 
+ 
+T15_23 =
+ 
+cos(theta2)*sin(theta3)
+ 
+ 
+T15_24 =
+ 
+cos(theta2)*sin(theta3) + sin(theta2)*sin(theta4) + cos(theta5)*(sin(theta2)*sin(theta4) + cos(theta2)*cos(theta3)*cos(theta4)) + sin(theta5)*(cos(theta4)*sin(theta2) - cos(theta2)*cos(theta3)*sin(theta4)) + cos(theta2)*cos(theta3)*cos(theta4) + 1
+ 
+ 
+T15_31 =
+ 
+cos(theta4 + theta5)*sin(theta3)
+ 
+ 
+T15_32 =
+ 
+-sin(theta4 + theta5)*sin(theta3)
+ 
+ 
+T15_33 =
+ 
+-cos(theta3)
+ 
+ 
+T15_34 =
+ 
+cos(theta4)*sin(theta3) - cos(theta3) - sin(theta3)*sin(theta4)*sin(theta5) + cos(theta4)*cos(theta5)*sin(theta3)
+ 
+ 
+T15_temp =
+ 
+[    0.25*sin(theta6) + 0.966506*cos(theta6)*cos(theta7) + 0.0580127*cos(theta6)*sin(theta7),     0.966506*cos(theta7)*sin(theta6) - 0.25*cos(theta6) + 0.0580127*sin(theta6)*sin(theta7), 0.0580127*cos(theta7) - 0.966506*sin(theta7), 0.966506*cos(theta7) + 0.0580127*sin(theta7) - 2.82356]
+[0.0580127*cos(theta6)*cos(theta7) - 0.433013*sin(theta6) + 0.899519*cos(theta6)*sin(theta7), 0.433013*cos(theta6) + 0.0580127*cos(theta7)*sin(theta6) + 0.899519*sin(theta6)*sin(theta7), 0.899519*cos(theta7) - 0.0580127*sin(theta7), 0.0580127*cos(theta7) + 0.899519*sin(theta7) + 1.15849]
+[     0.866025*sin(theta6) - 0.25*cos(theta6)*cos(theta7) + 0.433013*cos(theta6)*sin(theta7),      0.433013*sin(theta6)*sin(theta7) - 0.25*cos(theta7)*sin(theta6) - 0.866025*cos(theta6),                     0.5*sin(theta7 + 1.0472),                  - 0.5*cos(theta7 + 1.0472) - 0.683013]
+[                                                                                          0,                                                                                           0,                                            0,                                                    1.0]
+ 
+ 
+T12 =
+ 
+[-sin(theta2), 0, cos(theta2), 0]
+[ cos(theta2), 0, sin(theta2), 1]
+[           0, 1,           0, 0]
+[           0, 0,           0, 1]
+ 
+ 
+T12_temp =
+ 
+[                0.0580127*cos(theta7)*sin(theta3) - 0.966506*sin(theta3)*sin(theta7) + 0.25*cos(theta3)*cos(theta4)*cos(theta5)*sin(theta6) + 0.25*cos(theta3)*cos(theta4)*cos(theta6)*sin(theta5) + 0.25*cos(theta3)*cos(theta5)*cos(theta6)*sin(theta4) - 0.25*cos(theta3)*sin(theta4)*sin(theta5)*sin(theta6) + 0.966506*cos(theta3)*cos(theta4)*cos(theta5)*cos(theta6)*cos(theta7) + 0.0580127*cos(theta3)*cos(theta4)*cos(theta5)*cos(theta6)*sin(theta7) - 0.966506*cos(theta3)*cos(theta4)*cos(theta7)*sin(theta5)*sin(theta6) - 0.966506*cos(theta3)*cos(theta5)*cos(theta7)*sin(theta4)*sin(theta6) - 0.966506*cos(theta3)*cos(theta6)*cos(theta7)*sin(theta4)*sin(theta5) - 0.0580127*cos(theta3)*cos(theta4)*sin(theta5)*sin(theta6)*sin(theta7) - 0.0580127*cos(theta3)*cos(theta5)*sin(theta4)*sin(theta6)*sin(theta7) - 0.0580127*cos(theta3)*cos(theta6)*sin(theta4)*sin(theta5)*sin(theta7),                 0.966506*cos(theta3)*sin(theta7) - 0.0580127*cos(theta3)*cos(theta7) + 0.25*cos(theta4)*cos(theta5)*sin(theta3)*sin(theta6) + 0.25*cos(theta4)*cos(theta6)*sin(theta3)*sin(theta5) + 0.25*cos(theta5)*cos(theta6)*sin(theta3)*sin(theta4) - 0.25*sin(theta3)*sin(theta4)*sin(theta5)*sin(theta6) + 0.966506*cos(theta4)*cos(theta5)*cos(theta6)*cos(theta7)*sin(theta3) + 0.0580127*cos(theta4)*cos(theta5)*cos(theta6)*sin(theta3)*sin(theta7) - 0.966506*cos(theta4)*cos(theta7)*sin(theta3)*sin(theta5)*sin(theta6) - 0.966506*cos(theta5)*cos(theta7)*sin(theta3)*sin(theta4)*sin(theta6) - 0.966506*cos(theta6)*cos(theta7)*sin(theta3)*sin(theta4)*sin(theta5) - 0.0580127*cos(theta4)*sin(theta3)*sin(theta5)*sin(theta6)*sin(theta7) - 0.0580127*cos(theta5)*sin(theta3)*sin(theta4)*sin(theta6)*sin(theta7) - 0.0580127*cos(theta6)*sin(theta3)*sin(theta4)*sin(theta5)*sin(theta7),     0.484123*sin(theta4 + theta5 + theta6 + theta7 - 0.0599512) - 0.25*cos(theta4 + theta5 + theta6) + 0.484123*sin(theta4 + theta5 + theta6 - 1.0*theta7 + 0.0599512),              0.908494*cos(theta7) - 0.25*sin(theta6) + 1.02452*sin(theta7) - 0.966506*cos(theta6)*cos(theta7) - 0.25*cos(theta5)*sin(theta6) - 0.25*cos(theta6)*sin(theta5) - 0.0580127*cos(theta6)*sin(theta7) + 0.966506*cos(theta7)*sin(theta5)*sin(theta6) + 0.0580127*sin(theta5)*sin(theta6)*sin(theta7) - 0.966506*cos(theta5)*cos(theta6)*cos(theta7) - 0.0580127*cos(theta5)*cos(theta6)*sin(theta7) - 2.82356]
+[0.899519*cos(theta7)*sin(theta3) - 0.0580127*sin(theta3)*sin(theta7) - 0.433013*cos(theta3)*cos(theta4)*cos(theta5)*sin(theta6) - 0.433013*cos(theta3)*cos(theta4)*cos(theta6)*sin(theta5) - 0.433013*cos(theta3)*cos(theta5)*cos(theta6)*sin(theta4) + 0.433013*cos(theta3)*sin(theta4)*sin(theta5)*sin(theta6) + 0.0580127*cos(theta3)*cos(theta4)*cos(theta5)*cos(theta6)*cos(theta7) + 0.899519*cos(theta3)*cos(theta4)*cos(theta5)*cos(theta6)*sin(theta7) - 0.0580127*cos(theta3)*cos(theta4)*cos(theta7)*sin(theta5)*sin(theta6) - 0.0580127*cos(theta3)*cos(theta5)*cos(theta7)*sin(theta4)*sin(theta6) - 0.0580127*cos(theta3)*cos(theta6)*cos(theta7)*sin(theta4)*sin(theta5) - 0.899519*cos(theta3)*cos(theta4)*sin(theta5)*sin(theta6)*sin(theta7) - 0.899519*cos(theta3)*cos(theta5)*sin(theta4)*sin(theta6)*sin(theta7) - 0.899519*cos(theta3)*cos(theta6)*sin(theta4)*sin(theta5)*sin(theta7), 0.0580127*cos(theta3)*sin(theta7) - 0.899519*cos(theta3)*cos(theta7) - 0.433013*cos(theta4)*cos(theta5)*sin(theta3)*sin(theta6) - 0.433013*cos(theta4)*cos(theta6)*sin(theta3)*sin(theta5) - 0.433013*cos(theta5)*cos(theta6)*sin(theta3)*sin(theta4) + 0.433013*sin(theta3)*sin(theta4)*sin(theta5)*sin(theta6) + 0.0580127*cos(theta4)*cos(theta5)*cos(theta6)*cos(theta7)*sin(theta3) + 0.899519*cos(theta4)*cos(theta5)*cos(theta6)*sin(theta3)*sin(theta7) - 0.0580127*cos(theta4)*cos(theta7)*sin(theta3)*sin(theta5)*sin(theta6) - 0.0580127*cos(theta5)*cos(theta7)*sin(theta3)*sin(theta4)*sin(theta6) - 0.0580127*cos(theta6)*cos(theta7)*sin(theta3)*sin(theta4)*sin(theta5) - 0.899519*cos(theta4)*sin(theta3)*sin(theta5)*sin(theta6)*sin(theta7) - 0.899519*cos(theta5)*sin(theta3)*sin(theta4)*sin(theta6)*sin(theta7) - 0.899519*cos(theta6)*sin(theta3)*sin(theta4)*sin(theta5)*sin(theta7), 0.433013*cos(theta4 + theta5 + theta6) + 0.450694*cos(theta4 + theta5 + theta6 - 1.0*theta7 - 0.0644038) - 0.450694*cos(theta4 + theta5 + theta6 + theta7 + 0.0644038), 0.433013*sin(theta6) - 0.841506*cos(theta7) + 0.957532*sin(theta7) - 0.0580127*cos(theta6)*cos(theta7) + 0.433013*cos(theta5)*sin(theta6) + 0.433013*cos(theta6)*sin(theta5) - 0.899519*cos(theta6)*sin(theta7) + 0.0580127*cos(theta7)*sin(theta5)*sin(theta6) + 0.899519*sin(theta5)*sin(theta6)*sin(theta7) - 0.0580127*cos(theta5)*cos(theta6)*cos(theta7) - 0.899519*cos(theta5)*cos(theta6)*sin(theta7) + 1.15849]
+[                         0.433013*cos(theta7)*sin(theta3) + 0.25*sin(theta3)*sin(theta7) + 0.866025*cos(theta3)*cos(theta4)*cos(theta5)*sin(theta6) + 0.866025*cos(theta3)*cos(theta4)*cos(theta6)*sin(theta5) + 0.866025*cos(theta3)*cos(theta5)*cos(theta6)*sin(theta4) - 0.866025*cos(theta3)*sin(theta4)*sin(theta5)*sin(theta6) - 0.25*cos(theta3)*cos(theta4)*cos(theta5)*cos(theta6)*cos(theta7) + 0.433013*cos(theta3)*cos(theta4)*cos(theta5)*cos(theta6)*sin(theta7) + 0.25*cos(theta3)*cos(theta4)*cos(theta7)*sin(theta5)*sin(theta6) + 0.25*cos(theta3)*cos(theta5)*cos(theta7)*sin(theta4)*sin(theta6) + 0.25*cos(theta3)*cos(theta6)*cos(theta7)*sin(theta4)*sin(theta5) - 0.433013*cos(theta3)*cos(theta4)*sin(theta5)*sin(theta6)*sin(theta7) - 0.433013*cos(theta3)*cos(theta5)*sin(theta4)*sin(theta6)*sin(theta7) - 0.433013*cos(theta3)*cos(theta6)*sin(theta4)*sin(theta5)*sin(theta7),                          0.866025*cos(theta4)*cos(theta5)*sin(theta3)*sin(theta6) - 0.25*cos(theta3)*sin(theta7) - 0.433013*cos(theta3)*cos(theta7) + 0.866025*cos(theta4)*cos(theta6)*sin(theta3)*sin(theta5) + 0.866025*cos(theta5)*cos(theta6)*sin(theta3)*sin(theta4) - 0.866025*sin(theta3)*sin(theta4)*sin(theta5)*sin(theta6) - 0.25*cos(theta4)*cos(theta5)*cos(theta6)*cos(theta7)*sin(theta3) + 0.433013*cos(theta4)*cos(theta5)*cos(theta6)*sin(theta3)*sin(theta7) + 0.25*cos(theta4)*cos(theta7)*sin(theta3)*sin(theta5)*sin(theta6) + 0.25*cos(theta5)*cos(theta7)*sin(theta3)*sin(theta4)*sin(theta6) + 0.25*cos(theta6)*cos(theta7)*sin(theta3)*sin(theta4)*sin(theta5) - 0.433013*cos(theta4)*sin(theta3)*sin(theta5)*sin(theta6)*sin(theta7) - 0.433013*cos(theta5)*sin(theta3)*sin(theta4)*sin(theta6)*sin(theta7) - 0.433013*cos(theta6)*sin(theta3)*sin(theta4)*sin(theta5)*sin(theta7),             0.25*cos(theta4 + theta5 + theta6 - 1.0*theta7 + 0.523599) - 0.866025*cos(theta4 + theta5 + theta6) - 0.25*sin(theta4 + theta5 + theta6 + theta7 + 1.0472),               0.183013*sin(theta7) - 0.866025*sin(theta6) - 0.683013*cos(theta7) + 0.25*cos(theta6)*cos(theta7) - 0.866025*cos(theta5)*sin(theta6) - 0.866025*cos(theta6)*sin(theta5) - 0.433013*cos(theta6)*sin(theta7) - 0.25*cos(theta7)*sin(theta5)*sin(theta6) + 0.433013*sin(theta5)*sin(theta6)*sin(theta7) + 0.25*cos(theta5)*cos(theta6)*cos(theta7) - 0.433013*cos(theta5)*cos(theta6)*sin(theta7) - 0.683013]
+[                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           0,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            0,                                                                                                                                                                      0,                                                                                                                                                                                                                                                                                                                                                                                                                     1.0]
+ 
