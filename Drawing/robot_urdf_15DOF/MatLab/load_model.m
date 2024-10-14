@@ -1,7 +1,7 @@
 clear;clc;close all;
 %% 导入模型
-robot = importrobot('DuckDuck\urdf\DuckDuck.urdf');
-show(robot);
+robot = importrobot('../DuckDuck/urdf/DuckDuck.urdf');
+% show(robot);
 %% 开启日记功能，将命令行输出保存到文件
 diaryFilename = 'output.txt';
 fileID = fopen(diaryFilename, 'w');
@@ -68,7 +68,7 @@ jacobian_head = geometricJacobian(robot, config, head);                     % �
 % configSoln(1:6).JointPosition
 
 % 测试C++使用RBDL计算 %
-jointAngles = [0.1, 0.1, -0.4, 0.5, 0.1, 0.1];
+jointAngles = [0.15, 0.15, -0.45, 0.5, 0.15, 0.15];
 for i = 1:length(jointAngles)
     config(i).JointPosition = jointAngles(i);   % 更新关节角度
 end
@@ -78,8 +78,7 @@ eulerAngles3 = tform2eul(T_left_foot_relative_base, 'ZYX');
 eulerAngles4 = rotationMatrixToZYXEulerAngles(T_left_foot_relative_base(1:3,1:3))
 
 
-jointAngles = [0.100844 0.0997803 -0.397815  0.486827  0.133358       0.1];% 阻尼最小二乘法 alpha = 1.0
-jointAngles = [0.100835 0.0997811 -0.397815  0.486841   0.13332       0.1];% 伪逆法 alpha = 0.1
+jointAngles = [0.0790421  0.156649  -0.46605  0.564931    0.1664       0.1];
 
 for i = 1:length(jointAngles)
     config(i).JointPosition = jointAngles(i);   % 更新关节角度
@@ -93,6 +92,6 @@ for i = 1:6
     config(i).JointPosition = config(i).JointPosition;
 end
 % 显示更新后的机器人模型
-show(robot, config);
+% show(robot, config);
 %% 关闭日记功能
 diary off;
