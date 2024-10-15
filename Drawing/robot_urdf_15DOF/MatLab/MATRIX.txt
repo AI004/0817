@@ -1,68 +1,68 @@
  
-T15_11 =
+T =
  
-cos(theta5)*(cos(theta2)*sin(theta4) - cos(theta3)*cos(theta4)*sin(theta2)) + sin(theta5)*(cos(theta2)*cos(theta4) + cos(theta3)*sin(theta2)*sin(theta4))
- 
- 
-T15_12 =
- 
-cos(theta5)*(cos(theta2)*cos(theta4) + cos(theta3)*sin(theta2)*sin(theta4)) - sin(theta5)*(cos(theta2)*sin(theta4) - cos(theta3)*cos(theta4)*sin(theta2))
+[-sin(theta4 + theta5 + theta6), cos(theta4 + theta5 + theta6)*sin(theta7), cos(theta4 + theta5 + theta6)*cos(theta7), cos(theta4 + theta5) - cos(theta4 + theta5 + theta6) + cos(theta4)]
+[ cos(theta4 + theta5 + theta6), sin(theta4 + theta5 + theta6)*sin(theta7), sin(theta4 + theta5 + theta6)*cos(theta7), sin(theta4 + theta5) - sin(theta4 + theta5 + theta6) + sin(theta4)]
+[                             0,                               cos(theta7),                              -sin(theta7),                                                                  1]
+[                             0,                                         0,                                         0,                                                                  1]
  
  
-T15_13 =
+T_11 =
  
--sin(theta2)*sin(theta3)
- 
- 
-T15_14 =
- 
-cos(theta2)*sin(theta4) - sin(theta2)*sin(theta3) + cos(theta5)*(cos(theta2)*sin(theta4) - cos(theta3)*cos(theta4)*sin(theta2)) + sin(theta5)*(cos(theta2)*cos(theta4) + cos(theta3)*sin(theta2)*sin(theta4)) - cos(theta3)*cos(theta4)*sin(theta2)
+-sin(theta4 + theta5 + theta6)
  
  
-T15_21 =
+T_12 =
  
-cos(theta5)*(sin(theta2)*sin(theta4) + cos(theta2)*cos(theta3)*cos(theta4)) + sin(theta5)*(cos(theta4)*sin(theta2) - cos(theta2)*cos(theta3)*sin(theta4))
- 
- 
-T15_22 =
- 
-cos(theta5)*(cos(theta4)*sin(theta2) - cos(theta2)*cos(theta3)*sin(theta4)) - sin(theta5)*(sin(theta2)*sin(theta4) + cos(theta2)*cos(theta3)*cos(theta4))
+cos(theta4 + theta5 + theta6)*sin(theta7)
  
  
-T15_23 =
+T_13 =
  
-cos(theta2)*sin(theta3)
- 
- 
-T15_24 =
- 
-cos(theta2)*sin(theta3) + sin(theta2)*sin(theta4) + cos(theta5)*(sin(theta2)*sin(theta4) + cos(theta2)*cos(theta3)*cos(theta4)) + sin(theta5)*(cos(theta4)*sin(theta2) - cos(theta2)*cos(theta3)*sin(theta4)) + cos(theta2)*cos(theta3)*cos(theta4) + 1
+cos(theta4 + theta5 + theta6)*cos(theta7)
  
  
-T15_31 =
+T_14 =
  
-cos(theta4 + theta5)*sin(theta3)
- 
- 
-T15_32 =
- 
--sin(theta4 + theta5)*sin(theta3)
+cos(theta4 + theta5) - cos(theta4 + theta5 + theta6) + cos(theta4)
  
  
-T15_33 =
+T_21 =
  
--cos(theta3)
- 
- 
-T15_34 =
- 
-cos(theta4)*sin(theta3) - cos(theta3) - sin(theta3)*sin(theta4)*sin(theta5) + cos(theta4)*cos(theta5)*sin(theta3)
+cos(theta4 + theta5 + theta6)
  
  
-T15_temp =
+T_22 =
  
-[    0.25*sin(theta6) + 0.966506*cos(theta6)*cos(theta7) + 0.0580127*cos(theta6)*sin(theta7),     0.966506*cos(theta7)*sin(theta6) - 0.25*cos(theta6) + 0.0580127*sin(theta6)*sin(theta7), 0.0580127*cos(theta7) - 0.966506*sin(theta7), 0.966506*cos(theta7) + 0.0580127*sin(theta7) - 2.82356]
-[0.0580127*cos(theta6)*cos(theta7) - 0.433013*sin(theta6) + 0.899519*cos(theta6)*sin(theta7), 0.433013*cos(theta6) + 0.0580127*cos(theta7)*sin(theta6) + 0.899519*sin(theta6)*sin(theta7), 0.899519*cos(theta7) - 0.0580127*sin(theta7), 0.0580127*cos(theta7) + 0.899519*sin(theta7) + 1.15849]
-[     0.866025*sin(theta6) - 0.25*cos(theta6)*cos(theta7) + 0.433013*cos(theta6)*sin(theta7),      0.433013*sin(theta6)*sin(theta7) - 0.25*cos(theta7)*sin(theta6) - 0.866025*cos(theta6),                     0.5*sin(theta7 + 1.0472),                  - 0.5*cos(theta7 + 1.0472) - 0.683013]
-[                                                                                          0,                                                                                           0,                                            0,                                                    1.0]
+sin(theta4 + theta5 + theta6)*sin(theta7)
+ 
+ 
+T_23 =
+ 
+sin(theta4 + theta5 + theta6)*cos(theta7)
+ 
+ 
+T_24 =
+ 
+sin(theta4 + theta5) - sin(theta4 + theta5 + theta6) + sin(theta4)
+ 
+ 
+T_31 =
+ 
+0
+ 
+ 
+T_32 =
+ 
+cos(theta7)
+ 
+ 
+T_33 =
+ 
+-sin(theta7)
+ 
+ 
+T_34 =
+ 
+1
  

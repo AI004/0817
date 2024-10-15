@@ -51,8 +51,7 @@
 
             尝试把`关节123`相对于`base`的变换矩阵整合，观察得到的矩阵，可以看到`T14(3,3)`为`-cos(theta3)`，可以根据单一变量原则计算得到`theta3`，得到theta3后可以根据theta3得到其他，按照矩阵内数据分布可以得到全部的解析解
 
-        方案二：<span style="color: red; font-weight: bold;">not still ok</span>
-            尝试对最后一个变换矩阵求逆
+        方案二：尝试对最后一个变换矩阵求逆<span style="color: red; font-weight: bold;">failed</span>
 
             1. T16 * T7 = T17
             2. T16_temp = T17 * T7_inv
@@ -62,3 +61,9 @@
             6. sin(theta7) = cos(theta3)
             结论：
                 theta3 = theta7 - pi/2
+        方案三：参考链接:<https://blog.csdn.net/fengyu19930920/article/details/81144042> <span style="color: red; font-weight: bold;">failed</span>
+
+            1. DuckDuck的腿部结构符合Pieper准则
+            2. 参考UR机械臂逆解方法，把连续三个平行的关节的旋转矩阵单独拎出来，等号左边利用矩阵求逆，构建矩阵相等，观察数据
+
+        方案四：改为MDH模型测试

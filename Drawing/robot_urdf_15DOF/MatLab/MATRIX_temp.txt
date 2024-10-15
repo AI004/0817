@@ -1,0 +1,68 @@
+ 
+T_temp =
+ 
+[0.433013*cos(theta2)*cos(theta3) - 0.866025*sin(theta3) + 0.25*cos(theta3)*sin(theta2), 0.433013*sin(theta3) + 0.899519*cos(theta2)*cos(theta3) - 0.0580127*cos(theta3)*sin(theta2), 0.0580127*cos(theta2)*cos(theta3) - 0.25*sin(theta3) - 0.966506*cos(theta3)*sin(theta2), 0.158494*cos(theta2)*cos(theta3) - 0.683013*sin(theta3) + 2.82356*cos(theta3)*sin(theta2)]
+[                                                             -0.5*cos(theta2 + 1.0472),                                                0.0580127*cos(theta2) + 0.899519*sin(theta2),                                            0.966506*cos(theta2) + 0.0580127*sin(theta2),                                                0.158494*sin(theta2) - 2.82356*cos(theta2)]
+[0.866025*cos(theta3) + 0.433013*cos(theta2)*sin(theta3) + 0.25*sin(theta2)*sin(theta3), 0.899519*cos(theta2)*sin(theta3) - 0.433013*cos(theta3) - 0.0580127*sin(theta2)*sin(theta3), 0.25*cos(theta3) + 0.0580127*cos(theta2)*sin(theta3) - 0.966506*sin(theta2)*sin(theta3), 0.683013*cos(theta3) + 0.158494*cos(theta2)*sin(theta3) + 2.82356*sin(theta2)*sin(theta3)]
+[                                                                                     0,                                                                                           0,                                                                                       0,                                                                                       1.0]
+ 
+ 
+T_11 =
+ 
+0.433013*cos(theta2)*cos(theta3) - 0.866025*sin(theta3) + 0.25*cos(theta3)*sin(theta2)
+ 
+ 
+T_12 =
+ 
+0.433013*sin(theta3) + 0.899519*cos(theta2)*cos(theta3) - 0.0580127*cos(theta3)*sin(theta2)
+ 
+ 
+T_13 =
+ 
+0.0580127*cos(theta2)*cos(theta3) - 0.25*sin(theta3) - 0.966506*cos(theta3)*sin(theta2)
+ 
+ 
+T_14 =
+ 
+0.158494*cos(theta2)*cos(theta3) - 0.683013*sin(theta3) + 2.82356*cos(theta3)*sin(theta2)
+ 
+ 
+T_21 =
+ 
+-0.5*cos(theta2 + 1.0472)
+ 
+ 
+T_22 =
+ 
+0.0580127*cos(theta2) + 0.899519*sin(theta2)
+ 
+ 
+T_23 =
+ 
+0.966506*cos(theta2) + 0.0580127*sin(theta2)
+ 
+ 
+T_24 =
+ 
+0.158494*sin(theta2) - 2.82356*cos(theta2)
+ 
+ 
+T_31 =
+ 
+0.866025*cos(theta3) + 0.433013*cos(theta2)*sin(theta3) + 0.25*sin(theta2)*sin(theta3)
+ 
+ 
+T_32 =
+ 
+0.899519*cos(theta2)*sin(theta3) - 0.433013*cos(theta3) - 0.0580127*sin(theta2)*sin(theta3)
+ 
+ 
+T_33 =
+ 
+0.25*cos(theta3) + 0.0580127*cos(theta2)*sin(theta3) - 0.966506*sin(theta2)*sin(theta3)
+ 
+ 
+T_34 =
+ 
+0.683013*cos(theta3) + 0.158494*cos(theta2)*sin(theta3) + 2.82356*sin(theta2)*sin(theta3)
+ 

@@ -35,9 +35,9 @@ robot0 = SerialLink(L, 'name', 'Left-Leg');
 theta = [pi/2 0 pi/2 pi 0 pi 0];  % 初始关节角度
 angle = [0 0 pi/6 pi/6 0 0 0];
 theta = theta + angle;
-robot0.teach(theta)
-title('六轴机械臂模型');
-view([-59.08 22.49]);
+% robot0.teach(theta)
+% title('六轴机械臂模型');
+% view([-59.08 22.49]);
 %% 正解计算
 [T, allt] = robot0.fkine(theta);  % 计算末端执行器的位姿
 
@@ -46,12 +46,12 @@ orientation = tr2rpy(T.R);  % 姿态 (roll, pitch, yaw)
 offset_T= eye(4);
 offset_R= rotx(0)*roty(90)*rotz(180);
 offset_T(1:3,1:3) = offset_R;
-disp('末端执行器的位置:');
-disp(position');
-disp('末端执行器的姿态 (RPY):');
-disp(orientation');
-disp('调整方向与base坐标系一致后，末端执行器的姿态 (RPY):');
-disp(tr2rpy(T.R * offset_R)');
+% disp('末端执行器的位置:');
+% disp(position');
+% disp('末端执行器的姿态 (RPY):');
+% disp(orientation');
+% disp('调整方向与base坐标系一致后，末端执行器的姿态 (RPY):');
+% disp(tr2rpy(T.R * offset_R)');
 %% 逆解计算
 % 定义符号变量
 syms theta2 theta3 theta4 theta5 theta6 theta7 real
@@ -77,12 +77,7 @@ for i = 1:length(a)
     eval([varName ' = T_i;']);
 end
 
-% 开启日记功能，将命令行输出保存到文件
-diaryFilename = 'MATRIX.txt';
-fileID = fopen(diaryFilename, 'w');
-fclose(fileID);
-diary(diaryFilename);
-
+% 变换矩阵
 T1;
 T2;
 T3;
@@ -97,56 +92,81 @@ T17 = subs(T17, ...
            {0+pi/6, pi/2+pi/6, pi+pi/6, 0+pi/6, pi+pi/6, 0+pi/6});
 RPY = tr2rpy(T17(1:3,1:3));
 
-% 测试T15和T15_temp
-T15 = simplify(T1*T2*T3*T4*T5);
+% ===========================================================================
+% 开启日记功能，将命令行输出保存到文件
+diaryFilename = 'MATRIX.txt';
+fileID = fopen(diaryFilename, 'w');
+fclose(fileID);
+diary(diaryFilename);
+% ===========================================================================
+
+% T
+T = simplify(T4*T5*T6*T7)
 for i = 1:4
     for j = 1:4
         % 动态生成变量名
-        varName = sprintf('T15_%d%d', i, j);
+        varName = sprintf('T_%d%d', i, j);
         
-        T15_ij = T15(i,j);
+        T_ij = T(i,j);
         
-        eval([varName ' = T15_ij;']);
+        eval([varName ' = T_ij;']);
     end
 end
-T15_11
-T15_12
-T15_13
-T15_14
-T15_21
-T15_22
-T15_23
-T15_24
-T15_31
-T15_32
-T15_33
-T15_34
-T15_temp = vpa(simplify(T17 / (T6*T7)),6)
-% T15_temp = simplify(T17 / (T6*T7))
-% subs(T15 - T15_temp, ...
-%     {theta2, theta3, theta4, theta5, theta6, theta7}, ...
-%     {0+pi/6, pi/2+pi/6, pi+pi/6, 0+pi/6, pi+pi/6, 0+pi/6})
+T_11
+T_12
+T_13
+T_14
+T_21
+T_22
+T_23
+T_24
+T_31
+T_32
+T_33
+T_34
 
+% ===========================================================================
 diary off;% 关闭日记功能
+% ===========================================================================
 
+% ===========================================================================
+% 开启日记功能，将命令行输出保存到文件
+diaryFilename = 'MATRIX_temp.txt';
+fileID = fopen(diaryFilename, 'w');
+fclose(fileID);
+diary(diaryFilename);
+% ===========================================================================
 
+% T36_temp
+T_temp = vpa(simplify((T1*T2*T3) \ T17 / (eye(4))),6)
+for i = 1:4
+    for j = 1:4
+        % 动态生成变量名
+        varName = sprintf('T_%d%d', i, j);
+        
+        T_ij = vpa(T_temp(i,j),6);
+        
+        eval([varName ' = T_ij;']);
+    end
+end
+T_11
+T_12
+T_13
+T_14
+T_21
+T_22
+T_23
+T_24
+T_31
+T_32
+T_33
+T_34
 
+% ===========================================================================
+diary off;% 关闭日记功能
+% ===========================================================================
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+atan(0.899519/0.0580127)/pi*180
 
 
 
