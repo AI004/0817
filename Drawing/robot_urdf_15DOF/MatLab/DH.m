@@ -90,7 +90,14 @@ T4;
 T5;
 T6;
 T7 = T7 * offset_T;
+T17 = simplify(T1*T2*T3*T4*T5*T6*T7);
 
+T17 = subs(T17, ...
+           {theta2, theta3, theta4, theta5, theta6, theta7}, ...
+           {0+pi/6, pi/2+pi/6, pi+pi/6, 0+pi/6, pi+pi/6, 0+pi/6});
+RPY = tr2rpy(T17(1:3,1:3));
+
+% 测试T15和T15_temp
 T15 = simplify(T1*T2*T3*T4*T5);
 for i = 1:4
     for j = 1:4
@@ -114,21 +121,12 @@ T15_31
 T15_32
 T15_33
 T15_34
-
-T17 = T1*T2*T3*T4*T5*T6*T7;
-T17 = subs(T17, ...
-           {theta2, theta3, theta4, theta5, theta6, theta7}, ...
-           {0+pi/6, pi/2+pi/6, pi+pi/6, 0+pi/6, pi+pi/6, 0+pi/6});
-RPY = tr2rpy(T17(1:3,1:3));
-
-
-
 T15_temp = vpa(simplify(T17 / (T6*T7)),6)
-
 % T15_temp = simplify(T17 / (T6*T7))
 % subs(T15 - T15_temp, ...
 %     {theta2, theta3, theta4, theta5, theta6, theta7}, ...
 %     {0+pi/6, pi/2+pi/6, pi+pi/6, 0+pi/6, pi+pi/6, 0+pi/6})
+
 diary off;% 关闭日记功能
 
 

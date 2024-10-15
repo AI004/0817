@@ -38,23 +38,22 @@
 
 2. `DuckDuck`腿部`DH`建模参考链接`https://blog.csdn.net/qq_60580136/article/details/136062448`
 
-
 ## MatLab
 
-1. 在MatLab计算过程中，计算的结果有 `6.1232e-17` 怎么处理，参考连接：https://blog.csdn.net/jh1513/article/details/131243390
+1. 在MatLab计算过程中，计算的结果有 `6.1232e-17` 怎么处理，参考连接：<https://blog.csdn.net/jh1513/article/details/131243390>
 
 2. MatLab计算左腿解析解分下
-        
+
     1. 把所有变换矩阵都打印出来，参考MATRIX.txt文件
     2. 根据机器人的腿部结构，`关节123`可以抽象为一个`球关节`
 
         方案一：<span style="color: red; font-weight: bold;">failed</span>
 
             尝试把`关节123`相对于`base`的变换矩阵整合，观察得到的矩阵，可以看到`T14(3,3)`为`-cos(theta3)`，可以根据单一变量原则计算得到`theta3`，得到theta3后可以根据theta3得到其他，按照矩阵内数据分布可以得到全部的解析解
-    
+
         方案二：<span style="color: red; font-weight: bold;">not still ok</span>
             尝试对最后一个变换矩阵求逆
-            
+
             1. T16 * T7 = T17
             2. T16_temp = T17 * T7_inv
             3. T16 = T16_temp
