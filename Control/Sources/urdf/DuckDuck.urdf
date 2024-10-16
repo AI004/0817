@@ -237,7 +237,7 @@
     <origin xyz="0 -0.04 0" rpy="0 0 0" />
     <parent link="base" />
     <child link="right_hip_yaw" />
-    <axis xyz="0 0 1" />
+    <axis xyz="0 0 -1" />
     <limit lower="0" upper="0" effort="0" velocity="0" />
   </joint>
   <link name="right_hip_roll">
@@ -266,7 +266,7 @@
     <origin xyz="0 0 0" rpy="0 0 0" />
     <parent link="right_hip_yaw" />
     <child link="right_hip_roll" />
-    <axis xyz="1 0 0" />
+    <axis xyz="-1 0 0" />
     <limit lower="0" upper="0" effort="0" velocity="0" />
   </joint>
   <link name="right_hip_pitch">
@@ -295,7 +295,7 @@
     <origin xyz="0 0 0" rpy="0 0 0" />
     <parent link="right_hip_roll" />
     <child link="right_hip_pitch" />
-    <axis xyz="0 -1 0" />
+    <axis xyz="0 1 0" />
     <limit lower="0" upper="0" effort="0" velocity="0" />
   </joint>
   <link name="right_knee_pitch">
@@ -324,7 +324,7 @@
     <origin xyz="0 -0.0936181760425084 -0.14" rpy="0 0 0" />
     <parent link="right_hip_pitch" />
     <child link="right_knee_pitch" />
-    <axis xyz="0 -1 0" />
+    <axis xyz="0 1 0" />
     <limit lower="0" upper="0" effort="0" velocity="0" />
   </joint>
   <link name="right_ankle_pitch">
@@ -353,7 +353,7 @@
     <origin xyz="0 0 -0.14" rpy="0 0 0" />
     <parent link="right_knee_pitch" />
     <child link="right_ankle_pitch" />
-    <axis xyz="0 -1 0" />
+    <axis xyz="0 1 0" />
     <limit lower="0" upper="0" effort="0" velocity="0" />
   </joint>
   <link name="right_ankle_roll">
@@ -382,7 +382,7 @@
     <origin xyz="0 0 -0.0523924267994828" rpy="0 0 0" />
     <parent link="right_ankle_pitch" />
     <child link="right_ankle_roll" />
-    <axis xyz="1 0 0" />
+    <axis xyz="-1 0 0" />
     <limit lower="0" upper="0" effort="0" velocity="0" />
   </joint>
   <link name="neck_pitch">

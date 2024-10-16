@@ -8,8 +8,8 @@ WorldInfo {
   basicTimeStep 1.25
 }
 Viewpoint {
-  orientation -0.14443442634587353 0.07898112093599616 0.9863572775733102 2.152321421144641
-  position 0.6243392665489598 -0.8297755246825845 0.6964802875973289
+  orientation -0.1453580887070405 0.34343019883502474 0.9278613714211686 0.8559497190239019
+  position -0.636124402211119 -0.7786001771738043 0.6948095343933104
 }
 TexturedBackground {
 }
@@ -306,7 +306,7 @@ DEF DuckDuck Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        axis 0 0 1
+        axis 0 0 -1
         anchor 0 -0.04 0
       }
       device [
@@ -320,6 +320,7 @@ DEF DuckDuck Robot {
       ]
       endPoint Solid {
         translation 0 -0.04 0
+        rotation 0 0 -1 0
         children [
           Shape {
             appearance DEF right_hip_yaw_material PBRAppearance {
@@ -334,6 +335,7 @@ DEF DuckDuck Robot {
           }
           HingeJoint {
             jointParameters HingeJointParameters {
+              axis -1 0 0
             }
             device [
               RotationalMotor {
@@ -345,7 +347,7 @@ DEF DuckDuck Robot {
               }
             ]
             endPoint Solid {
-              rotation 1 0 0 0
+              rotation -1 0 0 0
               children [
                 Shape {
                   appearance DEF right_hip_roll_material PBRAppearance {
@@ -360,7 +362,7 @@ DEF DuckDuck Robot {
                 }
                 HingeJoint {
                   jointParameters HingeJointParameters {
-                    axis 0 -1 0
+                    axis 0 1 0
                   }
                   device [
                     RotationalMotor {
@@ -372,7 +374,7 @@ DEF DuckDuck Robot {
                     }
                   ]
                   endPoint Solid {
-                    rotation 0 -1 0 0
+                    rotation 0 1 0 0
                     children [
                       Shape {
                         appearance DEF right_hip_pitch_material PBRAppearance {
@@ -387,7 +389,7 @@ DEF DuckDuck Robot {
                       }
                       HingeJoint {
                         jointParameters HingeJointParameters {
-                          axis 0 -1 0
+                          axis 0 1 0
                           anchor 0 -0.093618 -0.14
                         }
                         device [
@@ -401,7 +403,7 @@ DEF DuckDuck Robot {
                         ]
                         endPoint Solid {
                           translation 0 -0.093618 -0.14
-                          rotation 0 -1 0 0
+                          rotation 0 1 0 0
                           children [
                             Shape {
                               appearance DEF right_knee_pitch_material PBRAppearance {
@@ -416,7 +418,7 @@ DEF DuckDuck Robot {
                             }
                             HingeJoint {
                               jointParameters HingeJointParameters {
-                                axis 0 -1 0
+                                axis 0 1 0
                                 anchor 0 0 -0.14
                               }
                               device [
@@ -430,7 +432,7 @@ DEF DuckDuck Robot {
                               ]
                               endPoint Solid {
                                 translation 0 0 -0.14
-                                rotation 0 -1 0 0
+                                rotation 0 1 0 0
                                 children [
                                   Shape {
                                     appearance DEF right_ankle_pitch_material PBRAppearance {
@@ -445,6 +447,7 @@ DEF DuckDuck Robot {
                                   }
                                   HingeJoint {
                                     jointParameters HingeJointParameters {
+                                      axis -1 0 0
                                       anchor 0 0 -0.052392
                                     }
                                     device [
@@ -458,7 +461,7 @@ DEF DuckDuck Robot {
                                     ]
                                     endPoint Solid {
                                       translation 0 0 -0.052392
-                                      rotation 1 0 0 0
+                                      rotation -1 0 0 0
                                       children [
                                         Shape {
                                           appearance DEF right_ankle_roll_material PBRAppearance {

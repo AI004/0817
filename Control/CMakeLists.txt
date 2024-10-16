@@ -18,7 +18,7 @@ SET(PROJECT_WEBOTS "mpc_controller")
 # option(webots_sim_def "compile webots sim" off)
 set(webots_sim_def FALSE CACHE BOOL "compile webots sim")
 set(realrobot TRUE CACHE BOOL "compile real robot control")
-set(rosopen FALSE CACHE BOOL "compile with ros")
+set(rosopen TRUE CACHE BOOL "compile with ros")
 
 if (realrobot)
 	# for nokov get information

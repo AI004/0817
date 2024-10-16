@@ -162,8 +162,12 @@ void Zero::onEnter() {
   // xStand(5) = -0.83;
   // footflag = true;
   // wkSpace2Joint(xStand, qCmd, qDotCmd, footflag);
+  double deg2rad = 3.1415926 / 180;
+  qCmd << 0, -7, 45, -90, 45, 7, 0, -7, 45, -90, 45, 7;
+  qCmd = qCmd * deg2rad;
   qd.setZero();
   qd.block(6, 0, 12, 1) = qCmd;
+  qd.block(18, 0, 3, 1) << -20 * deg2rad, 0, 0;
 
   // sit position
   // xStand(0) = 0.3;
@@ -236,14 +240,14 @@ void Zero::run() {
   double n = 30;
   Eigen::VectorXd FR = Eigen::VectorXd::Zero(6);
   Eigen::VectorXd FL = Eigen::VectorXd::Zero(6);
-  // totaltime=100;
+  totaltime = 1;
   if (timer < totaltime) {
     gait->FifthPoly(qa, qa_dot, O, qd, qd_dot, O, totaltime, timer, robotdata->q_c, robotdata->q_dot_c,
                     robotdata->q_ddot_c);
     robotdata->tau_c.setZero();
-    robotdata->q_c(6 + 6 - 1) = 3.1415926 / 10 * cos(2 * 3.1415926 * timer);  // left ankle roll
+    // robotdata->q_c(6 + 6 - 1) = 3.1415926 / 10 * cos(2 * 3.1415926 * timer);  // left ankle roll
     // robotdata->q_c(6 + 6 - 2) = 3.1415926 / 10 * sin(2 * 3.1415926 * timer);  // left ankle pitch
-    robotdata->q_c(6 + 12 - 1) = 3.1415926 / 10 * cos(2 * 3.1415926 * timer);  // right ankle roll
+    // robotdata->q_c(6 + 12 - 1) = 3.1415926 / 10 * cos(2 * 3.1415926 * timer);  // right ankle roll
     // robotdata->q_c(6 + 12 - 2) = 3.1415926 / 10 * sin(2 * 3.1415926 * timer);  // right ankle pitch
   } else {
     // when zero complete tell gui zero
