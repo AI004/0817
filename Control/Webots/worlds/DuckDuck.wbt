@@ -49,7 +49,10 @@ DEF DuckDuck Robot {
       device [
         RotationalMotor {
           name "left_hip_yaw_joint"
-          maxTorque 10000
+          maxVelocity 15
+          minPosition -2
+          maxPosition 2
+          maxTorque 20
         }
         PositionSensor {
           name "left_hip_yaw_joint_sensor"
@@ -75,7 +78,10 @@ DEF DuckDuck Robot {
             device [
               RotationalMotor {
                 name "left_hip_roll_joint"
-                maxTorque 10000
+                maxVelocity 15
+                minPosition -2
+                maxPosition 2
+                maxTorque 20
               }
               PositionSensor {
                 name "left_hip_roll_joint_sensor"
@@ -102,7 +108,10 @@ DEF DuckDuck Robot {
                   device [
                     RotationalMotor {
                       name "left_hip_pitch_joint"
-                      maxTorque 10000
+                      maxVelocity 15
+                      minPosition -2
+                      maxPosition 2
+                      maxTorque 20
                     }
                     PositionSensor {
                       name "left_hip_pitch_joint_sensor"
@@ -130,7 +139,10 @@ DEF DuckDuck Robot {
                         device [
                           RotationalMotor {
                             name "left_knee_pitch_joint"
-                            maxTorque 10000
+                            maxVelocity 15
+                            minPosition -2
+                            maxPosition 2
+                            maxTorque 20
                           }
                           PositionSensor {
                             name "left_knee_pitch_joint_sensor"
@@ -159,7 +171,10 @@ DEF DuckDuck Robot {
                               device [
                                 RotationalMotor {
                                   name "left_ankle_pitch_joint"
-                                  maxTorque 10000
+                                  maxVelocity 15
+                                  minPosition -2
+                                  maxPosition 2
+                                  maxTorque 20
                                 }
                                 PositionSensor {
                                   name "left_ankle_pitch_joint_sensor"
@@ -187,7 +202,10 @@ DEF DuckDuck Robot {
                                     device [
                                       RotationalMotor {
                                         name "left_ankle_roll_joint"
-                                        maxTorque 10000
+                                        maxVelocity 15
+                                        minPosition -2
+                                        maxPosition 2
+                                        maxTorque 20
                                       }
                                       PositionSensor {
                                         name "left_ankle_roll_joint_sensor"
@@ -226,7 +244,6 @@ DEF DuckDuck Robot {
                                   }
                                 ]
                                 name "left_ankle_pitch"
-                                boundingObject USE left_ankle_pitch
                                 physics Physics {
                                   density -1
                                   mass 0.065149
@@ -242,7 +259,6 @@ DEF DuckDuck Robot {
                             }
                           ]
                           name "left_knee_pitch"
-                          boundingObject USE left_knee_pitch
                           physics Physics {
                             density -1
                             mass 0.232718
@@ -258,7 +274,6 @@ DEF DuckDuck Robot {
                       }
                     ]
                     name "left_hip_pitch"
-                    boundingObject USE left_hip_pitch
                     physics Physics {
                       density -1
                       mass 0.240239
@@ -274,7 +289,6 @@ DEF DuckDuck Robot {
                 }
               ]
               name "left_hip_roll"
-              boundingObject USE left_hip_roll
               physics Physics {
                 density -1
                 mass 0.227465
@@ -290,7 +304,6 @@ DEF DuckDuck Robot {
           }
         ]
         name "left_hip_yaw"
-        boundingObject USE left_hip_yaw
         physics Physics {
           density -1
           mass 0.227707
@@ -312,7 +325,10 @@ DEF DuckDuck Robot {
       device [
         RotationalMotor {
           name "right_hip_yaw_joint"
-          maxTorque 10000
+          maxVelocity 15
+          minPosition -2
+          maxPosition 2
+          maxTorque 20
         }
         PositionSensor {
           name "right_hip_yaw_joint_sensor"
@@ -340,7 +356,10 @@ DEF DuckDuck Robot {
             device [
               RotationalMotor {
                 name "right_hip_roll_joint"
-                maxTorque 10000
+                maxVelocity 15
+                minPosition -2
+                maxPosition 2
+                maxTorque 20
               }
               PositionSensor {
                 name "right_hip_roll_joint_sensor"
@@ -367,7 +386,10 @@ DEF DuckDuck Robot {
                   device [
                     RotationalMotor {
                       name "right_hip_pitch_joint"
-                      maxTorque 10000
+                      maxVelocity 15
+                      minPosition -2
+                      maxPosition 2
+                      maxTorque 20
                     }
                     PositionSensor {
                       name "right_hip_pitch_joint_sensor"
@@ -395,7 +417,10 @@ DEF DuckDuck Robot {
                         device [
                           RotationalMotor {
                             name "right_knee_pitch_joint"
-                            maxTorque 10000
+                            maxVelocity 15
+                            minPosition -2
+                            maxPosition 2
+                            maxTorque 20
                           }
                           PositionSensor {
                             name "right_knee_pitch_joint_sensor"
@@ -424,7 +449,10 @@ DEF DuckDuck Robot {
                               device [
                                 RotationalMotor {
                                   name "right_ankle_pitch_joint"
-                                  maxTorque 10000
+                                  maxVelocity 15
+                                  minPosition -2
+                                  maxPosition 2
+                                  maxTorque 20
                                 }
                                 PositionSensor {
                                   name "right_ankle_pitch_joint_sensor"
@@ -453,7 +481,10 @@ DEF DuckDuck Robot {
                                     device [
                                       RotationalMotor {
                                         name "right_ankle_roll_joint"
-                                        maxTorque 10000
+                                        maxVelocity 15
+                                        minPosition -2
+                                        maxPosition 2
+                                        maxTorque 20
                                       }
                                       PositionSensor {
                                         name "right_ankle_roll_joint_sensor"
@@ -492,7 +523,6 @@ DEF DuckDuck Robot {
                                   }
                                 ]
                                 name "right_ankle_pitch"
-                                boundingObject USE right_ankle_pitch
                                 physics Physics {
                                   density -1
                                   mass 0.065149
@@ -508,7 +538,6 @@ DEF DuckDuck Robot {
                             }
                           ]
                           name "right_knee_pitch"
-                          boundingObject USE right_knee_pitch
                           physics Physics {
                             density -1
                             mass 0.232718
@@ -524,7 +553,6 @@ DEF DuckDuck Robot {
                       }
                     ]
                     name "right_hip_pitch"
-                    boundingObject USE right_hip_pitch
                     physics Physics {
                       density -1
                       mass 0.240239
@@ -540,7 +568,6 @@ DEF DuckDuck Robot {
                 }
               ]
               name "right_hip_roll"
-              boundingObject USE right_hip_roll
               physics Physics {
                 density -1
                 mass 0.227465
@@ -556,7 +583,6 @@ DEF DuckDuck Robot {
           }
         ]
         name "right_hip_yaw"
-        boundingObject USE right_hip_yaw
         physics Physics {
           density -1
           mass 0.227707
@@ -578,7 +604,10 @@ DEF DuckDuck Robot {
       device [
         RotationalMotor {
           name "neck_pitch_joint"
-          maxTorque 10000
+          maxVelocity 15
+          minPosition -2
+          maxPosition 2
+          maxTorque 20
         }
         PositionSensor {
           name "neck_pitch_joint_sensor"
@@ -607,7 +636,10 @@ DEF DuckDuck Robot {
             device [
               RotationalMotor {
                 name "neck_roll_joint"
-                maxTorque 10000
+                maxVelocity 15
+                minPosition -2
+                maxPosition 2
+                maxTorque 20
               }
               PositionSensor {
                 name "neck_roll_joint_sensor"
@@ -636,7 +668,10 @@ DEF DuckDuck Robot {
                   device [
                     RotationalMotor {
                       name "neck_yaw_joint"
-                      maxTorque 10000
+                      maxVelocity 15
+                      minPosition -2
+                      maxPosition 2
+                      maxTorque 20
                     }
                     PositionSensor {
                       name "neck_yaw_joint_sensor"
@@ -658,7 +693,6 @@ DEF DuckDuck Robot {
                       }
                     ]
                     name "neck_yaw"
-                    boundingObject USE neck_yaw
                     physics Physics {
                       density -1
                       mass 1.364893
@@ -674,7 +708,6 @@ DEF DuckDuck Robot {
                 }
               ]
               name "neck_roll"
-              boundingObject USE neck_roll
               physics Physics {
                 density -1
                 mass 0.05549
@@ -690,7 +723,6 @@ DEF DuckDuck Robot {
           }
         ]
         name "neck_pitch"
-        boundingObject USE neck_pitch
         physics Physics {
           density -1
           mass 0.094414
@@ -706,7 +738,6 @@ DEF DuckDuck Robot {
     }
   ]
   name "DuckDuck"
-  boundingObject USE base
   physics Physics {
     density -1
     mass 1.700374

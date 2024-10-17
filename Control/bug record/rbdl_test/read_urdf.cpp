@@ -100,18 +100,21 @@ int main(int argc, char* argv[]) {
   T.block(0, 3, 3, 1) = body_transform.r;
   std::cout << T << std::endl;
 
+  Q << 0, 0, 0, 0, 0, 0, 0, -7, 45, -90, 45, 7, 0, 0, 0, 0, -7, 45, -90, 45,
+      7;  // DuckDuck zero state only leg position
+  Q = Q / 180 * 3.1415926;
   // 计算雅可比矩阵
   MatrixNd J_left_foot = MatrixNd::Zero(6, model->qdot_size);
   body_id = 8;
   CalcPointJacobian6D(*model, Q, body_id, Vector3d(0., 0., 0.), J_left_foot, false);
   std::cout << "Jacobian Matrix (Body " << body_id << "):" << std::endl;
-  std::cout << J_left_foot << std::endl;
+  std::cout << J_left_foot.block(0, 6, 6, 6) << std::endl;
 
   MatrixNd J_right_foot = MatrixNd::Zero(6, model->qdot_size);
   body_id = 17;
   CalcPointJacobian6D(*model, Q, body_id, Vector3d(0., 0., 0.), J_right_foot, false);
   std::cout << "Jacobian Matrix (Body " << body_id << "):" << std::endl;
-  std::cout << J_right_foot << std::endl;
+  std::cout << J_right_foot.block(0, 15, 6, 6) << std::endl;
 
   MatrixNd J_head = MatrixNd::Zero(3, model->qdot_size);
   body_id = 11;

@@ -770,6 +770,7 @@ void Estimation_Operator::task_state_update_x_a(Robot_Data* robotdata) {
         for (uint i = 0; i < (*iter)->task_selection_matrix.size(); i++) {
           (*iter)->jacobi.row(i) = J_6D.row((*iter)->task_selection_matrix[i]);
         }
+        std::cout << (*iter)->jacobi << std::endl;
         // update jacobi_dotq_dot
         RigidBodyDynamics::Math::VectorNd Jdotqdot_6D =
             RigidBodyDynamics::CalcPointAcceleration6D(*(robotdata->robot_model), robotdata->q_a, robotdata->q_dot_a,

@@ -416,7 +416,7 @@
                                     <type>sensor_msgs/JointState</type>
                                 </x_axis>
                                 <y_axis>
-                                    <field>velocity/4</field>
+                                    <field>velocity/3</field>
                                     <field_type>0</field_type>
                                     <scale>
                                         <absolute_maximum>1000</absolute_maximum>

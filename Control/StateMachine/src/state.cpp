@@ -163,16 +163,20 @@ void Zero::onEnter() {
   // xStand(5) = -0.83;
   // footflag = true;
   // wkSpace2Joint(xStand, qCmd, qDotCmd, footflag);
+
+  // 手动指定关节位置
   double deg2rad = 3.1415926 / 180;
   qCmd << 0, -7, 45, -90, 45, 7, 0, -7, 45, -90, 45, 7;
   qCmd = qCmd * deg2rad;
-  // xStand(0) = 0.0;
-  // xStand(1) = 0.1;
-  // xStand(2) = 0.3 * -1;
-  // xStand(3) = 0.0;
-  // xStand(4) = 0.1 * -1;
-  // xStand(5) = 0.3 * -1;
+  // 对应足端位置
+  xStand(0) = 0.0;
+  xStand(1) = 0.102406431;
+  xStand(2) = 0.269925199 * -1;
+  xStand(3) = 0.0;
+  xStand(4) = 0.102406431 * -1;
+  xStand(5) = 0.269925199 * -1;
   // wkSpace2Joint(xStand, qCmd, qDotCmd);
+
   int left_foot_id = gait->robot_controller_._robot_data->left_foot_id;
   int right_foot_id = gait->robot_controller_._robot_data->right_foot_id;
   int upper_joints_id = gait->robot_controller_._robot_data->upper_joints_id;
@@ -603,7 +607,7 @@ void Z2S::init() {
   qDotCmd = Eigen::VectorXd::Zero(12);
   xStand = Eigen::VectorXd::Zero(6);
   xStand_tgt = Eigen::VectorXd::Zero(6);
-  qArmCmd = Eigen::VectorXd::Zero(adam_upper_except_waist_actor_num);
+  // qArmCmd = Eigen::VectorXd::Zero(adam_upper_except_waist_actor_num);
 
   return;
 }
@@ -658,6 +662,14 @@ void Z2S::onEnter() {
   left_foot_x_c = left_foot_x_a;
   right_foot_x_c = right_foot_x_a;
   upper_joints_x_c = upper_joints_x_a;
+  std::cout << "body_x_c" << std::endl;
+  std::cout << body_x_c << std::endl;
+  std::cout << "left_foot_x_c" << std::endl;
+  std::cout << left_foot_x_c << std::endl;
+  std::cout << "right_foot_x_c" << std::endl;
+  std::cout << right_foot_x_c << std::endl;
+  std::cout << "upper_joints_x_c" << std::endl;
+  std::cout << upper_joints_x_c << std::endl;
 
   // kinematics
   first_flag = true;
@@ -673,7 +685,11 @@ void Z2S::onEnter() {
   // xStand(4) = -0.12;
   // xStand(5) = -0.50;
   xStand = robotdata->xStand_init;
-  wkSpace2Joint(xStand, qCmd, qDotCmd, first_flag);
+  // wkSpace2Joint(xStand, qCmd, qDotCmd, first_flag);
+  // 手动指定关节位置
+  double deg2rad = 3.1415926 / 180;
+  qCmd << 0, -7, 45, -90, 45, 7, 0, -7, 45, -90, 45, 7;
+  qCmd = qCmd * deg2rad;
   xStand_tgt = xStand;
   double delth = -0.0;
   xStand_tgt(2) += delth;
@@ -688,7 +704,7 @@ void Z2S::onEnter() {
 }
 
 void Z2S::run() {
-  // std::cout << "Z2S::run()" << std::endl;
+  std::cout << "Z2S::run()" << std::endl;
   GaitGenerator* gait = static_cast<GaitGenerator*>(app);
   auto robotdata = gait->robot_controller_._robot_data;
   // auto plandata = gait->plandata_;
@@ -704,10 +720,15 @@ void Z2S::run() {
   double omega = M_PI / totaltime;
   if (timer < totaltime) {
     Eigen::VectorXd xStand_cmd = xStand;
-    xStand_cmd(2) = xStand(2) + delth * (1 - cos(omega * timer)) / 2.0;
-    xStand_cmd(5) = xStand(5) + delth * (1 - cos(omega * timer)) / 2.0;
-    wkSpace2Joint(xStand_cmd, qCmd, qDotCmd, first_flag);
+    xStand_cmd(2) = xStand(2);  // + delth * (1 - cos(omega * timer)) / 2.0;
+    xStand_cmd(5) = xStand(5);  // + delth * (1 - cos(omega * timer)) / 2.0;
+    // wkSpace2Joint(xStand_cmd, qCmd, qDotCmd, first_flag);
+    // 手动指定关节位置
+    double deg2rad = 3.1415926 / 180;
+    qCmd << 0, -7, 45, -90, 45, 7, 0, -7, 45, -90, 45, 7;
+    qCmd = qCmd * deg2rad;
     robotdata->q_c.block(6, 0, 12, 1) = qCmd;
+    robotdata->q_c.block(18, 0, 3, 1) << -20 * deg2rad, 0, 0;
     // robotdata->q_dot_c.block(6, 0, 12, 1) = qDotCmd;
     // body_x_d = robotdata->task_card_set[robotdata->body_task_id]->X_a;
     body_x_d.setZero();
@@ -739,7 +760,7 @@ void Z2S::run() {
   // set waist and arm qc
   robotdata->q_c.segment(18, 3).setZero();
   // std::cout << "qArmCmd.size(): " << qArmCmd.size() << std::endl;
-  robotdata->q_c.tail(adam_upper_except_waist_actor_num) = qArmCmd;
+  // robotdata->q_c.tail(adam_upper_except_waist_actor_num) = qArmCmd;
   robotdata->q_dot_c.tail(adam_upper_actor_num).setZero();
   upper_joints_x_d.row(0) = robotdata->q_c.tail(adam_upper_actor_num);
   // std::cout << "upper_joints_x_d.row(0): \t" << upper_joints_x_d.row(0).tail(8) << std::endl;
@@ -794,9 +815,13 @@ void Z2S::run() {
     tau_ub << 200.0, 130.0, 100.0, 200.0, 60.0, 20.0, 200.0, 130.0, 100.0, 200.0, 60.0, 20.0, 82.5, 82.5, 82.5, 18.0,
         18.0, 18.0, 18.0, 2.0, 2.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 18.0, 18.0, 18.0,
         18.0, 2.0, 2.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
+  } else if (adam_type == ADAM_TYPE::DuckDuck) {
+    tau_ub << 200.0, 130.0, 100.0, 200.0, 60.0, 60.0, 200.0, 130.0, 100.0, 200.0, 60.0, 60.0, 82.5, 82.5, 82.5;
+    tau_ub = tau_ub * 0.1;
   }
   tau_lb = -tau_ub;
   GRF_ub << 16.6, 32.0, 10.0, 200.0, 200.0, 700.0, 16.6, 32.0, 10.0, 200.0, 200.0, 700.0;
+  GRF_ub = GRF_ub * 0.1;
   GRF_lb = -GRF_ub;
   GRF_lb(5) = 0.0;
   GRF_lb(11) = 0.0;
@@ -926,7 +951,7 @@ void Stand::init() {
 
   avr_v = 0.1;
   totaltime = 0;
-  qCmd = Eigen::VectorXd::Ones(12) * 0.05;
+  qCmd = Eigen::VectorXd::Zero(12);
   qDotCmd = Eigen::VectorXd::Zero(12);
   com_tgt = Eigen::VectorXd::Zero(6);
   xStand = Eigen::VectorXd::Zero(6);
@@ -1020,7 +1045,7 @@ void Stand::onEnter() {
   xStand = robotdata->xStand_init;
   torso_d = 0.5 * (left_foot_x_a.row(0).tail(3).transpose() + right_foot_x_a.row(0).tail(3).transpose());
   torso_d(0) += 0.01;
-  torso_d(2) = 0.83;
+  torso_d(2) = 0.269925199;
   xStand_tgt.head(3) = left_foot_x_a.row(0).tail(3).transpose() - torso_d;
   xStand_tgt.tail(3) = right_foot_x_a.row(0).tail(3).transpose() - torso_d;
   xStand_Zero = xStand_tgt;
@@ -1102,8 +1127,12 @@ void Stand::run() {
 
     // wkSpace2Joint(xStand_cmd, qCmd, qDotCmd, first_flag);
     // wkSpace2Joint(xStand_cmd, rTorsoCmd, rFootCmd, qCmd, qDotCmd, first_flag);
+    double deg2rad = 3.1415926 / 180;
+    qCmd << 0, -7, 45, -90, 45, 7, 0, -7, 45, -90, 45, 7;
+    qCmd = qCmd * deg2rad;
     robotdata->q_c.block(6, 0, 12, 1) = qCmd;
-    robotdata->q_dot_c.block(6, 0, 12, 1) = qDotCmd;
+    // robotdata->q_dot_c.block(6, 0, 12, 1) = qDotCmd;
+    robotdata->q_c.block(18, 0, 3, 1) << -20 * deg2rad, 0, 0;
 
     com_tgt = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(0).transpose();
     com_tgt.segment(3, 2) = 0.5 * (left_foot_x_d.block(0, 3, 1, 2) + right_foot_x_d.block(0, 3, 1, 2)).transpose();
