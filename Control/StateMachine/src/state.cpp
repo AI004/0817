@@ -150,6 +150,7 @@ void Zero::onEnter() {
   // gait->robot_controller_._robot_data->fsmname = stateName;
   timer = 0.0;
   gait->robot_controller_._robot_data->addlog("Zero::onEnter()");
+  gait->robot_controller_._estimation_operator->task_state_update_x_a(gait->robot_controller_._robot_data);
   // update
   qa = gait->robot_controller_._robot_data->q_a;
   qa_dot = gait->robot_controller_._robot_data->q_dot_a;
@@ -165,7 +166,23 @@ void Zero::onEnter() {
   double deg2rad = 3.1415926 / 180;
   qCmd << 0, -7, 45, -90, 45, 7, 0, -7, 45, -90, 45, 7;
   qCmd = qCmd * deg2rad;
-  qd.setZero();
+  // xStand(0) = 0.0;
+  // xStand(1) = 0.1;
+  // xStand(2) = 0.3 * -1;
+  // xStand(3) = 0.0;
+  // xStand(4) = 0.1 * -1;
+  // xStand(5) = 0.3 * -1;
+  // wkSpace2Joint(xStand, qCmd, qDotCmd);
+  int left_foot_id = gait->robot_controller_._robot_data->left_foot_id;
+  int right_foot_id = gait->robot_controller_._robot_data->right_foot_id;
+  int upper_joints_id = gait->robot_controller_._robot_data->upper_joints_id;
+  std::cout << "left leg jacobi:\r\n"
+            << gait->robot_controller_._robot_data->task_card_set[left_foot_id]->jacobi << std::endl;
+  std::cout << "right leg jacobi:\r\n"
+            << gait->robot_controller_._robot_data->task_card_set[right_foot_id]->jacobi << std::endl;
+  std::cout << "head jacobi:\r\n"
+            << gait->robot_controller_._robot_data->task_card_set[upper_joints_id]->jacobi << std::endl;
+
   qd.block(6, 0, 12, 1) = qCmd;
   qd.block(18, 0, 3, 1) << -20 * deg2rad, 0, 0;
 

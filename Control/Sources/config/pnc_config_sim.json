@@ -12,7 +12,7 @@
             "TransVector": [
                 0,
                 0,
-                -0.063
+                -0.0
             ],
             "RotMatrix": [
                 1,
@@ -52,12 +52,12 @@
             "TaskType": "contact",
             "TaskID": 2,
             "ControlFrame": "world",
-            "SolidNum": 12,
+            "SolidNum": 15,
             "TaskLevel": 1,
             "TransVector": [
                 0,
                 0,
-                -0.063
+                -0.0
             ],
             "RotMatrix": [
                 1,
@@ -231,7 +231,7 @@
             "TaskName": "arm_waist_joints",
             "TaskType": "joint",
             "TaskID": 6,
-            "StartJoint": 13,
+            "StartJoint": 7,
             "JointsDim": 0,
             "TaskLevel": 1,
             "ControlConfig": {

@@ -49,8 +49,9 @@ base = 'base';
 
 T_left_foot_relative_base = getTransform(robot, config, left_foot, base)    % 计算左脚相对于base的变换矩阵
 T_left_foot_relative_base(1:3,4)'
-eulerAngles1 = tform2eul(T_left_foot_relative_base, 'ZYX');
-eulerAngles2 = rotationMatrixToZYXEulerAngles(T_left_foot_relative_base(1:3,1:3))
+eulerAngles1 = tform2eul(T_left_foot_relative_base, 'XYZ')
+eulerAngles2 = rotationMatrixToXYZEulerAngles(T_left_foot_relative_base(1:3,1:3))
+
 T_right_foot_relative_base = getTransform(robot, config, right_foot, base); % 计算右脚相对于base的变换矩阵
 T_head_relative_base = getTransform(robot, config, head, base);             % 计算头相对于base的变换矩阵
 
@@ -74,19 +75,19 @@ for i = 1:length(jointAngles)
 end
 T_left_foot_relative_base = getTransform(robot, config, left_foot, base)    % 计算左脚相对于base的变换矩阵
 T_left_foot_relative_base(1:3,4)'
-eulerAngles3 = tform2eul(T_left_foot_relative_base, 'ZYX');
-eulerAngles4 = rotationMatrixToZYXEulerAngles(T_left_foot_relative_base(1:3,1:3))
+eulerAngles3 = tform2eul(T_left_foot_relative_base, 'XYZ')
+eulerAngles4 = rotationMatrixToXYZEulerAngles(T_left_foot_relative_base(1:3,1:3))
 
 
-jointAngles = [0.0790421  0.156649  -0.46605  0.564931    0.1664       0.1];
+jointAngles = [0.14966  0.150027 -0.449909   0.50081  0.147031  0.149633];
 
 for i = 1:length(jointAngles)
     config(i).JointPosition = jointAngles(i);   % 更新关节角度
 end
 T_left_foot_relative_base = getTransform(robot, config, left_foot, base)    % 计算左脚相对于base的变换矩阵
 T_left_foot_relative_base(1:3,4)'
-eulerAngles5 = tform2eul(T_left_foot_relative_base, 'ZYX');
-eulerAngles6 = rotationMatrixToZYXEulerAngles(T_left_foot_relative_base(1:3,1:3))
+eulerAngles5 = tform2eul(T_left_foot_relative_base, 'XYZ')
+eulerAngles6 = rotationMatrixToXYZEulerAngles(T_left_foot_relative_base(1:3,1:3))
 %% 更新机器人配置
 for i = 1:6
     config(i).JointPosition = config(i).JointPosition;

@@ -227,6 +227,12 @@ void Robot_Constructor::robotconstructor(QString path, Robot_Data* robotdata) {
           RigidBodyDynamics::Addons::URDFReadFromFile(it.value().toString().toStdString().c_str(),
                                                       robotdata->robot_model, false);
 
+          // 打印所有 body 名称和对应的 body ID
+          std::cout << "Bodies:" << std::endl;
+          for (unsigned int i = 0; i < robotdata->robot_model->mBodies.size(); ++i) {
+            std::cout << "  Body ID: " << i << ", Name: " << robotdata->robot_model->GetBodyName(i) << std::endl;
+          }
+
           robotdata->ndof = robotdata->robot_model->dof_count;
           std::cout << "robotdata->ndof: " << robotdata->ndof << std::endl;
           robotdata->id_body.resize(robotdata->robot_model->mBodies.size());
@@ -234,6 +240,7 @@ void Robot_Constructor::robotconstructor(QString path, Robot_Data* robotdata) {
                     << std::endl;
           for (int i = 0; i < robotdata->id_body.size(); i++) {
             robotdata->id_body[i] = robotdata->robot_model->GetBodyId("base") + i;
+            std::cout << "i: " << i << " " << robotdata->id_body[i] << std::endl;
           }
 
           robotdata->wbcsolver = Wbc_Solver_type(2);
@@ -370,6 +377,8 @@ void Robot_Constructor::robotconstructor(QString path, Robot_Data* robotdata) {
               // record start joint and joints num
               if (_task_array_object.key() == "StartJoint") {
                 robotdata->task_card_set[i]->joint_id = _task_array_object.value().toInt();
+                std::cout << "robotdata->task_card_set[" << i
+                          << "]->joint_id: " << robotdata->task_card_set[i]->joint_id << std::endl;
               }
               if (_task_array_object.key() == "JointsDim") {
                 robotdata->task_card_set[i]->dim = _task_array_object.value().toInt();
@@ -506,6 +515,8 @@ void Robot_Constructor::robotconstructor(QString path, Robot_Data* robotdata) {
                 } else if (robotdata->robottype == robot_type::Float_Base_Open_Chain ||
                            robotdata->robottype == robot_type::Mobile_Wheel_Open_Chain) {
                   robotdata->task_card_set[i]->joint_id = robotdata->id_body[_joint_num];
+                  std::cout << "robotdata->task_card_set[" << i
+                            << "]->joint_id: " << robotdata->task_card_set[i]->joint_id << std::endl;
                 } else {
                   std::cout << "no matching robot type!" << std::endl;
                   return;
