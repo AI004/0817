@@ -52,7 +52,7 @@
             "TaskType": "contact",
             "TaskID": 2,
             "ControlFrame": "world",
-            "SolidNum": 15,
+            "SolidNum": 12,
             "TaskLevel": 1,
             "TransVector": [
                 0,
@@ -231,7 +231,7 @@
             "TaskName": "arm_waist_joints",
             "TaskType": "joint",
             "TaskID": 6,
-            "StartJoint": 7,
+            "StartJoint": 13,
             "JointsDim": 0,
             "TaskLevel": 1,
             "ControlConfig": {

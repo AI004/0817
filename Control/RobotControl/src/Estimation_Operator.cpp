@@ -757,6 +757,10 @@ void Estimation_Operator::task_state_update_x_a(Robot_Data* robotdata) {
         // x_6d.block(0,0,3,1) = Euler_ZYX;
         x_6d.block(0, 0, 3, 1) = Euler_XYZ;
         x_6d.block(3, 0, 3, 1) = pa;
+        // std::cout << "(*iter)->joint_id: " << (*iter)->joint_id << std::endl;
+        // std::cout << "robotdata->q_a: " << robotdata->q_a.transpose() << std::endl;
+        // std::cout << "x_6d" << std::endl;
+        // std::cout << x_6d.transpose() << std::endl;
         for (uint i = 0; i < (*iter)->task_selection_matrix.size(); i++) {
           (*iter)->X_a(0, i) = x_6d((*iter)->task_selection_matrix[i], 0);
         }
@@ -770,7 +774,7 @@ void Estimation_Operator::task_state_update_x_a(Robot_Data* robotdata) {
         for (uint i = 0; i < (*iter)->task_selection_matrix.size(); i++) {
           (*iter)->jacobi.row(i) = J_6D.row((*iter)->task_selection_matrix[i]);
         }
-        std::cout << (*iter)->jacobi << std::endl;
+        // std::cout << (*iter)->jacobi << std::endl;
         // update jacobi_dotq_dot
         RigidBodyDynamics::Math::VectorNd Jdotqdot_6D =
             RigidBodyDynamics::CalcPointAcceleration6D(*(robotdata->robot_model), robotdata->q_a, robotdata->q_dot_a,

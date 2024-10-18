@@ -52,7 +52,7 @@ DEF DuckDuck Robot {
           maxVelocity 15
           minPosition -2
           maxPosition 2
-          maxTorque 20
+          maxTorque 5
         }
         PositionSensor {
           name "left_hip_yaw_joint_sensor"
@@ -81,7 +81,7 @@ DEF DuckDuck Robot {
                 maxVelocity 15
                 minPosition -2
                 maxPosition 2
-                maxTorque 20
+                maxTorque 5
               }
               PositionSensor {
                 name "left_hip_roll_joint_sensor"
@@ -111,7 +111,7 @@ DEF DuckDuck Robot {
                       maxVelocity 15
                       minPosition -2
                       maxPosition 2
-                      maxTorque 20
+                      maxTorque 5
                     }
                     PositionSensor {
                       name "left_hip_pitch_joint_sensor"
@@ -142,7 +142,7 @@ DEF DuckDuck Robot {
                             maxVelocity 15
                             minPosition -2
                             maxPosition 2
-                            maxTorque 20
+                            maxTorque 5
                           }
                           PositionSensor {
                             name "left_knee_pitch_joint_sensor"
@@ -174,7 +174,7 @@ DEF DuckDuck Robot {
                                   maxVelocity 15
                                   minPosition -2
                                   maxPosition 2
-                                  maxTorque 20
+                                  maxTorque 5
                                 }
                                 PositionSensor {
                                   name "left_ankle_pitch_joint_sensor"
@@ -205,7 +205,7 @@ DEF DuckDuck Robot {
                                         maxVelocity 15
                                         minPosition -2
                                         maxPosition 2
-                                        maxTorque 20
+                                        maxTorque 5
                                       }
                                       PositionSensor {
                                         name "left_ankle_roll_joint_sensor"
@@ -328,7 +328,7 @@ DEF DuckDuck Robot {
           maxVelocity 15
           minPosition -2
           maxPosition 2
-          maxTorque 20
+          maxTorque 5
         }
         PositionSensor {
           name "right_hip_yaw_joint_sensor"
@@ -359,7 +359,7 @@ DEF DuckDuck Robot {
                 maxVelocity 15
                 minPosition -2
                 maxPosition 2
-                maxTorque 20
+                maxTorque 5
               }
               PositionSensor {
                 name "right_hip_roll_joint_sensor"
@@ -389,7 +389,7 @@ DEF DuckDuck Robot {
                       maxVelocity 15
                       minPosition -2
                       maxPosition 2
-                      maxTorque 20
+                      maxTorque 5
                     }
                     PositionSensor {
                       name "right_hip_pitch_joint_sensor"
@@ -420,7 +420,7 @@ DEF DuckDuck Robot {
                             maxVelocity 15
                             minPosition -2
                             maxPosition 2
-                            maxTorque 20
+                            maxTorque 5
                           }
                           PositionSensor {
                             name "right_knee_pitch_joint_sensor"
@@ -452,7 +452,7 @@ DEF DuckDuck Robot {
                                   maxVelocity 15
                                   minPosition -2
                                   maxPosition 2
-                                  maxTorque 20
+                                  maxTorque 5
                                 }
                                 PositionSensor {
                                   name "right_ankle_pitch_joint_sensor"
@@ -484,7 +484,7 @@ DEF DuckDuck Robot {
                                         maxVelocity 15
                                         minPosition -2
                                         maxPosition 2
-                                        maxTorque 20
+                                        maxTorque 5
                                       }
                                       PositionSensor {
                                         name "right_ankle_roll_joint_sensor"
@@ -603,14 +603,14 @@ DEF DuckDuck Robot {
       }
       device [
         RotationalMotor {
-          name "neck_pitch_joint"
+          name "throat_pitch_joint"
           maxVelocity 15
           minPosition -2
           maxPosition 2
-          maxTorque 20
+          maxTorque 5
         }
         PositionSensor {
-          name "neck_pitch_joint_sensor"
+          name "throat_pitch_joint_sensor"
         }
       ]
       endPoint Solid {
@@ -618,13 +618,13 @@ DEF DuckDuck Robot {
         rotation 0 1 0 0
         children [
           Shape {
-            appearance DEF neck_pitch_material PBRAppearance {
+            appearance DEF throat_pitch_material PBRAppearance {
               roughness 1
               metalness 0
             }
-            geometry DEF neck_pitch Mesh {
+            geometry DEF throat_pitch Mesh {
               url [
-                "../meshes_DuckDuck/neck_pitch.STL"
+                "../meshes_DuckDuck/throat_pitch.STL"
               ]
             }
           }
@@ -635,14 +635,14 @@ DEF DuckDuck Robot {
             }
             device [
               RotationalMotor {
-                name "neck_roll_joint"
+                name "throat_roll_joint"
                 maxVelocity 15
                 minPosition -2
                 maxPosition 2
-                maxTorque 20
+                maxTorque 5
               }
               PositionSensor {
-                name "neck_roll_joint_sensor"
+                name "throat_roll_joint_sensor"
               }
             ]
             endPoint Solid {
@@ -650,13 +650,13 @@ DEF DuckDuck Robot {
               rotation -1 0 0 0
               children [
                 Shape {
-                  appearance DEF neck_roll_material PBRAppearance {
+                  appearance DEF throat_roll_material PBRAppearance {
                     roughness 1
                     metalness 0
                   }
-                  geometry DEF neck_roll Mesh {
+                  geometry DEF throat_roll Mesh {
                     url [
-                      "../meshes_DuckDuck/neck_roll.STL"
+                      "../meshes_DuckDuck/throat_roll.STL"
                     ]
                   }
                 }
@@ -667,32 +667,32 @@ DEF DuckDuck Robot {
                   }
                   device [
                     RotationalMotor {
-                      name "neck_yaw_joint"
+                      name "throat_yaw_joint"
                       maxVelocity 15
                       minPosition -2
                       maxPosition 2
-                      maxTorque 20
+                      maxTorque 5
                     }
                     PositionSensor {
-                      name "neck_yaw_joint_sensor"
+                      name "throat_yaw_joint_sensor"
                     }
                   ]
                   endPoint Solid {
                     translation 0 0 0.061
                     children [
                       Shape {
-                        appearance DEF neck_yaw_material PBRAppearance {
+                        appearance DEF throat_yaw_material PBRAppearance {
                           roughness 1
                           metalness 0
                         }
-                        geometry DEF neck_yaw Mesh {
+                        geometry DEF throat_yaw Mesh {
                           url [
-                            "../meshes_DuckDuck/neck_yaw.STL"
+                            "../meshes_DuckDuck/throat_yaw.STL"
                           ]
                         }
                       }
                     ]
-                    name "neck_yaw"
+                    name "throat_yaw"
                     physics Physics {
                       density -1
                       mass 1.364893
@@ -707,7 +707,7 @@ DEF DuckDuck Robot {
                   }
                 }
               ]
-              name "neck_roll"
+              name "throat_roll"
               physics Physics {
                 density -1
                 mass 0.05549
@@ -722,7 +722,7 @@ DEF DuckDuck Robot {
             }
           }
         ]
-        name "neck_pitch"
+        name "throat_pitch"
         physics Physics {
           density -1
           mass 0.094414

@@ -31,11 +31,11 @@ void WebotsRobot::initWebots() {
     i++;
     legMotor[i] = robot->getMotor("right_ankle_roll_joint");
     i++;
-    legMotor[i] = robot->getMotor("neck_pitch_joint");
+    legMotor[i] = robot->getMotor("throat_pitch_joint");
     i++;
-    legMotor[i] = robot->getMotor("neck_roll_joint");
+    legMotor[i] = robot->getMotor("throat_roll_joint");
     i++;
-    legMotor[i] = robot->getMotor("neck_yaw_joint");
+    legMotor[i] = robot->getMotor("throat_yaw_joint");
     i++;
   } else {
     legMotor[i] = robot->getMotor("hipPitch_Left");
@@ -235,11 +235,11 @@ void WebotsRobot::initWebots() {
     i++;
     legSensor[i] = robot->getPositionSensor("right_ankle_roll_joint_sensor");
     i++;
-    legSensor[i] = robot->getPositionSensor("neck_pitch_joint_sensor");
+    legSensor[i] = robot->getPositionSensor("throat_pitch_joint_sensor");
     i++;
-    legSensor[i] = robot->getPositionSensor("neck_roll_joint_sensor");
+    legSensor[i] = robot->getPositionSensor("throat_roll_joint_sensor");
     i++;
-    legSensor[i] = robot->getPositionSensor("neck_yaw_joint_sensor");
+    legSensor[i] = robot->getPositionSensor("throat_yaw_joint_sensor");
     i++;
   } else {
     legSensor[i] = robot->getPositionSensor("hipPitch_Left_sensor");

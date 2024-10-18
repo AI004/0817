@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
 
   model = new Model();
 
-  if (!Addons::URDFReadFromFile(urdf_file.c_str(), model, floating_base)) {
+  if (!Addons::URDFReadFromFile(urdf_file.c_str(), model, floating_base, true)) {
     std::cerr << "Error loading URDF model from file: " << urdf_file << std::endl;
     delete model;
     return -1;
@@ -103,24 +103,41 @@ int main(int argc, char* argv[]) {
   Q << 0, 0, 0, 0, 0, 0, 0, -7, 45, -90, 45, 7, 0, 0, 0, 0, -7, 45, -90, 45,
       7;  // DuckDuck zero state only leg position
   Q = Q / 180 * 3.1415926;
+  std::cout << "Q:" << std::endl;
+  std::cout << Q.block(0, 0, 6, 1).transpose() << std::endl;
+  std::cout << Q.block(6, 0, 6, 1).transpose() << std::endl;
+  std::cout << Q.block(12, 0, 3, 1).transpose() << std::endl;
+  std::cout << Q.block(15, 0, 6, 1).transpose() << std::endl;
   // 计算雅可比矩阵
   MatrixNd J_left_foot = MatrixNd::Zero(6, model->qdot_size);
   body_id = 8;
+  Vector3d position_left_foot;
+  position_left_foot = CalcBodyToBaseCoordinates(*model, Q, body_id, Vector3d(0., 0., 0.));
   CalcPointJacobian6D(*model, Q, body_id, Vector3d(0., 0., 0.), J_left_foot, false);
   std::cout << "Jacobian Matrix (Body " << body_id << "):" << std::endl;
   std::cout << J_left_foot.block(0, 6, 6, 6) << std::endl;
+  std::cout << "position_left_foot (Body " << body_id << "):" << std::endl;
+  std::cout << position_left_foot.transpose() << std::endl;
 
   MatrixNd J_right_foot = MatrixNd::Zero(6, model->qdot_size);
   body_id = 17;
+  Vector3d position_right_foot;
+  position_right_foot = CalcBodyToBaseCoordinates(*model, Q, body_id, Vector3d(0., 0., 0.));
   CalcPointJacobian6D(*model, Q, body_id, Vector3d(0., 0., 0.), J_right_foot, false);
   std::cout << "Jacobian Matrix (Body " << body_id << "):" << std::endl;
   std::cout << J_right_foot.block(0, 15, 6, 6) << std::endl;
+  std::cout << "position_right_foot (Body " << body_id << "):" << std::endl;
+  std::cout << position_right_foot.transpose() << std::endl;
 
   MatrixNd J_head = MatrixNd::Zero(3, model->qdot_size);
   body_id = 11;
+  Vector3d position_head;
+  position_head = CalcBodyToBaseCoordinates(*model, Q, body_id, Vector3d(0., 0., 0.));
   CalcPointJacobian6D(*model, Q, body_id, Vector3d(0., 0., 0.), J_head, false);
   std::cout << "Jacobian Matrix (Body " << body_id << "):" << std::endl;
   std::cout << J_head << std::endl;
+  std::cout << "position_head (Body " << body_id << "):" << std::endl;
+  std::cout << position_head.transpose() << std::endl;
 
   // 计算逆运动学（简单示例，实际应用中需要更复杂的优化方法）
   std::cout << "model->q_size: " << model->q_size << std::endl;

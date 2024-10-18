@@ -95,8 +95,10 @@ bool WalkStateEstimate::grfEstimating(Robot_Data* robotdata) {
   RigidBodyDynamics::NonlinearEffects(*(robotdata->robot_model), robotdata->q_a, robotdata->q_dot_a, nonlinear);
   robotdata->grf =
       J_grf.transpose().colPivHouseholderQr().solve(nonlinear.segment(6, 12) - robotdata->tau_a.segment(6, 12));
-  std::cout << J_grf << std::endl;
-  std::cout << "grf" << robotdata->grf.transpose() << std::endl;
+  // std::cout << "J_grf" << std::endl;
+  // std::cout << J_grf << std::endl;
+  // std::cout << "grf" << std::endl;
+  // std::cout << robotdata->grf.transpose() << std::endl;
   return true;
 }
 

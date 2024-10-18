@@ -1,9 +1,9 @@
 #include "dataPub.h"
 
 DataPub::DataPub() {
-  joint_desired_.name = joint_names_;
-  joint_measured_.name = joint_names_;
-  joint_command_.name = joint_names_;
+  joint_desired_.name = DuckDuck_joint_names_;
+  joint_measured_.name = DuckDuck_joint_names_;
+  joint_command_.name = DuckDuck_joint_names_;
 
   joint_desired_.position.resize(DuckDuck_joints_num);
   joint_desired_.velocity.resize(DuckDuck_joints_num);
