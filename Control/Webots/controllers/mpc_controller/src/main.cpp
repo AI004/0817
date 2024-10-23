@@ -155,6 +155,8 @@ int main(int argc, char** argv) {
   double timeSim = 0.0;
   double timeStep = dt;
   double timeTotal = 500.0;
+  double timeZero = 2.0;
+  double timeZ2S = 4.0;
 //
 #ifdef DATALOG_MAIN
   std::ostringstream oss;
@@ -244,6 +246,12 @@ int main(int argc, char** argv) {
     } else {
     }
 
+    if (timeSim == timeZero) {
+      gait.setevent("gotoZero");
+    }
+    if (timeSim == timeZ2S) {
+      gait.setevent("gotoZ2S");
+    }
 #endif
     // std::cout<<"event: "<<gait.event<<std::endl;
     gait.gait_run(data);
