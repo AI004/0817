@@ -348,31 +348,7 @@ class Robot_Data {
   Eigen::Vector2d impactFactor = Eigen::Vector2d::Zero();
   Eigen::Vector2d impactMomentum = Eigen::Vector2d::Zero();
   Eigen::Vector2d impactVel = Eigen::Vector2d::Zero();
-  /*
-   *                        _oo0oo_
-   *                       o8888888o
-   *                       88" . "88
-   *                       (| -_- |)
-   *                       0\  =  /0
-   *                     ___/`---'\___
-   *                   .' \\|     |// '.
-   *                  / \\|||  :  |||// \
-   *                 / _||||| -:- |||||- \
-   *                |   | \\\  - /// |   |
-   *                | \_|  ''\---/''  |_/ |
-   *                \  .-\__  '-'  ___/-. /
-   *              ___'. .'  /--.--\  `. .'___
-   *           ."" '<  `.___\_<|>_/___.' >' "".
-   *          | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-   *          \  \ `_.   \_ __\ /__ _/   .-` /  /
-   *      =====`-.____`.___ \_____/___.-`___.-'=====
-   *                        `=---='
-   *
-   *
-   *      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *    mocap_with_hand和is_mocap_with_hand 变量位置不可动
-   *            佛祖保佑       永不宕机     永无BUG
-   */
+
   // mocap with hand
   double mocap_with_hand = 0.0;
   bool is_mocap_with_hand = false;
@@ -403,7 +379,7 @@ class Robot_Data {
   Eigen::VectorXd observeData = Eigen::VectorXd::Zero(50);
 
   // log buffer
-  Eigen::VectorXd dataL = Eigen::VectorXd::Zero(300);
+  Eigen::VectorXd dataL = Eigen::VectorXd::Zero(500);
   std::vector<std::string> log_buffer;
 
   bool PushWalkRecoveryFlag = false;

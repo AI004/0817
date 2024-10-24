@@ -67,3 +67,53 @@
             2. 参考UR机械臂逆解方法，把连续三个平行的关节的旋转矩阵单独拎出来，等号左边利用矩阵求逆，构建矩阵相等，观察数据
 
         方案四：改为MDH模型测试
+
+## Log 说明
+
+### DuckDuck对应的日志说明如下所示
+
+1. 000~000:`时间(以0.0025s递增)`
+2. 001~009:`程序内部各部分时间增量`
+3. 010~018:`IMURPY角位置` `IMURPY角速度` `IMURPY角加速度`
+4. 019~019:`0:start` `1:zero` `2:Z2S` `3:stand` `4:S2W` `5:walk` `6:UniGait` `7:Dual2Single` `8:SingleStand` `9:Single2Dual` `10:stop` `11:swing`
+5. 020~020:`各状态时间`
+6. 021~041:`q_a`
+7. 042~062:`q_dot_a`
+8. 063~083:`tau_a`
+9. 084~095:`grf`
+10. 096~116:`q_c`
+11. 117~137:`q_dot_c`
+12. 138~156:`tau_c`
+13. 159~170:`contact_force`
+14. 171~176:`left_foot_position`
+15. 177~182:`left_foot_velocity`
+16. 183~188:`right_foot_position`
+17. 189~194:`right_foot_veloctiy`
+18. 195~200:`com_position`
+19. 201~206:`com_velocity`
+20. 207~212:`body_position`
+21. 213~218:`body_velocity`
+22. 219~219:`motionTurnOn`
+23. 220~220:`motionNumber`
+24. 221~221:`momentumTurnOn`
+25. 222~222:`carryBoxState`
+26. 494~496:`v_body`
+27. 497~499:`euler_world`
+
+### DuckDuck对应的关节顺序
+
+1. `left_hip_yaw_joint`
+2. `left_hip_roll_joint`
+3. `left_hip_pitch_joint`
+4. `left_knee_pitch_joint`
+5. `left_ankle_pitch_joint`
+6. `left_ankle_roll_joint`
+7. `right_hip_yaw_joint`
+8. `right_hip_roll_joint`
+9. `right_hip_pitch_joint`
+10. `right_knee_pitch_joint`
+11. `right_ankle_pitch_joint`
+12. `right_ankle_roll_joint`
+13. `throat_pitch_joint`
+14. `throat_roll_joint`
+15. `throat_yaw_joint`

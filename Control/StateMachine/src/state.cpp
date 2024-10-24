@@ -100,9 +100,25 @@ void Start::run() {
   robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(0).transpose();
   i = i + task_dl;
   robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL(i) = robotdata->motionTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->motionNumber;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->momentumTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->carryBoxState;
 
-  robotdata->dataL.segment(294, 3) = v_body;
-  robotdata->dataL.segment(297, 3) = euler_world;
+  robotdata->dataL.segment(494, 3) = v_body;
+  robotdata->dataL.segment(497, 3) = euler_world;
 }
 
 void Start::onExit() {
@@ -352,9 +368,25 @@ void Zero::run() {
   robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(0).transpose();
   i = i + task_dl;
   robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL(i) = robotdata->motionTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->motionNumber;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->momentumTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->carryBoxState;
 
-  robotdata->dataL.segment(294, 3) = v_body;
-  robotdata->dataL.segment(297, 3) = euler_world;
+  robotdata->dataL.segment(494, 3) = v_body;
+  robotdata->dataL.segment(497, 3) = euler_world;
   // std::cout<<"error?"<<std::endl;
   // std::cout << robotdata->grf(5)+robotdata->grf(11) << std::endl;
 
@@ -551,20 +583,54 @@ void Swing::run() {
   robotdata->tau_c.setZero();
 
   // log data
+  int q_dl = generalized_coordinates;
+  int f_dl = 12;
+  int task_dl = 6;
+  int i = 21;
   robotdata->dataL(19) = 11;
   robotdata->dataL(20) = timer;
-  robotdata->dataL.segment(21, 29) = robotdata->q_a;
-  robotdata->dataL.segment(50, 29) = robotdata->q_dot_a;
-  robotdata->dataL.segment(79, 29) = robotdata->tau_a;
-  robotdata->dataL.segment(108, 12) = robotdata->grf;
-  robotdata->dataL.segment(120, 29) = robotdata->q_c;
-  robotdata->dataL.segment(149, 29) = robotdata->q_dot_c;
-  robotdata->dataL.segment(178, 29) = robotdata->tau_c;
-  robotdata->dataL.segment(207, 12) = robotdata->contactforce;
-  robotdata->dataL.segment(219, 6) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(0).transpose();
-  robotdata->dataL.segment(225, 6) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(1).transpose();
-  robotdata->dataL.segment(231, 6) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(0).transpose();
-  robotdata->dataL.segment(237, 6) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(1).transpose();
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_a;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_dot_a;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->tau_a;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, f_dl) = robotdata->grf;
+  i = i + f_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_c;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_dot_c;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->tau_c;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, f_dl) = robotdata->contactforce;
+  i = i + f_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL(i) = robotdata->motionTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->motionNumber;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->momentumTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->carryBoxState;
+
+  robotdata->dataL.segment(494, 3) = v_body;
+  robotdata->dataL.segment(497, 3) = euler_world;
   // std::cout<<"error?"<<std::endl;
 }
 
@@ -879,6 +945,25 @@ void Z2S::run() {
   robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(0).transpose();
   i = i + task_dl;
   robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL(i) = robotdata->motionTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->motionNumber;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->momentumTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->carryBoxState;
+
+  robotdata->dataL.segment(494, 3) = v_body;
+  robotdata->dataL.segment(497, 3) = euler_world;
 
   robotdata->dataL.segment(294, 3) = v_body;
   robotdata->dataL.segment(297, 3) = euler_world;
@@ -1968,7 +2053,6 @@ void Stand::run() {
   int f_dl = 12;
   int task_dl = 6;
   int i = 21;
-  int joystick_dl = 3;
   robotdata->dataL(19) = 3;
   robotdata->dataL(20) = timer;
   robotdata->dataL.segment(i, q_dl) = robotdata->q_a;
@@ -1995,10 +2079,6 @@ void Stand::run() {
   i = i + task_dl;
   robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(1).transpose();
   i = i + task_dl;
-  robotdata->dataL.segment(i, joystick_dl) = robotdata->pCmd_joystick_last;
-  i = i + joystick_dl;
-  robotdata->dataL.segment(i, joystick_dl) = robotdata->rCmd_joystick_last;
-  i = i + joystick_dl;
   robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(0).transpose();
   i = i + task_dl;
   robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(1).transpose();
@@ -2015,8 +2095,8 @@ void Stand::run() {
   i = i + 1;
   robotdata->dataL(i) = robotdata->carryBoxState;
 
-  robotdata->dataL.segment(294, 3) = v_body;
-  robotdata->dataL.segment(297, 3) = euler_world;
+  robotdata->dataL.segment(494, 3) = v_body;
+  robotdata->dataL.segment(497, 3) = euler_world;
 
   // robotdata->tau_c = ratio*robotdata->tau_c;
   // std::cout << robotdata->grf(5)+robotdata->grf(11) << std::endl;
@@ -2376,32 +2456,48 @@ void S2W::run() {
   int i = 21;
   robotdata->dataL(19) = 4;
   robotdata->dataL(20) = timer;
-  robotdata->dataL.segment(21, q_dl) = robotdata->q_a;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_a;
   i = i + q_dl;
-  robotdata->dataL.segment(50, q_dl) = robotdata->q_dot_a;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_dot_a;
   i = i + q_dl;
-  robotdata->dataL.segment(79, q_dl) = robotdata->tau_a;
+  robotdata->dataL.segment(i, q_dl) = robotdata->tau_a;
   i = i + q_dl;
-  robotdata->dataL.segment(108, f_dl) = robotdata->grf;
+  robotdata->dataL.segment(i, f_dl) = robotdata->grf;
   i = i + f_dl;
-  robotdata->dataL.segment(120, q_dl) = robotdata->q_c;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_c;
   i = i + q_dl;
-  robotdata->dataL.segment(149, q_dl) = robotdata->q_dot_c;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_dot_c;
   i = i + q_dl;
-  robotdata->dataL.segment(178, q_dl) = robotdata->tau_c;
+  robotdata->dataL.segment(i, q_dl) = robotdata->tau_c;
   i = i + q_dl;
-  robotdata->dataL.segment(207, f_dl) = robotdata->contactforce;
+  robotdata->dataL.segment(i, f_dl) = robotdata->contactforce;
   i = i + f_dl;
-  robotdata->dataL.segment(219, task_dl) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(0).transpose();
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(0).transpose();
   i = i + task_dl;
-  robotdata->dataL.segment(225, task_dl) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(1).transpose();
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(1).transpose();
   i = i + task_dl;
-  robotdata->dataL.segment(231, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(0).transpose();
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(0).transpose();
   i = i + task_dl;
-  robotdata->dataL.segment(237, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(1).transpose();
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL(i) = robotdata->motionTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->motionNumber;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->momentumTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->carryBoxState;
 
-  robotdata->dataL.segment(294, 3) = v_body;
-  robotdata->dataL.segment(297, 3) = euler_world;
+  robotdata->dataL.segment(494, 3) = v_body;
+  robotdata->dataL.segment(497, 3) = euler_world;
   // robotdata->tau_c = ratio*robotdata->tau_c;
 
   // std::cout<<"error!"<<std::endl;
@@ -2790,22 +2886,54 @@ void Walk::run() {
   // std::cout<<"W2S: "<<gait->W2S<<std::endl;
   // std::cout<<"prestand: "<<robotdata->prestand<<std::endl;
   // log data
+  int q_dl = generalized_coordinates;
+  int f_dl = 12;
+  int task_dl = 6;
+  int i = 21;
   robotdata->dataL(19) = 5;
-  robotdata->dataL(20) = robotdata->time;
-  robotdata->dataL.segment(21, 29) = robotdata->q_a;
-  robotdata->dataL.segment(50, 29) = robotdata->q_dot_a;
-  robotdata->dataL.segment(79, 29) = robotdata->tau_a;
-  robotdata->dataL.segment(108, 12) = robotdata->grf;
-  robotdata->dataL.segment(120, 29) = robotdata->q_c;
-  robotdata->dataL.segment(149, 29) = robotdata->q_dot_c;
-  robotdata->dataL.segment(178, 29) = robotdata->tau_c;
-  robotdata->dataL.segment(207, 12) = robotdata->contactforce;
-  robotdata->dataL.segment(219, 6) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(0).transpose();
-  robotdata->dataL.segment(225, 6) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(1).transpose();
-  robotdata->dataL.segment(231, 6) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(0).transpose();
-  robotdata->dataL.segment(237, 6) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(1).transpose();
+  robotdata->dataL(20) = timer;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_a;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_dot_a;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->tau_a;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, f_dl) = robotdata->grf;
+  i = i + f_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_c;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_dot_c;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->tau_c;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, f_dl) = robotdata->contactforce;
+  i = i + f_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL(i) = robotdata->motionTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->motionNumber;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->momentumTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->carryBoxState;
 
-  robotdata->dataL.segment(243, 3) = robotdata->vCmd;
+  robotdata->dataL.segment(494, 3) = v_body;
+  robotdata->dataL.segment(497, 3) = euler_world;
 }
 
 void Walk::onExit() {
@@ -3322,10 +3450,9 @@ void UniGait::run() {
   int q_dl = generalized_coordinates;
   int f_dl = 12;
   int task_dl = 6;
-  int vCmd_dl = 3;
   int i = 21;
   robotdata->dataL(19) = 6;
-  robotdata->dataL(20) = robotdata->time;
+  robotdata->dataL(20) = timer;
   robotdata->dataL.segment(i, q_dl) = robotdata->q_a;
   i = i + q_dl;
   robotdata->dataL.segment(i, q_dl) = robotdata->q_dot_a;
@@ -3350,24 +3477,24 @@ void UniGait::run() {
   i = i + task_dl;
   robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(1).transpose();
   i = i + task_dl;
-  robotdata->dataL.segment(i, vCmd_dl) = robotdata->vCmd;
-  i = i + vCmd_dl;
-  robotdata->dataL(i) = robotdata->step;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL(i) = robotdata->motionTurnOn;
   i = i + 1;
-  robotdata->dataL(i) = robotdata->stance_index;
+  robotdata->dataL(i) = robotdata->motionNumber;
   i = i + 1;
-  robotdata->dataL(i) = robotdata->phase;
+  robotdata->dataL(i) = robotdata->momentumTurnOn;
   i = i + 1;
-  robotdata->dataL(i) = robotdata->st_leg(0);
-  i = i + 1;
-  robotdata->dataL(i) = robotdata->st_leg(1);
-  i = i + 1;
-  robotdata->dataL(i) = robotdata->t_leg(0);
-  i = i + 1;
-  robotdata->dataL(i) = robotdata->t_leg(1);
+  robotdata->dataL(i) = robotdata->carryBoxState;
 
-  robotdata->dataL.segment(294, 3) = v_body;
-  robotdata->dataL.segment(297, 3) = euler_world;
+  robotdata->dataL.segment(494, 3) = v_body;
+  robotdata->dataL.segment(497, 3) = euler_world;
 }
 
 void UniGait::onExit() {
@@ -3597,9 +3724,25 @@ void Stop::run() {
   robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(0).transpose();
   i = i + task_dl;
   robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL(i) = robotdata->motionTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->motionNumber;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->momentumTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->carryBoxState;
 
-  robotdata->dataL.segment(294, 3) = v_body;
-  robotdata->dataL.segment(297, 3) = euler_world;
+  robotdata->dataL.segment(494, 3) = v_body;
+  robotdata->dataL.segment(497, 3) = euler_world;
   // std::cout<<"error?"<<std::endl;
 }
 
@@ -3940,20 +4083,54 @@ void Dual2Single::run() {
   timer += robotdata->dt;
 
   // log data
+  int q_dl = generalized_coordinates;
+  int f_dl = 12;
+  int task_dl = 6;
+  int i = 21;
   robotdata->dataL(19) = 7;
-  robotdata->dataL(20) = robotdata->time;
-  robotdata->dataL.segment(21, 29) = robotdata->q_a;
-  robotdata->dataL.segment(50, 29) = robotdata->q_dot_a;
-  robotdata->dataL.segment(79, 29) = robotdata->tau_a;
-  robotdata->dataL.segment(108, 12) = robotdata->grf;
-  robotdata->dataL.segment(120, 29) = robotdata->q_c;
-  robotdata->dataL.segment(149, 29) = robotdata->q_dot_c;
-  robotdata->dataL.segment(178, 29) = robotdata->tau_c;
-  robotdata->dataL.segment(207, 12) = robotdata->contactforce;
-  robotdata->dataL.segment(219, 6) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(0).transpose();
-  robotdata->dataL.segment(225, 6) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(1).transpose();
-  robotdata->dataL.segment(231, 6) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(0).transpose();
-  robotdata->dataL.segment(237, 6) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(1).transpose();
+  robotdata->dataL(20) = timer;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_a;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_dot_a;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->tau_a;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, f_dl) = robotdata->grf;
+  i = i + f_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_c;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_dot_c;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->tau_c;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, f_dl) = robotdata->contactforce;
+  i = i + f_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL(i) = robotdata->motionTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->motionNumber;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->momentumTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->carryBoxState;
+
+  robotdata->dataL.segment(494, 3) = v_body;
+  robotdata->dataL.segment(497, 3) = euler_world;
   // robotdata->tau_c = ratio*robotdata->tau_c;
   // updata event
   if (timer < totaltime) {
@@ -4341,20 +4518,54 @@ void SingleStand::run() {
   //     }
   // }
   // log data
+  int q_dl = generalized_coordinates;
+  int f_dl = 12;
+  int task_dl = 6;
+  int i = 21;
   robotdata->dataL(19) = 8;
-  robotdata->dataL(20) = robotdata->time;
-  robotdata->dataL.segment(21, 29) = robotdata->q_a;
-  robotdata->dataL.segment(50, 29) = robotdata->q_dot_a;
-  robotdata->dataL.segment(79, 29) = robotdata->tau_a;
-  robotdata->dataL.segment(108, 12) = robotdata->grf;
-  robotdata->dataL.segment(120, 29) = robotdata->q_c;
-  robotdata->dataL.segment(149, 29) = robotdata->q_dot_c;
-  robotdata->dataL.segment(178, 29) = robotdata->tau_c;
-  robotdata->dataL.segment(207, 12) = robotdata->contactforce;
-  robotdata->dataL.segment(219, 6) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(0).transpose();
-  robotdata->dataL.segment(225, 6) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(1).transpose();
-  robotdata->dataL.segment(231, 6) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(0).transpose();
-  robotdata->dataL.segment(237, 6) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(1).transpose();
+  robotdata->dataL(20) = timer;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_a;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_dot_a;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->tau_a;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, f_dl) = robotdata->grf;
+  i = i + f_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_c;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_dot_c;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->tau_c;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, f_dl) = robotdata->contactforce;
+  i = i + f_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL(i) = robotdata->motionTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->motionNumber;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->momentumTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->carryBoxState;
+
+  robotdata->dataL.segment(494, 3) = v_body;
+  robotdata->dataL.segment(497, 3) = euler_world;
   // robotdata->tau_c = ratio*robotdata->tau_c;
 }
 
@@ -4672,20 +4883,54 @@ void Single2Dual::run() {
   timer += robotdata->dt;
 
   // log data
+  int q_dl = generalized_coordinates;
+  int f_dl = 12;
+  int task_dl = 6;
+  int i = 21;
   robotdata->dataL(19) = 9;
-  robotdata->dataL(20) = robotdata->time;
-  robotdata->dataL.segment(21, 29) = robotdata->q_a;
-  robotdata->dataL.segment(50, 29) = robotdata->q_dot_a;
-  robotdata->dataL.segment(79, 29) = robotdata->tau_a;
-  robotdata->dataL.segment(108, 12) = robotdata->grf;
-  robotdata->dataL.segment(120, 29) = robotdata->q_c;
-  robotdata->dataL.segment(149, 29) = robotdata->q_dot_c;
-  robotdata->dataL.segment(178, 29) = robotdata->tau_c;
-  robotdata->dataL.segment(207, 12) = robotdata->contactforce;
-  robotdata->dataL.segment(219, 6) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(0).transpose();
-  robotdata->dataL.segment(225, 6) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(1).transpose();
-  robotdata->dataL.segment(231, 6) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(0).transpose();
-  robotdata->dataL.segment(237, 6) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(1).transpose();
+  robotdata->dataL(20) = timer;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_a;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_dot_a;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->tau_a;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, f_dl) = robotdata->grf;
+  i = i + f_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_c;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->q_dot_c;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, q_dl) = robotdata->tau_c;
+  i = i + q_dl;
+  robotdata->dataL.segment(i, f_dl) = robotdata->contactforce;
+  i = i + f_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->left_foot_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->right_foot_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->com_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(0).transpose();
+  i = i + task_dl;
+  robotdata->dataL.segment(i, task_dl) = robotdata->task_card_set[robotdata->body_task_id]->X_a.row(1).transpose();
+  i = i + task_dl;
+  robotdata->dataL(i) = robotdata->motionTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->motionNumber;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->momentumTurnOn;
+  i = i + 1;
+  robotdata->dataL(i) = robotdata->carryBoxState;
+
+  robotdata->dataL.segment(494, 3) = v_body;
+  robotdata->dataL.segment(497, 3) = euler_world;
   // robotdata->tau_c = ratio*robotdata->tau_c;
   // updata event
   if (timer < totaltime) {
